@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indicadores de gestión · Portal Logística</title>
+<style>
+
+body{margin:0;font-family:Inter,Arial,sans-serif;background:#F1EFEA;color:#222}
+a{color:#D01148}a:hover{color:#8E1B5A}
+button{font-family:inherit}
+.btn{border:1px solid #d6d2c8;background:#fff;border-radius:10px;padding:9px 14px;font-size:13px;font-weight:700;color:#333;cursor:pointer;min-height:40px;text-decoration:none;display:inline-flex;align-items:center}
+.btn.pri{background:#D01148;border-color:#D01148;color:#fff}
+.chip{border:1px solid #d6d2c8;background:#fff;border-radius:20px;padding:7px 13px;font-size:13px;font-weight:600;color:#333;cursor:pointer;min-height:36px}
+.chip.on{background:#222;color:#fff;border-color:#222}
+.lbl{font-size:11px;font-weight:800;color:#666;text-transform:uppercase}
+.vsel{display:inline-flex;flex-wrap:wrap;background:#e6e2d9;border-radius:12px;padding:4px;gap:4px}
+.vs{border:0;background:transparent;padding:9px 16px;border-radius:9px;font-weight:800;font-size:13.5px;cursor:pointer;color:#555;min-height:40px}
+.vs.on{background:#fff;color:#D01148;box-shadow:0 1px 3px #00000033}
+.fil{background:#fff;border-radius:14px;box-shadow:0 1px 3px #0000001a;padding:12px 14px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px 14px;align-items:center}
+.g4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.k{background:#fff;border-radius:14px;box-shadow:0 1px 3px #0000001a;padding:12px 14px;cursor:pointer;border:2px solid transparent;text-align:left;display:flex;flex-direction:column;gap:3px;color:#222}
+.k:hover{border-color:#D01148}
+.kt{font-size:11px;color:#666;font-weight:800;text-transform:uppercase}
+.kv{font-size:24px;font-weight:800}
+.ks{font-size:12px;color:#666}
+.vg{color:#1B5E20;font-weight:800;font-size:12px}.vb{color:#9B1C1C;font-weight:800;font-size:12px}.vn{color:#666;font-weight:700;font-size:12px}
+.card{background:#fff;border-radius:14px;box-shadow:0 1px 3px #0000001a;padding:14px}
+.ct{font-weight:800;font-size:14px;margin-bottom:6px;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.ct i{font-style:normal;font-weight:600;color:#777;font-size:12px}
+.bar{display:grid;grid-template-columns:minmax(120px,40%) minmax(0,1fr) auto;align-items:center;gap:8px;padding:5px 4px;border-radius:8px;cursor:pointer;font-size:12.5px;border:0;background:transparent;width:100%;text-align:left;color:#222;min-height:34px}
+.bar:hover{background:#f7eef2}
+.bar .r{height:16px;border-radius:4px}
+.bar .v{font-weight:700;white-space:nowrap;color:#333}
+.mas{margin-top:6px;padding:9px;border:1.5px dashed #d9c3cd;border-radius:10px;text-align:center;font-size:12.5px;font-weight:800;color:#8E1B5A;cursor:pointer;background:#fff;width:100%;min-height:40px}
+.hm{display:grid;grid-template-columns:44px repeat(14,minmax(0,1fr));gap:3px;font-size:11px}
+.hc{border:0;border-radius:5px;height:30px;cursor:pointer;font-size:11px;font-weight:800;padding:0}
+.hh{text-align:center;color:#777;font-weight:700}
+.dl{color:#555;font-weight:800;align-self:center}
+table{border-collapse:collapse;width:100%;font-size:12.5px}
+th{background:#8E1B5A;color:#fff;padding:7px 6px;text-align:right;font-weight:700}
+th:first-child{text-align:left}
+td{padding:7px 6px;border-bottom:1px solid #eee;text-align:right}
+td:first-child{text-align:left}
+.tl{text-align:left}
+.lnk{border:0;background:transparent;color:#8E1B5A;font-weight:800;cursor:pointer;padding:4px 0;text-align:left;font-size:12.5px}
+.gk{background:#fff;border-radius:14px;box-shadow:0 1px 3px #0000001a;padding:14px;cursor:pointer;border:2px solid transparent;text-align:left;display:flex;flex-direction:column;gap:6px;color:#222}
+.gk:hover{border-color:#D01148}
+.pill{display:inline-block;border-radius:20px;padding:3px 10px;font-size:12px;font-weight:800;align-self:flex-start}
+.ok{background:#E3F1E4;color:#1B5E20}.am{background:#FDF0D5;color:#7A4A00}.ro{background:#FBE3E3;color:#9B1C1C}.na{background:#ECEAE4;color:#555}
+.vok{color:#1B5E20}.vam{color:#7A4A00}.vro{color:#9B1C1C}.vna{color:#222}
+.note{background:#EEF4FF;border-radius:10px;padding:10px 14px;font-size:13px;color:#1E3A6E}
+.note.w{background:#FFF6E0;color:#6B4200}
+.ov{position:fixed;inset:0;background:#00000066;display:flex;align-items:flex-start;justify-content:center;padding:30px 12px;z-index:20;overflow:auto}
+.md{background:#F1EFEA;border-radius:16px;max-width:980px;width:100%;padding:16px;box-sizing:border-box}
+.tag{display:inline-block;font-size:11px;border-radius:6px;padding:2px 7px;font-weight:800}
+.tC{background:#fde8ef;color:#8E1B5A}.tT{background:#EAF3DD;color:#3F5F14}
+.red{color:#9B1C1C;font-weight:800}
+.rx td{color:#aaa;text-decoration:line-through}
+.xb{border:1px solid #d6d2c8;background:#fff;border-radius:8px;padding:5px 9px;font-size:11.5px;font-weight:800;cursor:pointer;color:#555;min-height:30px}
+.xb.on{background:#C62828;border-color:#C62828;color:#fff}
+.scr{overflow-x:auto}
+.hcol{display:flex;flex-direction:column;align-items:center;gap:6px;flex:1 1 0;min-width:0;border:0;background:transparent;cursor:pointer;padding:6px 2px;border-radius:10px}
+.hcol:hover{background:#f7eef2}
+.hb{width:30px;border-radius:4px 4px 0 0}
+.hv{font-size:11px;font-weight:800;color:#333}
+@media(max-width:860px){.g4{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:minmax(0,1fr)}.g2{grid-template-columns:minmax(0,1fr)}.fil{grid-template-columns:minmax(0,1fr)}.bar{grid-template-columns:minmax(0,1fr) auto}.bar .n{grid-column:1/-1}.hm{grid-template-columns:36px repeat(14,minmax(0,1fr))}.hc{font-size:9px}.hb{width:18px}}
+@media print{.vsel,.fil,.mas,.ov,.noprint{display:none}}
+
+*{box-sizing:border-box}
+body{background:#F1EFEA}
+.top{background:#fff;border-bottom:1px solid #e5e2da;padding:10px 20px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;position:sticky;top:0;z-index:5}
+.logos{display:inline-flex;align-items:center;gap:10px}.logos img{height:26px;object-fit:contain}.logos i{width:1px;height:22px;background:#D0CEC8;display:block}
+.tt{display:flex;flex-direction:column}.tt b{font-size:16px}.tt span{font-size:12px;color:#666}
+.usr{margin-left:auto;font-size:13px;color:#444}
+.mk{margin-left:auto;font-size:11px;background:#fde8ef;color:#8E1B5A;border-radius:6px;padding:4px 9px;font-weight:800}
+.wrap{max-width:1200px;margin:0 auto;padding:16px 20px 40px;display:flex;flex-direction:column;gap:12px}
+.hd{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.hd h1{margin:0;font-size:22px}
+.tb{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.chw{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.card.full{grid-column:1/-1}
+.chip.dis{opacity:.45;cursor:default}
+.nt{font-size:11.5px;color:#777;margin-top:6px}
+.vac{color:#888;font-size:13px;padding:8px}
+.sw{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+.legs{display:flex;gap:10px;flex-wrap:wrap;margin:2px 0 6px}.legs span{font-size:12px;font-weight:700;display:inline-flex;align-items:center;gap:5px}.legs i{display:inline-block;width:12px;height:10px;border-radius:3px}
+.bar .rr{display:flex;min-width:0}.bar .r{display:block}
+.gr{display:grid;gap:3px}
+.gc{border:0;border-radius:4px;height:26px;cursor:pointer;font-size:10.5px;font-weight:800;padding:0;min-width:0}
+.gh{text-align:center;color:#777;font-weight:700;font-size:10.5px}
+.gl{color:#444;font-weight:800;font-size:11.5px;align-self:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hcols{display:flex;align-items:flex-end;gap:8px;height:250px;border-bottom:1px solid #e5e2da;padding:0 4px}
+.hbs{display:flex;align-items:flex-end;gap:4px;height:200px}.hbw{display:flex;flex-direction:column;align-items:center;gap:3px}.hb{display:block}.hl{font-size:12.5px;font-weight:800;color:#333}
+.k.nc{cursor:default}.k.nc:hover{border-color:transparent}
+.gkv{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}.gkv>span:first-child{font-size:30px;font-weight:800}
+.gke{font-size:12.5px;color:#444;line-height:1.4}
+.xb.dis{opacity:.6;cursor:default}
+.md h2{margin:0 0 2px;font-size:20px}.md .sub{color:#666;font-size:13px;margin-bottom:10px}
+.g2r{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.pc{background:#fff;border-radius:16px;box-shadow:0 1px 4px #0000001a;padding:18px;display:flex;flex-direction:column;gap:12px;color:#222;border:2px solid transparent;text-align:left;cursor:pointer;font:inherit}
+.pc:hover{border-color:#D01148}
+.pch{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+.pcv{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}.pcv b{font-size:38px}
+.sec{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:7px 0;border-top:1px solid #efece6}
+.dot{display:inline-block;width:10px;height:10px;border-radius:5px;margin-right:7px}
+.dok{background:#2E7D32}.dam{background:#D08A00}.dro{background:#C62828}.dna{background:#A8A39A}
+.lnk2{font-size:13px;font-weight:800;color:#D01148}
+.lg{max-width:380px;margin:0 auto;padding:30px 20px;display:flex;flex-direction:column;gap:18px}
+.lg h1{font-size:20px;margin:12px 0 4px}.lg .sub{font-size:13px;color:#666}
+.lgc{display:flex;flex-direction:column;align-items:center;gap:14px;padding:22px}
+.dots{display:flex;gap:12px}.d{width:16px;height:16px;border-radius:8px;border:2px solid #D01148;display:block}.d.on{background:#D01148}
+.kp{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;width:100%}
+.key{border:1px solid #E0DED8;background:#fff;border-radius:14px;height:60px;font-size:22px;font-weight:700;color:#222;cursor:pointer}
+.key:active{background:#fde8ef}.key.del{font-size:15px;color:#666}.key.okk{background:#2E7D32;border-color:#2E7D32;color:#fff;font-size:16px}
+.mt td{text-align:left;padding:8px 6px}.mt input{width:110px;border:1px solid #d6d2c8;border-radius:8px;padding:8px;font-size:14px;text-align:right}
+.dlg{max-width:460px}.dlg p{font-size:14px;color:#444;line-height:1.5}.dlg textarea{width:100%;border:1px solid #d6d2c8;border-radius:10px;padding:10px;font:inherit}
+.sino{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.sino button{border:0;border-radius:12px;padding:16px;font-size:16px;font-weight:800;color:#fff;cursor:pointer}
+.sino .si{background:#2E7D32}.sino .no{background:#C62828}
+.load{position:fixed;inset:0;background:#F1EFEAcc;z-index:30;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;font-weight:700;color:#444}
+.spin{width:38px;height:38px;border:4px solid #e5e2da;border-top-color:#D01148;border-radius:50%;animation:sp 0.8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#222;color:#fff;padding:12px 18px;border-radius:12px;z-index:40;font-size:14px;max-width:90vw}
+.prt{display:none}
+@media(max-width:860px){.g2r{grid-template-columns:minmax(0,1fr)}.tb{margin-left:0}.usr{margin-left:0}.top{padding:10px 12px}.wrap{padding:12px}.gc{height:22px;font-size:8.5px}.gh{font-size:8.5px}.pcv b{font-size:30px}}
+@media print{.top,.noprint,.tb,.fil,.mas,.ov,.toast,.load{display:none!important}.prt{display:block;font-size:18px;font-weight:800}body{background:#fff}.card,.k,.gk,.pc{box-shadow:none!important;border:1px solid #ddd!important;break-inside:avoid}.wrap{max-width:none;padding:0}}
+
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+"use strict";
+class Base {
+  constructor(app, P, D) {
+    this.app = app; this.P = P; this.D = D;
+    this.metas = app.metas;
+    this.CURSO = app.hoyYm; this.lastCurso = app.hoyD;
+    this.MESES = app.mesesDe(P);
+    this.ML = {}; this.MN = {};
+    var self = this, NL = ['', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    this.MESES.concat([this.prev(this.MESES[0])]).forEach(function (m) { self.ML[m] = NL[self.M(m)]; self.MN[m] = NL[self.M(m)].slice(0, 3).toLowerCase(); });
+    this.PAL = ['#D01148', '#3b6fd8', '#2E7D32', '#D08A00', '#8E1B5A', '#0EA5A4', '#7C3AED', '#B45309', '#64748B', '#DB2777', '#0369A1', '#65A30D'];
+    this.COL = {};
+    var ult = this.MESES.length > 1 ? this.MESES[this.MESES.length - 2] : this.MESES[0];
+    this.state = { tab: 'mes', mes: ult, emp: 'A', exp: {}, modal: null, hms: this.MESES.slice(-4), hmet: '', cmp: [], cmet: '' };
+    this.setup();
+  }
+  Y(m) { return Math.floor(m / 100); }
+  M(m) { return m % 100; }
+  prev(m) { return this.M(m) === 1 ? (this.Y(m) - 1) * 100 + 12 : m - 1; }
+  dim(m) { return new Date(this.Y(m), this.M(m), 0).getDate(); }
+  dt(m, d) { return new Date(this.Y(m), this.M(m) - 1, d); }
+  lbl(m) { return (this.ML[m] || '').slice(0, 3) + ' ' + this.Y(m); }
+  pad(x) { return (x < 10 ? '0' : '') + x; }
+  setState(o) { Object.assign(this.state, o); this.app.procState(this); this.app.render(); }
+  col(n) {
+    if (!this.COL[n]) { var k = Object.keys(this.COL).length; this.COL[n] = this.PAL[k % this.PAL.length]; }
+    return this.COL[n];
+  }
+  fmt(n, d) {
+    if (n === null || n === undefined || isNaN(n)) return '—';
+    return Number(n).toLocaleString('es-CO', { minimumFractionDigits: d || 0, maximumFractionDigits: d || 0 });
+  }
+  pc(v, d) { return v === null || v === undefined ? '—' : this.fmt(v, d === undefined ? 1 : d) + '%'; }
+  av(a) { return a.length ? a.reduce(function (x, y) { return x + y; }, 0) / a.length : null; }
+  med(a) { var T = a.slice().sort(function (x, y) { return x - y; }); return T.length ? (T.length % 2 ? T[(T.length - 1) / 2] : (T[T.length / 2 - 1] + T[T.length / 2]) / 2) : null; }
+  ratio(a, b) { return b ? a / b * 100 : null; }
+  vr(cur, prev, kind, dir, lbl) {
+    if (cur === null || cur === undefined || prev === null || prev === undefined) return { t: '', c: 'vn' };
+    var d, t;
+    if (kind === 'pct') { d = cur - prev; t = (d >= 0 ? '▲ ' : '▼ ') + this.fmt(Math.abs(d), 1) + ' pts'; }
+    else { if (!prev) return { t: '', c: 'vn' }; d = (cur - prev) / prev * 100; t = (d >= 0 ? '▲ ' : '▼ ') + this.fmt(Math.abs(d)) + '%'; }
+    var good = dir === 'down' ? d < 0 : dir === 'up' ? d > 0 : null;
+    return { t: t + (lbl ? ' ' + lbl : ''), c: good === null || Math.abs(d) < 0.05 ? 'vn' : good ? 'vg' : 'vb' };
+  }
+  sem(v, meta, dir) {
+    if (meta === null || meta === undefined) return { t: 'Sin meta', c: 'pill na', v: 'vna' };
+    if (v === null || v === undefined) return { t: 'Sin datos', c: 'pill na', v: 'vna' };
+    var ok = dir === 'le' ? v <= meta : v >= meta;
+    var mg = (this.metas.ambar === null || this.metas.ambar === undefined ? 10 : this.metas.ambar) / 100;
+    var near = dir === 'le' ? v <= meta * (1 + mg) : v >= meta * (1 - mg);
+    if (meta === 0) near = false;
+    return ok ? { t: 'Cumple', c: 'pill ok', v: 'vok' } : near ? { t: 'Cerca de la meta', c: 'pill am', v: 'vam' } : { t: 'No cumple', c: 'pill ro', v: 'vro' };
+  }
+  chips(cur, ops, fn) {
+    return ops.map(function (o) {
+      var on = Array.isArray(cur) ? (o[0] === '' ? !cur.length : cur.indexOf(o[0]) >= 0) : cur === o[0];
+      return { t: (Array.isArray(cur) && on && o[0] !== '' ? '✓ ' : '') + o[1], cls: o[2] ? 'chip dis' : on ? 'chip on' : 'chip', click: function () { if (!o[2]) fn(o[0]); } };
+    });
+  }
+  togArr(k, v) {
+    var a = (this.state[k] || []).slice();
+    if (v === '') a = []; else { var i = a.indexOf(v); if (i < 0) a.push(v); else a.splice(i, 1); }
+    var o = {}; o[k] = a; this.setState(o);
+  }
+  group(L, kf) {
+    var o = {}, out = [];
+    L.forEach(function (x) { var k = kf(x); if (k === null || k === undefined) return; if (!o[k]) { o[k] = { k: k, L: [] }; out.push(o[k]); } o[k].L.push(x); });
+    return out;
+  }
+  bars(id, t, groups, valFn, colFn, subFn, clickFn, opt) {
+    var self = this; opt = opt || {};
+    groups.sort(function (a, b) { return valFn(b) - valFn(a); });
+    var mx = 1; groups.forEach(function (g) { mx = Math.max(mx, valFn(g) + (opt.v2 ? opt.v2(g) : 0)); });
+    var ex = !!this.state.exp[id];
+    var items = groups.slice(0, ex ? groups.length : 10).map(function (g) {
+      return { n: opt.lbl ? opt.lbl(g) : g.k, v: subFn(g), w: Math.max(opt.v2 ? 0 : 2, valFn(g) / mx * 100).toFixed(1), col: colFn(g), w2: opt.v2 ? (opt.v2(g) / mx * 100).toFixed(1) : '0', col2: opt.col2 || 'transparent', click: function () { clickFn(g); } };
+    });
+    var rest = groups.length - 10;
+    return {
+      t: t, i: opt.i || (groups.length + ' en total'), cls: opt.full ? 'card full' : 'card', items: items, empty: !groups.length,
+      hasLeg: !!opt.leg, leg: opt.leg || [], nt: opt.nt || '', hasMore: rest > 0,
+      more: ex ? '▴ Ver menos (solo los 10 primeros)' : '▾ Ver los ' + rest + ' restantes',
+      tog: function () { var e = Object.assign({}, self.state.exp); e[id] = !ex; self.setState({ exp: e }); }
+    };
+  }
+  table(id, t, i, head, rows, lim) {
+    var self = this, ex = !!this.state.exp[id], n = lim || 1e9;
+    return { t: t, i: i, head: head, rows: rows.slice(0, ex ? rows.length : n), hasMore: rows.length > n, more: ex ? '▴ Ver menos' : '▾ Ver las ' + (rows.length - n) + ' restantes', tog: function () { var e = Object.assign({}, self.state.exp); e[id] = !ex; self.setState({ exp: e }); } };
+  }
+  heat(t, i, rowsLbl, colsLbl, countFn, clickFn, nt, lw, minw) {
+    var mx = 1, C = rowsLbl.map(function (r, ri) { return colsLbl.map(function (c, ci) { var v = countFn(ri, ci); mx = Math.max(mx, v); return v; }); });
+    return { t: t, i: i, nt: nt, nc: colsLbl.length, lw: lw || 44, minw: minw || 0, cols: colsLbl.map(function (c) { return c[1] !== undefined ? c[1] : String(c); }),
+      rows: rowsLbl.map(function (r, ri) { return { n: r, cells: colsLbl.map(function (c, ci) { var v = C[ri][ci], a = v ? 0.12 + 0.88 * v / mx : 0;
+        return { t: v ? String(v) : '', bg: v ? 'rgba(208,17,72,' + a.toFixed(2) + ')' : '#F4F2ED', fg: a > 0.5 ? '#fff' : '#5A1030', al: r + ' ' + c + ': ' + v, click: function () { if (v) clickFn(ri, ci); } }; }) }; }) };
+  }
+  openM(title, sub, kind, ids, sortFn) {
+    ids = ids.slice(); if (sortFn) ids.sort(sortFn);
+    this.setState({ modal: { title: title, sub: sub, kind: kind, ids: ids } });
+  }
+  isEx(kind, i) { return this.app.isEx(this.P, kind, this.keyOf(kind, i), this.rowYm(kind, i)); }
+  card(t, v, s, x, click) { return { t: t, v: v, s: s, vt: x.t, vc: x.c, click: click }; }
+  gcard(t, v, txt, meta, metaTxt, dir, prev, prevTxt, kind, exp, click) {
+    var sm = this.sem(v, meta, dir), P = this.prev(this.state.mes);
+    var x = this.vr(v, prev, kind, dir === 'le' ? 'down' : dir === 'ge' ? 'up' : 'n', '');
+    return { t: t, v: txt, pt: sm.t, pcls: sm.c, vcls: sm.v, meta: metaTxt, cmp: this.hasPrev() ? this.MN[P] + '.: ' + prevTxt : 'sin mes anterior', vt: x.t, vc: x.c, exp: exp, click: click };
+  }
+  lineChart(t, i, V, cols, names, labels, fv, fg, W, H, conLbl, meta, metaTxt) {
+    var pl = 52, pr = 34, pt = 26, pb = 34, n = labels.length, vals = [];
+    V.forEach(function (a) { a.forEach(function (v) { if (v !== null && v !== undefined && !isNaN(v)) vals.push(v); }); });
+    var hi = vals.length ? Math.max.apply(null, vals) * 1.15 : 1; if (meta !== null && meta !== undefined) hi = Math.max(hi, meta * 1.15); if (!hi) hi = 1;
+    var lo = vals.length ? Math.min(0, Math.min.apply(null, vals)) : 0;
+    var X = function (j) { return n === 1 ? (pl + W - pr) / 2 : pl + (W - pl - pr) * j / (n - 1); };
+    var Y = function (v) { return pt + (H - pt - pb) * (1 - (v - lo) / (hi - lo)); };
+    var ok = function (v) { return v !== null && v !== undefined && !isNaN(v); };
+    var grid = [0, 0.25, 0.5, 0.75, 1].map(function (k) { var v = lo + (hi - lo) * k; return { x1: pl, x2: W - pr, y: Y(v).toFixed(1), tx: pl - 8, ty: (Y(v) + 4).toFixed(1), t: Math.abs(v) < 1e-9 ? '0' : fg(v) }; });
+    var xl = labels.map(function (l, j) { return { x: X(j).toFixed(1), y: H - 10, t: l }; });
+    var lines = V.map(function (a, k) { return { col: cols[k], pts: a.map(function (v, j) { return ok(v) ? X(j).toFixed(1) + ',' + Y(v).toFixed(1) : null; }).filter(Boolean).join(' ') }; });
+    var dots = [], lbl = conLbl && V.length <= 4;
+    V.forEach(function (a, k) { a.forEach(function (v, j) { if (ok(v)) dots.push({ x: X(j).toFixed(1), y: Y(v).toFixed(1), ty: (Y(v) - 10).toFixed(1), t: lbl ? fv(v) : '', col: cols[k] }); }); });
+    var ref = meta !== null && meta !== undefined ? [{ x1: pl, x2: W - pr, y: Y(meta).toFixed(1), tx: W - pr, ty: (Y(meta) - 6).toFixed(1), t: metaTxt }] : [];
+    return { t: t, i: i, ref: ref, vb: '0 0 ' + W + ' ' + H, grid: grid, xl: xl, lines: lines, dots: dots, leg: names.map(function (nm, k) { return { n: nm, col: cols[k] }; }) };
+  }
+  hasPrev() { return this.MESES.indexOf(this.state.mes) > 0; }
+  renderVals() {
+    var self = this, s = this.state, MN = this.MN, f = function (n, d) { return self.fmt(n, d); };
+    var B = this.build();
+    var tabs = [['mes', 'Mes'], ['hist', 'Histórico · varios meses'], ['gest', 'Indicadores de gestión']].map(function (t) {
+      return { t: t[1], cls: s.tab === t[0] ? 'vs on' : 'vs', click: function () { self.setState({ tab: t[0] }); } };
+    });
+    var fRows = [];
+    if (s.tab !== 'hist') fRows.push({ l: 'Mes', chips: this.MESES.map(function (m) { return { t: self.lbl(m) + (m === self.CURSO ? ' · en curso' : '') + (self.app.cerrado(m) ? ' ✓' : ''), cls: s.mes === m ? 'chip on' : 'chip', click: function () { self.setState({ mes: m }); } }; }), nota: '' });
+    else fRows.push({ l: 'Meses', chips: this.MESES.map(function (m) { return { t: self.lbl(m), cls: s.hms.indexOf(m) >= 0 ? 'chip on' : 'chip', click: function () { var a = s.hms.slice(); var i = a.indexOf(m); if (i < 0) a.push(m); else a.splice(i, 1); self.setState({ hms: a }); } }; }), nota: '' });
+    fRows = fRows.concat(B.fRows);
+    // histórico
+    var ms = s.hms.slice().sort(function (a, b) { return a - b; });
+    var H = this.hist(ms);
+    var met = H.mets[s.hmet] || H.mets[Object.keys(H.mets)[0]];
+    var DIMS = this.DIMS(), CMx = this.CMETS();
+    fRows.push({ l: 'Comparar por', chips: [{ t: 'Nada', cls: s.cmp.length ? 'chip' : 'chip on', click: function () { self.setState({ cmp: [] }); } }].concat(Object.keys(DIMS).map(function (k) { var on = s.cmp.indexOf(k) >= 0; return { t: (on ? '✓ ' : '') + DIMS[k][0], cls: on ? 'chip on' : 'chip', click: function () { var a = s.cmp.slice(), ix = a.indexOf(k); if (ix < 0) a.push(k); else a.splice(ix, 1); self.setState({ cmp: a }); } }; })), nota: s.cmp.length > 1 ? 'combinando ' + s.cmp.map(function (k) { return DIMS[k][0].toLowerCase(); }).join(' + ') : s.cmp.length ? '' : 'sin desglose' });
+    var keyOf = function (kind, x) { return s.cmp.map(function (k) { return DIMS[k][1](kind, x); }); };
+    var combos = function (months) { var o = {}, out = []; months.forEach(function (m) { self.items(m).forEach(function (it) { var a = keyOf(it[0], it[1]); if (a.some(function (v) { return v === null || v === undefined || v === '*' || v === ''; })) return; var k = a.join(' · '); if (!o[k]) { o[k] = 1; out.push({ k: k, vals: a }); } }); }); return out; };
+    var predOf = function (c) { return { id: 'c:' + s.cmp.join('+') + ':' + c.k, fn: function (kind, x) { for (var j = 0; j < s.cmp.length; j++) { var v = DIMS[s.cmp[j]][1](kind, x); if (v !== '*' && v !== c.vals[j]) return false; } return true; } }; };
+    var cmpCol = function (k, ix) { var fx = { 'Contubos': '#D01148', 'Tecnipapel': '#80AD36', 'Materia prima': '#D08A00', 'Maquila': '#3b6fd8', 'Cargue': '#3b6fd8', 'Descargue': '#D08A00', 'Sencillo': '#64748B', 'Tractomula': '#8E1B5A' }; return fx[k] || self.COL[k] || self.PAL[ix % self.PAL.length]; };
+    var series = H.series.none;
+    if (s.cmp.length) {
+      var vol = CMx[this.VOL];
+      var cl = combos(ms).map(function (c) { var p = predOf(c); var t = 0; ms.forEach(function (m) { var v = vol.fn(self.stats(m, p.fn)); if (v) t += v; }); return { c: c, p: p, t: t }; }).filter(function (x) { return x.t > 0; }).sort(function (a, b) { return b.t - a.t; }).slice(0, 8);
+      series = { n: 'por ' + s.cmp.map(function (k) { return DIMS[k][0].toLowerCase(); }).join(' + '), list: cl.map(function (x, ix) { return [x.c.k, x.p, cmpCol(x.c.k, ix)]; }) };
+    }
+    // ---- comparativo del mes
+    var cmet = CMx[s.cmet] ? s.cmet : this.VOL, cm = CMx[cmet];
+    var cMetChips = Object.keys(CMx).map(function (k) { return { t: CMx[k].n, cls: cmet === k ? 'chip on' : 'chip', click: function () { self.setState({ cmet: k }); } }; });
+    var cG = (s.cmp.length ? combos([s.mes]) : [{ k: 'Todos', vals: [] }]).map(function (c, ix) {
+      var p = s.cmp.length ? predOf(c) : null, st = self.stats(s.mes, p ? p.fn : null), pv = self.hasPrev() ? self.stats(self.prev(s.mes), p ? p.fn : null) : null;
+      return { k: c.k, p: p, st: st, pv: pv, v: cm.fn(st), vol: CMx[self.VOL].fn(st), col: cmpCol(c.k, ix) };
+    }).filter(function (g) { return g.vol; });
+    cG.sort(function (a, b) { return (b.v === null ? -1e9 : b.v) - (a.v === null ? -1e9 : a.v); });
+    var cmx = 1; cG.forEach(function (g) { if (g.v !== null && g.v !== undefined) cmx = Math.max(cmx, g.v); });
+    var cEx = !!s.exp.cmp;
+    var fmtM = function (M, v) { return v === null || v === undefined ? '—' : f(v, M.d) + M.u; };
+    var openG = function (g) { self.cmpOpen(g.k + ' · ' + self.lbl(s.mes), g.p ? g.p.fn : null); };
+    var cBars = cG.slice(0, cEx ? cG.length : 12).map(function (g) {
+      var hasM = cm.meta !== undefined, ok = hasM && g.v !== null && (cm.dir === 'up' ? g.v >= cm.meta : g.v <= cm.meta);
+      return { n: g.k, w: g.v === null || g.v === undefined ? '0' : Math.max(2, g.v / cmx * 100).toFixed(1), col: hasM ? (ok ? '#2E7D32' : '#C62828') : g.col, v: fmtM(cm, g.v) + (cmet !== self.VOL ? ' · ' + fmtM(CMx[self.VOL], g.vol) : ''), click: function () { openG(g); } };
+    });
+    var cMore = cG.length > 12 ? (cEx ? '▴ Ver menos' : '▾ Ver los ' + (cG.length - 12) + ' grupos restantes') : '';
+    var cTog = function () { self.setState({ exp: Object.assign({}, s.exp, { cmp: !cEx }) }); };
+    var cMeta = cm.meta !== undefined ? 'Verde: cumple la meta (' + cm.mt + ') · rojo: no cumple.' : '';
+    var cKeys = Object.keys(CMx);
+    var cCols = cKeys.map(function (k) { return CMx[k].n; });
+    var cRows = cG.map(function (g) {
+      var x = g.pv ? self.vr(cm.fn(g.st), cm.fn(g.pv), cm.kind, cm.dir, '') : { t: '', c: 'vn' };
+      return { n: g.k, col: g.col, click: function () { openG(g); }, vt: x.t || (self.hasPrev() ? 'sin datos' : ''), vc: x.c,
+        cells: cKeys.map(function (k) { var M = CMx[k], v = M.fn(g.st), bad = M.meta !== undefined && v !== null && v !== undefined && (M.dir === 'up' ? v < M.meta : v > M.meta); return { v: fmtM(M, v), c: bad ? 'red' : '' }; }) };
+    });
+    var cHead = s.cmp.length ? s.cmp.map(function (k) { return DIMS[k][0]; }).join(' · ') : 'Grupo';
+    var cTitle = 'Comparativo · ' + (s.cmp.length ? s.cmp.map(function (k) { return DIMS[k][0].toLowerCase(); }).join(' + ') : 'sin desglose') + ' · ' + cm.n.toLowerCase();
+    var cVarHead = (this.hasPrev() ? cm.n + ' vs ' + MN[this.prev(s.mes)] + '.' : 'vs mes ant.');
+    var cNoneTxt = 'Escoja en "Comparar por" una o varias dimensiones (' + Object.keys(DIMS).map(function (k) { return DIMS[k][0].toLowerCase(); }).join(', ') + '). Se pueden combinar.';
+    var mKeys = cKeys.filter(function (k) { return CMx[k].meta !== undefined; });
+    var gmCols = mKeys.map(function (k) { return CMx[k].n + ' · meta ' + CMx[k].mt; });
+    var gmRows = cG.map(function (g) {
+      var okN = 0, cells = mKeys.map(function (k) { var M = CMx[k], v = M.fn(g.st), sm = self.sem(v, M.meta, M.dir === 'up' ? 'ge' : 'le'); if (sm.t === 'Cumple') okN++; return { v: fmtM(M, v), c: sm.c }; });
+      return { n: g.k, col: g.col, cells: cells, ok: okN + ' de ' + mKeys.length, okN: okN, vol: g.vol, click: function () { openG(g); } };
+    }).sort(function (a, b) { return a.okN - b.okN || b.vol - a.vol; });
+    var gmTitle = 'Cumplimiento de metas por ' + (s.cmp.length ? s.cmp.map(function (k) { return DIMS[k][0].toLowerCase(); }).join(' + ') : 'grupo');
+    if (s.tab === 'hist') {
+      fRows.push({ l: 'Ver', chips: Object.keys(H.mets).map(function (k) { return { t: H.mets[k].n, cls: (s.hmet || Object.keys(H.mets)[0]) === k ? 'chip on' : 'chip', click: function () { self.setState({ hmet: k }); } }; }), nota: '' });
+    }
+    var V = series.list.map(function (se) { return ms.map(function (m) { return met.fn(m, se[1]); }); });
+    var hmx = 1; V.forEach(function (a) { a.forEach(function (v) { if (v !== null && v !== undefined) hmx = Math.max(hmx, v); }); });
+    var hCols = ms.map(function (m, j) {
+      return { lbl: self.lbl(m) + (m === self.CURSO ? ' · en curso' : ''), click: function () { self.setState({ tab: 'mes', mes: m }); },
+        bars: series.list.map(function (se, i) { var v = V[i][j]; return { h: v === null || v === undefined ? '0' : Math.max(2, v / hmx * 170).toFixed(0), col: se[2], t: v === null || v === undefined ? '' : f(v, met.d) }; }) };
+    });
+    var hRows = series.list.map(function (se, i) {
+      var a = V[i], nn = a.filter(function (v) { return v !== null && v !== undefined; }), x = nn.length > 1 ? self.vr(nn[nn.length - 1], nn[0], met.kind, met.dir, '') : { t: '', c: 'vn' };
+      return { n: se[0], col: se[2], cells: a.map(function (v) { return { v: v === null || v === undefined ? '—' : f(v, met.d) + met.u }; }), vt: x.t, vc: x.c };
+    });
+    var multiY = ms.length && self.Y(ms[0]) !== self.Y(ms[ms.length - 1]);
+    var shortL = ms.map(function (m) { return self.ML[m].slice(0, 3) + (multiY ? ' ' + String(self.Y(m)).slice(2) : '') + (m === self.CURSO ? '*' : ''); });
+    var lcCols = series.list.map(function (se) { return se[2]; }), lcNames = series.list.map(function (se) { return se[0]; });
+    var lc = this.lineChart('Tendencia · ' + met.n, ms.length < 2 ? 'escoja 2 o más meses para ver la curva' : (s.cmp.length ? 'curvas ' + series.n : 'total'), V, lcCols, lcNames, shortL, function (v) { return f(v, met.d) + met.u; }, function (v) { return f(v, met.d > 0 && v < 10 ? 1 : 0); }, 1000, 280, true, met.meta, met.meta !== undefined ? 'meta ' + met.mt : '');
+    var lcm = s.tab === 'hist' ? Object.keys(H.mets).map(function (k) {
+      var mm = H.mets[k], VV = series.list.map(function (se) { return ms.map(function (m) { return mm.fn(m, se[1]); }); });
+      var c = self.lineChart(mm.n, '', VV, lcCols, lcNames, shortL, function (v) { return f(v, mm.d) + mm.u; }, function (v) { return f(v, mm.d > 0 && v < 10 ? 1 : 0); }, 520, 220, true, mm.meta, mm.meta !== undefined ? 'meta ' + mm.mt : '');
+      c.ver = function () { self.setState({ hmet: k }); }; return c;
+    }) : [];
+    // modal
+    var md = s.modal, mRows = [], mMore = '', mHead = [];
+    if (md) {
+      mHead = this.mHead[md.kind];
+      mRows = md.ids.slice(0, 150).map(function (i) {
+        var ex = self.isEx(md.kind, i), ymR = self.rowYm(md.kind, i), lock = ymR !== null && self.app.cerrado(ymR), ro = self.app.readonly;
+        return { cells: self.mRow(md.kind, i), rc: ex ? 'rx' : '', xt: ro ? (ex ? 'Excluido' : '') : lock ? (ex ? 'Excluido · mes cerrado' : 'Mes cerrado') : ex ? 'Incluir' : 'Excluir', xc: lock || ro ? 'xb dis' : ex ? 'xb on' : 'xb',
+          tog: function () { if (!lock && !ro) self.app.toggleEx(self, md.kind, i, !ex); } };
+      });
+      if (md.ids.length > 150) mMore = 'Mostrando 150 de ' + md.ids.length + ' registros. Para verlos todos, use el botón Excel.';
+    }
+    var KN = this.kinds(), exL = {};
+    Object.keys(KN).forEach(function (k) { for (var i = 0; i < KN[k]; i++) if (self.isEx(k, i)) (exL[k] = exL[k] || []).push(i); });
+    var nEx = Object.keys(exL).reduce(function (a, k) { return a + exL[k].length; }, 0);
+    var exclTxt = nEx ? nEx + ' registro' + (nEx > 1 ? 's excluidos' : ' excluido') + ' de los cálculos de este proceso.' : '';
+    var verExcl = function () { var k0 = Object.keys(exL)[0] || self.kind0; self.openM('Registros excluidos', 'No cuentan en ningún indicador. Toque "Incluir" para devolverlos.', k0, exL[k0] || []); };
+    var av = this.app.aviso(this), aviso = s.tab !== 'hist' ? av.t : '', avisoCls = av.c;
+    return {
+      tabs: tabs, aviso: aviso, avisoCls: avisoCls, exclTxt: exclTxt, verExcl: verExcl,
+      isMes: s.tab === 'mes', isHist: s.tab === 'hist', isGest: s.tab === 'gest',
+      fRows: fRows, hayFil: B.hayFil, quitar: B.quitar,
+      kpis: B.kpis, charts: B.charts, grids: B.grids || [], mTables: B.mTables || [],
+      lc: lc, lcm: lcm, cMetChips: cMetChips, cNone: !s.cmp.length, cNoneTxt: cNoneTxt, cBars: cBars, cMore: cMore, cTog: cTog, cMeta: cMeta, cCols: cCols, cRows: cRows, cHead: cHead, cTitle: cTitle, cVarHead: cVarHead, gmCols: gmCols, gmRows: gmRows, gmTitle: gmTitle, hEmpty: !ms.length, hOk: ms.length > 0, hk: H.kpis, hCols: hCols, hRows: hRows, hHead: ms.map(function (m) { return self.lbl(m) + (m === self.CURSO ? ' (en curso)' : ''); }),
+      hTitle: met.n + (s.cmp.length ? ' · ' + series.n : ''),
+      gTitle: 'Indicadores de gestión · ' + this.ML[s.mes] + ' ' + this.Y(s.mes) + ' · ' + B.empN + (this.hasPrev() ? ' · comparado con ' + this.ML[this.prev(s.mes)].toLowerCase() : ''), gk: B.gk, gTables: B.gTables || [],
+      hasModal: !!md, mTitle: md ? md.title : '', mSub: md ? md.sub + ' · ' + md.ids.length + ' registros' : '', mHead: mHead, mRows: mRows, mMore: mMore, mFoot: this.mFoot,
+      cerrar: function () { self.setState({ modal: null }); }
+    };
+  }
+}
+
+class Cond extends Base {
+  setup() {
+    this.kind0 = 'c';
+    this.COL = { 'SMURFIT': '#64748B', 'CAME': '#3b6fd8', 'CARVAJAL': '#0EA5A4', 'VENTA DIRECTA': '#D08A00', 'PAPELES REGIONALES': '#8E1B5A', 'COPAMEX': '#7C3AED' };
+    Object.assign(this.state, { ops: [], vehs: [], hmet: 'tot', cmp: ['emp', 'veh', 'op'], cmet: 'tot' });
+    this.VOL = 'n';
+    this.mHead = { c: ['Fecha', 'Ingreso', 'Operación', 'Empresa', 'Cliente', 'Vehículo', 'Operario', 'Espera', 'Carg./desc.', 'Total'] };
+    this.mFoot = 'Tiempos en minutos; en rojo, más de 60. "Excluir" saca el registro de todos los cálculos (duplicados, pruebas) sin borrarlo del Sheet y deja registro de quién lo excluyó.';
+  }
+  keyOf(k, i) { return this.D[i][12]; }
+  rowYm(k, i) { return this.D[i][0]; }
+  okC(i, pred) {
+    var s = this.state, r = this.D[i];
+    if (this.isEx('c', i)) return false;
+    if (s.emp !== 'A' && r[5] !== s.emp) return false;
+    if (s.ops.length && s.ops.indexOf(r[4]) < 0) return false;
+    if (s.vehs.length && s.vehs.indexOf(r[7]) < 0) return false;
+    return pred ? pred('c', i) : true;
+  }
+  stats(m, pred) {
+    var self = this, D = this.D, L = [];
+    D.forEach(function (r, i) { if (r[0] === m && self.okC(i, pred)) L.push(i); });
+    var nn = function (k) { return L.map(function (i) { return D[i][k]; }).filter(function (v) { return v !== null && v !== undefined; }); };
+    var E = nn(9), O = nn(10), T = nn(11).sort(function (a, b) { return a - b; });
+    var dias = {}; L.forEach(function (i) { dias[D[i][1]] = 1; });
+    var nd = Object.keys(dias).length, n = L.length, ntr = L.filter(function (i) { return D[i][7] === 'T'; }).length;
+    return { L: L, n: n, c: L.filter(function (i) { return D[i][4] === 'C'; }).length, d: L.filter(function (i) { return D[i][4] === 'D'; }).length,
+      dias: nd, pd: nd ? n / nd : null, trac: n ? ntr / n * 100 : null, ntrac: ntr,
+      esp: this.av(E), ope: this.av(O), tot: this.av(T), med: this.med(T), mx: T.length ? T[T.length - 1] : null,
+      e60: E.length ? E.filter(function (v) { return v > 60; }).length / E.length * 100 : null, ne60: E.filter(function (v) { return v > 60; }).length,
+      sin: L.filter(function (i) { return D[i][11] === null || D[i][11] === undefined; }).length };
+  }
+  mRow(k, i) {
+    var r = this.D[i], mm = function (v) { return v === null || v === undefined ? '—' : String(v); };
+    return [{ v: this.pad(r[1]) + '/' + this.pad(this.M(r[0])), c: '' }, { v: r[3] || '—', c: '' }, { v: r[4] === 'C' ? 'Cargue' : 'Descargue', c: '' }, { v: r[5] === 'C' ? 'Contubos' : 'Tecnipapel', c: r[5] === 'C' ? 'tag tC' : 'tag tT' }, { v: r[6], c: '' }, { v: r[7] === 'T' ? 'Tractomula' : 'Sencillo', c: '' }, { v: r[8], c: '' }, { v: mm(r[9]), c: '' }, { v: mm(r[10]), c: '' }, { v: mm(r[11]), c: r[11] !== null && r[11] > 60 ? 'red' : '' }];
+  }
+  byK(k) { var D = this.D; return function (a, b) { var x = D[a][k], y = D[b][k]; if (x === null || x === undefined) return 1; if (y === null || y === undefined) return -1; return y - x; }; }
+  build() {
+    var self = this, s = this.state, D = this.D, MN = this.MN, f = function (n, d) { return self.fmt(n, d); }, pc = function (v) { return self.pc(v); };
+    var mn = function (v) { return v === null || v === undefined ? '—' : f(v) + ' min'; };
+    var empN = { A: 'Ambas empresas', C: 'Contubos', T: 'Tecnipapel' }[s.emp];
+    var tit = this.ML[s.mes] + ' ' + this.Y(s.mes) + ' · ' + empN;
+    var S = this.stats(s.mes), P = this.hasPrev() ? this.stats(this.prev(s.mes)) : {};
+    var lp = 'vs ' + MN[this.prev(s.mes)] + '.';
+    var vr = function (k, kind, dir) { return self.vr(S[k], P[k], kind, dir, lp); };
+    var mt = this.metas;
+    var fRows = [
+      { l: 'Empresa', chips: this.chips(s.emp, [['A', 'Ambas'], ['C', 'Contubos'], ['T', 'Tecnipapel']], function (v) { self.setState({ emp: v }); }), nota: '' },
+      { l: 'Operación', chips: this.chips(s.ops, [['', 'Todas'], ['C', 'Cargue'], ['D', 'Descargue']], function (v) { self.togArr('ops', v); }), nota: '' },
+      { l: 'Vehículo', chips: this.chips(s.vehs, [['', 'Todos'], ['S', 'Sencillo'], ['T', 'Tractomula']], function (v) { self.togArr('vehs', v); }), nota: '' }
+    ];
+    var hayFil = s.emp !== 'A' || s.ops.length > 0 || s.vehs.length > 0;
+    var quitar = function () { self.setState({ emp: 'A', ops: [], vehs: [] }); };
+    var oC = function (t, sub, ids, sf) { self.openM(t, sub, 'c', ids, sf); };
+    var L = S.L;
+    var kpis = [
+      this.card('Movimientos', f(S.n), S.c + ' cargues · ' + S.d + ' descargues', vr('n', 'n', 'n'), function () { oC('Movimientos · ' + tit, S.n + ' vehículos', L); }),
+      this.card('Días operados', f(S.dias), f(S.pd, 1) + ' movimientos por día', vr('dias', 'n', 'n'), function () { oC('Movimientos · ' + tit, S.dias + ' días con movimiento', L); }),
+      this.card('% tractomula', pc(S.trac), S.ntrac + ' tractomulas', vr('trac', 'pct', 'n'), function () { oC('Tractomulas · ' + tit, S.ntrac + ' vehículos', L.filter(function (i) { return D[i][7] === 'T'; }), self.byK(11)); }),
+      this.card('Espera mayor a 1 h', pc(S.e60), S.ne60 + ' vehículos · meta ≤ ' + mt.cond_e60 + '%', vr('e60', 'pct', 'down'), function () { oC('Espera mayor a 1 hora · ' + tit, S.ne60 + ' vehículos', L.filter(function (i) { return D[i][9] !== null && D[i][9] > 60; }), self.byK(9)); }),
+      this.card('Espera promedio', mn(S.esp), 'ingreso → muelle · meta ≤ ' + mt.cond_esp, vr('esp', 'n', 'down'), function () { oC('Tiempo de espera · ' + tit, 'Ordenado de mayor a menor espera', L, self.byK(9)); }),
+      this.card('Cargue / descargue promedio', mn(S.ope), 'muelle → salida', vr('ope', 'n', 'down'), function () { oC('Tiempo de cargue/descargue · ' + tit, 'Ordenado de mayor a menor', L, self.byK(10)); }),
+      this.card('Tiempo total promedio', mn(S.tot), 'mediana ' + mn(S.med) + ' · máx ' + mn(S.mx), vr('tot', 'n', 'down'), function () { oC('Tiempo total en planta · ' + tit, 'Ordenado de mayor a menor', L, self.byK(11)); }),
+      this.card('Sin hora de salida', f(S.sin), 'no entran en los tiempos', vr('sin', 'n', 'down'), function () { oC('Registros sin hora de salida · ' + tit, 'Hay que completarlos en la app', L.filter(function (i) { return D[i][11] === null || D[i][11] === undefined; })); })
+    ];
+    var charts = [
+      this.bars('cli', 'Movimientos por cliente / proveedor', this.group(L, function (i) { return D[i][6]; }), function (g) { return g.L.length; }, function (g) { return self.col(g.k); }, function (g) { return g.L.length + ' · ' + mn(self.stats(s.mes, function (k, i) { return D[i][6] === g.k; }).tot); }, function (g) { oC(g.k + ' · ' + tit, g.L.length + ' movimientos', g.L, self.byK(11)); }, { nt: 'Los nombres se agrupan con la hoja Equivalencias del Sheet del portal (ej. "Carvajal Edu" = CARVAJAL).' }),
+      this.bars('opr', 'Movimientos por operario de bodega', this.group(L, function (i) { return D[i][8]; }), function (g) { return g.L.length; }, function (g) { return self.col(g.k); }, function (g) { return g.L.length + ' · opera ' + mn(self.av(g.L.map(function (i) { return D[i][10]; }).filter(function (v) { return v !== null && v !== undefined; }))); }, function (g) { oC(g.k + ' · ' + tit, g.L.length + ' movimientos atendidos', g.L, self.byK(10)); }),
+      this.bars('veh', 'Tiempo en planta por vehículo y operación', this.group(L, function (i) { return (D[i][7] === 'T' ? 'Tractomula' : 'Sencillo') + ' · ' + (D[i][4] === 'C' ? 'Cargue' : 'Descargue'); }).map(function (g) { var a = function (k) { return self.av(g.L.map(function (i) { return D[i][k]; }).filter(function (v) { return v !== null && v !== undefined; })) || 0; }; g.e = a(9); g.o = a(10); g.t = self.av(g.L.map(function (i) { return D[i][11]; }).filter(function (v) { return v !== null && v !== undefined; })); return g; }),
+        function (g) { return g.e; }, function () { return '#F2B8C6'; }, function (g) { return mn(g.t) + ' (' + g.L.length + ')'; }, function (g) { oC(g.k + ' · ' + tit, 'Espera ' + mn(g.e) + ' · cargue/descargue ' + mn(g.o), g.L, self.byK(11)); },
+        { v2: function (g) { return g.o; }, col2: '#8E1B5A', leg: [{ n: 'Espera', col: '#F2B8C6' }, { n: 'Cargue/descargue', col: '#8E1B5A' }], i: 'promedio en minutos · (vehículos)' })
+    ];
+    var DN = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'], HR = []; for (var h = 6; h <= 19; h++) HR.push([h, String(h)]);
+    var cnt = {}, tot = {};
+    L.forEach(function (i) { var r = D[i]; if (!r[3]) return; var hh = Number(r[3].slice(0, 2)); cnt[r[2] + '-' + hh] = (cnt[r[2] + '-' + hh] || 0) + 1; tot[hh] = (tot[hh] || 0) + 1; });
+    var pk = Object.keys(tot).sort(function (a, b) { return tot[b] - tot[a]; }).slice(0, 2).map(function (x) { return x + ':00'; });
+    var grids = [this.heat('Llegadas por día y hora de ingreso', pk.length ? 'picos: ' + pk.join(' y ') : '', DN, HR,
+      function (ri, ci) { return cnt[ri + '-' + HR[ci][0]] || 0; },
+      function (ri, ci) { var hh = HR[ci][0]; oC('Llegadas · ' + DN[ri] + ' de ' + hh + ':00 a ' + hh + ':59', tit, L.filter(function (i) { return D[i][2] === ri && D[i][3] && Number(D[i][3].slice(0, 2)) === hh; })); },
+      'Más oscuro = más vehículos llegando. Sirve para ver las horas pico y programar personal.', 40, 0)];
+    var gk = [
+      this.gcard('Tiempo de espera promedio', S.esp, mn(S.esp), mt.cond_esp, 'Meta ≤ ' + mt.cond_esp + ' min', 'le', P.esp, mn(P.esp), 'n', 'Desde que el vehículo ingresa a planta hasta que entra al muelle.', kpis[4].click),
+      this.gcard('Tiempo total en planta', S.tot, mn(S.tot), mt.cond_tot, 'Meta ≤ ' + mt.cond_tot + ' min', 'le', P.tot, mn(P.tot), 'n', 'Desde el ingreso hasta la salida. Es el KPI principal del proceso en el Resumen.', kpis[6].click),
+      this.gcard('Vehículos con espera mayor a 1 h', S.e60, pc(S.e60), mt.cond_e60, 'Meta ≤ ' + mt.cond_e60 + '%', 'le', P.e60, pc(P.e60), 'pct', S.ne60 + ' vehículos esperaron más de una hora para entrar al muelle.', kpis[3].click),
+      this.gcard('Registros sin hora de salida', S.sin, f(S.sin), 0, 'Meta 0', 'le', P.sin, f(P.sin), 'n', 'Si no se marca la salida, ese vehículo no entra en los tiempos.', kpis[7].click),
+      this.gcard('Mediana del tiempo total', S.med, mn(S.med), null, 'Sin meta', 'n', P.med, mn(P.med), 'n', 'La mitad de los vehículos sale antes de este tiempo. Si es mucho menor que el promedio, pocos casos largos lo están subiendo.', kpis[6].click),
+      this.gcard('Tiempo total máximo', S.mx, mn(S.mx), null, 'Sin meta', 'n', P.mx, mn(P.mx), 'n', 'El vehículo que más tiempo estuvo en planta en el mes.', kpis[6].click)
+    ];
+    return { fRows: fRows, hayFil: hayFil, quitar: quitar, kpis: kpis, charts: charts, grids: grids, mTables: [], gk: gk, gTables: [], empN: empN };
+  }
+  DIMS() {
+    var D = this.D;
+    return {
+      emp: ['Empresa', function (k, i) { return D[i][5] === 'C' ? 'Contubos' : 'Tecnipapel'; }],
+      op: ['Operación', function (k, i) { return D[i][4] === 'C' ? 'Cargue' : 'Descargue'; }],
+      veh: ['Vehículo', function (k, i) { return D[i][7] === 'T' ? 'Tractomula' : 'Sencillo'; }],
+      cli: ['Cliente', function (k, i) { return D[i][6]; }],
+      opr: ['Operario', function (k, i) { return D[i][8]; }]
+    };
+  }
+  CMETS() {
+    var mt = this.metas;
+    return {
+      n: { n: 'Vehículos', fn: function (st) { return st.n; }, d: 0, u: '', kind: 'n', dir: 'n' },
+      tot: { n: 'Tiempo total', fn: function (st) { return st.tot; }, d: 0, u: ' min', kind: 'n', dir: 'down', meta: mt.cond_tot, mt: '≤ ' + mt.cond_tot + ' min' },
+      esp: { n: 'Espera', fn: function (st) { return st.esp; }, d: 0, u: ' min', kind: 'n', dir: 'down', meta: mt.cond_esp, mt: '≤ ' + mt.cond_esp + ' min' },
+      ope: { n: 'Cargue/descargue', fn: function (st) { return st.ope; }, d: 0, u: ' min', kind: 'n', dir: 'down' },
+      e60: { n: 'Espera > 1 h', fn: function (st) { return st.e60; }, d: 1, u: '%', kind: 'pct', dir: 'down', meta: mt.cond_e60, mt: '≤ ' + mt.cond_e60 + '%' },
+      mx: { n: 'Máximo', fn: function (st) { return st.mx; }, d: 0, u: ' min', kind: 'n', dir: 'down' }
+    };
+  }
+  items(m) { var out = []; this.D.forEach(function (r, i) { if (r[0] === m) out.push(['c', i]); }); return out; }
+  cmpOpen(t, pred) { var st = this.stats(this.state.mes, pred); this.openM(t, st.n + ' vehículos', 'c', st.L, this.byK(11)); }
+  hist(ms) {
+    var self = this, f = function (n, d) { return self.fmt(n, d); }, mt = this.metas;
+    var C = {}, st = function (m, p) { var k = m + '|' + (p ? p.id : ''); if (!C[k]) C[k] = self.stats(m, p ? p.fn : null); return C[k]; };
+    var g = function (key) { return function (m, p) { var x = st(m, p); return x.n ? x[key] : null; }; };
+    var mets = {
+      tot: { n: 'Tiempo total promedio', fn: g('tot'), d: 0, u: ' min', kind: 'n', dir: 'down', meta: mt.cond_tot, mt: '≤ ' + mt.cond_tot + ' min' },
+      esp: { n: 'Espera promedio', fn: g('esp'), d: 0, u: ' min', kind: 'n', dir: 'down', meta: mt.cond_esp, mt: '≤ ' + mt.cond_esp + ' min' },
+      ope: { n: 'Cargue/descargue promedio', fn: g('ope'), d: 0, u: ' min', kind: 'n', dir: 'down' },
+      e60: { n: '% espera > 1 h', fn: g('e60'), d: 1, u: '%', kind: 'pct', dir: 'down', meta: mt.cond_e60, mt: '≤ ' + mt.cond_e60 + '%' },
+      n: { n: 'Movimientos', fn: g('n'), d: 0, u: '', kind: 'n', dir: 'n' }
+    };
+    var T = { n: 0, t: [], e: [], e60: 0, ne: 0 };
+    ms.forEach(function (m) { var x = st(m); T.n += x.n; x.L.forEach(function (i) { var r = self.D[i]; if (r[11] !== null && r[11] !== undefined) T.t.push(r[11]); if (r[9] !== null && r[9] !== undefined) { T.e.push(r[9]); if (r[9] > 60) T.e60++; } }); });
+    var kp = [
+      { t: 'Movimientos · ' + ms.length + ' meses', v: f(T.n), s: 'promedio ' + f(ms.length ? T.n / ms.length : null) + ' por mes' },
+      { t: 'Tiempo total promedio', v: T.t.length ? f(this.av(T.t)) + ' min' : '—', s: 'meta ≤ ' + mt.cond_tot + ' min' },
+      { t: 'Espera promedio', v: T.e.length ? f(this.av(T.e)) + ' min' : '—', s: 'meta ≤ ' + mt.cond_esp + ' min' },
+      { t: 'Espera mayor a 1 h', v: this.pc(this.ratio(T.e60, T.e.length)), s: 'meta ≤ ' + mt.cond_e60 + '%' }
+    ];
+    return { series: { none: { n: 'Sin desglose', list: [['Total', null, '#D01148']] } }, mets: mets, kpis: kp };
+  }
+  resumen() {
+    var s = this.state, S = this.stats(s.mes), P = this.hasPrev() ? this.stats(this.prev(s.mes)) : null, mt = this.metas, f = this.fmt.bind(this);
+    var e1 = this.sem(S.esp, mt.cond_esp, 'le'), e2 = this.sem(S.e60, mt.cond_e60, 'le');
+    return { t: 'Registro de conductores', sub: 'Cargue y descargue de vehículos', kt: 'Tiempo total en planta (promedio)', v: S.tot === null ? '—' : f(S.tot) + ' min', sm: this.sem(S.tot, mt.cond_tot, 'le'),
+      x: P ? this.vr(S.tot, P.tot, 'n', 'down', 'vs ' + this.MN[this.prev(s.mes)] + '. (' + (P.tot === null ? '—' : f(P.tot)) + ')') : { t: '', c: 'vn' },
+      det: 'Meta ≤ ' + mt.cond_tot + ' min · ' + S.n + ' vehículos',
+      sec: [[e1.c, 'Espera promedio', (S.esp === null ? '—' : f(S.esp) + ' min') + ' · meta ≤' + mt.cond_esp], [e2.c, 'Espera mayor a 1 h', this.pc(S.e60) + ' · meta ≤' + mt.cond_e60 + '%'], ['pill na', 'Vehículos atendidos', f(S.n) + (P ? ' · ' + this.vr(S.n, P.n, 'n', 'n', 'vs ' + this.MN[this.prev(s.mes)] + '.').t : '')]],
+      main: [['Tiempo total (min)', S.tot, mt.cond_tot, 'le'], ['Espera (min)', S.esp, mt.cond_esp, 'le'], ['Espera > 1 h (%)', S.e60, mt.cond_e60, 'le'], ['Vehículos', S.n, null, 'n']] };
+  }
+  kinds() { return { c: this.D.length }; }
+  exportIds(m) { var self = this; return { c: this.D.map(function (r, i) { return i; }).filter(function (i) { return self.D[i][0] === m; }) }; }
+}
+
+class Rollos extends Base {
+  setup() {
+    var self = this, R = this.D.R, E = this.D.E;
+    this.kind0 = 'r';
+    this.COL = { 'Smurfit': '#64748B', 'CAME': '#3b6fd8', 'Carvajal': '#0EA5A4', 'Sin cliente': '#A8A39A', 'Escaneo código': '#2E7D32', 'Escaneo QR': '#0EA5A4', 'Foto+IA': '#3b6fd8', 'Manual': '#C62828', 'Reasignacion': '#A8A39A', 'Materia prima': '#D08A00', 'Maquila': '#3b6fd8', 'Sin destino': '#A8A39A' };
+    this.reqE = R.map(function () { return []; });
+    this.reqCli = R.map(function () { return {}; });
+    E.forEach(function (e, i) { self.reqE[e[3]].push(i); self.reqCli[e[3]][e[6]] = 1; });
+    Object.assign(this.state, { maqs: [], clis: [], dest: '', hmet: 'cap', cmp: ['emp'], cmet: 'cap' });
+    this.VOL = 'ren';
+    this.mHead = {
+      r: ['Requisición', 'Creada', 'Hora', 'Empresa', 'Referencia', 'Máquina destino', 'Solicitó', 'Estado', 'Solicitados', 'Entregados', 'Ciclo (h)'],
+      e: ['Fecha', 'Hora', 'Requisición', 'Rollo', 'Kg', 'Cliente', 'Máquina', 'Captura', 'Operario bodega', 'Estado', 'Tipo']
+    };
+    this.mFoot = '"Excluir" saca el registro de todos los cálculos (pruebas, duplicados) sin borrarlo del Sheet y deja registro de quién lo excluyó. Excluir una requisición excluye también sus rollos.';
+  }
+  pad(x) { return (x < 10 ? '0' : '') + x; }
+  okR(i, pred) {
+    var s = this.state, r = this.D.R[i];
+    if (this.isEx('r', i)) return false;
+    if (s.emp !== 'A' && r[2] !== s.emp) return false;
+    if (s.dest && r[8] !== s.dest) return false;
+    if (s.maqs.length && !s.maqs.some(function (m) { return r[5].indexOf(m) >= 0; })) return false;
+    if (s.clis.length && !s.clis.some(function (c) { return this.reqCli[i][c]; }, this)) return false;
+    return pred ? pred('r', i) : true;
+  }
+  okE(i, pred) {
+    var s = this.state, e = this.D.E[i], r = this.D.R[e[3]];
+    if (this.isEx('e', i) || this.isEx('r', e[3])) return false;
+    if (s.emp !== 'A' && e[2] !== s.emp) return false;
+    if (s.dest && r[8] !== s.dest) return false;
+    if (s.maqs.length && s.maqs.indexOf(e[7]) < 0) return false;
+    if (s.clis.length && s.clis.indexOf(e[6]) < 0) return false;
+    return pred ? pred('e', i) : true;
+  }
+  stats(m, pred) {
+    var self = this, R = this.D.R, E = this.D.E, RI = [], EI = [];
+    R.forEach(function (r, i) { if (r[0] === m && self.okR(i, pred)) RI.push(i); });
+    E.forEach(function (e, i) { if (e[0] === m && self.okE(i, pred)) EI.push(i); });
+    var sol = 0, ent = 0;
+    RI.forEach(function (i) { sol += R[i][4]; self.reqE[i].forEach(function (j) { if (E[j][12] === 'Entregado' && self.okE(j)) ent++; }); });
+    var EN = EI.filter(function (i) { return E[i][12] === 'Entregado'; });
+    var kg = EN.reduce(function (a, i) { return a + E[i][5]; }, 0);
+    var cnt = function (fn) { return EI.filter(fn).length; };
+    var mov = EI.length, man = cnt(function (i) { return E[i][10] === 'Manual'; });
+    var H1 = RI.map(function (i) { return R[i][11]; }).filter(function (v) { return v !== null; });
+    var CI = RI.map(function (i) { return R[i][9]; }).filter(function (v) { return v !== null && v >= 0; });
+    return {
+      RI: RI, EI: EI, EN: EN, n: RI.length,
+      cer: RI.filter(function (i) { return R[i][7] === 'Cerrada'; }).length, act: RI.filter(function (i) { return R[i][7] === 'Activa'; }).length, anu: RI.filter(function (i) { return R[i][7] === 'Anulada'; }).length,
+      sol: sol, ent: ent, cum: this.ratio(ent, sol), ren: EN.length, kg: kg, pr: EN.length ? kg / EN.length : null, mov: mov,
+      dev: this.ratio(cnt(function (i) { return E[i][12] === 'Devuelto'; }), mov), ndev: cnt(function (i) { return E[i][12] === 'Devuelto'; }),
+      rea: this.ratio(cnt(function (i) { return E[i][12] === 'Reasignado'; }), mov), adi: this.ratio(cnt(function (i) { return E[i][9] === 'Adicional'; }), mov),
+      cam: this.ratio(cnt(function (i) { return E[i][8] === 1; }), mov), man: man, cap: mov ? (mov - man) / mov * 100 : null,
+      h1: this.med(H1), h1p: this.av(H1), h4: H1.length ? H1.filter(function (v) { return v <= 4; }).length / H1.length * 100 : null,
+      ci: this.av(CI), cim: this.med(CI)
+    };
+  }
+  mRow(k, i) {
+    var R = this.D.R, E = this.D.E, self = this, f = function (n, d) { return self.fmt(n, d); };
+    if (k === 'r') {
+      var r = R[i], en = this.reqE[i].filter(function (j) { return E[j][12] === 'Entregado'; }).length;
+      return [{ v: r[3], c: '' }, { v: this.pad(r[1]) + '/' + this.pad(this.M(r[0])), c: '' }, { v: r[10], c: '' }, { v: r[2] === 'C' ? 'Contubos' : 'Tecnipapel', c: r[2] === 'C' ? 'tag tC' : 'tag tT' }, { v: r[12], c: '' }, { v: r[5], c: '' }, { v: r[6], c: '' }, { v: r[7], c: r[7] === 'Anulada' ? 'red' : '' }, { v: r[4], c: '' }, { v: en, c: en < r[4] ? 'red' : '' }, { v: r[9] === null ? '—' : f(r[9], 1), c: '' }];
+    }
+    var e = E[i];
+    return [{ v: this.pad(e[1]) + '/' + this.pad(this.M(e[0])), c: '' }, { v: e[13], c: '' }, { v: R[e[3]][3], c: '' }, { v: e[4], c: '' }, { v: f(e[5]), c: '' }, { v: e[6], c: '' }, { v: e[7], c: '' }, { v: e[10], c: e[10] === 'Manual' ? 'red' : '' }, { v: e[11], c: '' }, { v: e[12], c: e[12] === 'Devuelto' ? 'red' : '' }, { v: e[9], c: '' }];
+  }
+  build() {
+    var self = this, s = this.state, R = this.D.R, E = this.D.E, MN = this.MN, f = function (n, d) { return self.fmt(n, d); }, pc = function (v) { return self.pc(v); };
+    var hr = function (v) { return v === null ? '—' : f(v, 1) + ' h'; };
+    var empN = { A: 'Ambas empresas', C: 'Contubos', T: 'Tecnipapel' }[s.emp];
+    var tit = this.ML[s.mes] + ' ' + this.Y(s.mes) + ' · ' + empN;
+    var S = this.stats(s.mes), P = this.hasPrev() ? this.stats(this.prev(s.mes)) : {}, mt = this.metas;
+    var lp = 'vs ' + MN[this.prev(s.mes)] + '.';
+    var vr = function (k, kind, dir) { return self.vr(S[k], P[k], kind, dir, lp); };
+    var maqAll = {}, cliAll = {};
+    E.forEach(function (e) { if (e[0] === s.mes && (s.emp === 'A' || e[2] === s.emp)) { maqAll[e[7]] = (maqAll[e[7]] || 0) + 1; cliAll[e[6]] = (cliAll[e[6]] || 0) + 1; } });
+    var byN = function (o) { return Object.keys(o).sort(function (a, b) { return o[b] - o[a]; }); };
+    var fRows = [
+      { l: 'Empresa', chips: this.chips(s.emp, [['A', 'Ambas'], ['C', 'Contubos'], ['T', 'Tecnipapel']], function (v) { self.setState({ emp: v }); }), nota: '' },
+      { l: 'Destino', chips: this.chips(s.dest, [['', 'Todos'], ['Materia prima', 'Materia prima'], ['Maquila', 'Maquila']], function (v) { self.setState({ dest: v }); }), nota: '' },
+      { l: 'Máquina', chips: this.chips(s.maqs, [['', 'Todas']].concat(byN(maqAll).map(function (m) { return [m, m]; })), function (v) { self.togArr('maqs', v); }), nota: s.maqs.length > 1 ? 'suma de ' + s.maqs.length + ' máquinas' : '' },
+      { l: 'Cliente', chips: this.chips(s.clis, [['', 'Todos']].concat(byN(cliAll).map(function (m) { return [m, m]; })), function (v) { self.togArr('clis', v); }), nota: '' }
+    ];
+    var hayFil = s.emp !== 'A' || !!s.dest || s.maqs.length > 0 || s.clis.length > 0;
+    var quitar = function () { self.setState({ emp: 'A', dest: '', maqs: [], clis: [] }); };
+    var oR = function (t, sub, ids, sf) { self.openM(t, sub, 'r', ids, sf); };
+    var oE = function (t, sub, ids, sf) { self.openM(t, sub, 'e', ids, sf); };
+    var kpis = [
+      this.card('Requisiciones creadas', f(S.n), S.cer + ' cerradas · ' + S.act + ' activas · ' + S.anu + ' anuladas', vr('n', 'n', 'n'), function () { oR('Requisiciones · ' + tit, 'Creadas en el mes', S.RI); }),
+      this.card('Rollos adicionales', pc(S.adi), 'reasignaciones ' + pc(S.rea) + ' · cambio de máquina ' + pc(S.cam), vr('adi', 'pct', 'n'), function () { oE('Rollos adicionales · ' + tit, 'Entregados por encima de lo solicitado', S.EI.filter(function (i) { return E[i][9] === 'Adicional'; })); }),
+      this.card('Rollos entregados', f(S.ren), 'por fecha de entrega · ' + f(S.mov) + ' movidos', vr('ren', 'n', 'n'), function () { oE('Rollos entregados · ' + tit, 'Por fecha de entrega', S.EN); }),
+      this.card('Kg entregados', f(S.kg), 'peso promedio ' + f(S.pr) + ' kg/rollo', vr('kg', 'n', 'n'), function () { oE('Rollos entregados · ' + tit, 'Por fecha de entrega', S.EN, function (a, b) { return E[b][5] - E[a][5]; }); }),
+      this.card('Cambio de máquina', pc(S.cam), S.EI.filter(function (i) { return E[i][8] === 1; }).length + ' rollos entregados a otra máquina', vr('cam', 'pct', 'n'), function () { oE('Rollos con cambio de máquina · ' + tit, 'Se entregaron a una máquina distinta a la de la requisición', S.EI.filter(function (i) { return E[i][8] === 1; })); }),
+      this.card('Ciclo creación → cierre', hr(S.ci), 'mediana ' + hr(S.cim), vr('ci', 'n', 'down'), function () { oR('Ciclo de la requisición · ' + tit, 'Ordenado de mayor a menor', S.RI, function (a, b) { return (R[b][9] || -1) - (R[a][9] || -1); }); }),
+      this.card('Devoluciones', pc(S.dev), S.ndev + ' rollos devueltos a bodega · meta ≤ ' + mt.rol_dev + '%', vr('dev', 'pct', 'down'), function () { oE('Devoluciones · ' + tit, 'Rollos devueltos de máquina a bodega', S.EI.filter(function (i) { return E[i][12] === 'Devuelto'; })); }),
+      this.card('Captura automática', pc(S.cap), S.man + ' rollos digitados a mano · meta ≥ ' + mt.rol_cap + '%', vr('cap', 'pct', 'up'), function () { oE('Rollos registrados a mano · ' + tit, 'Captura manual', S.EI.filter(function (i) { return E[i][10] === 'Manual'; })); })
+    ];
+    var gE = function (L, kf) { return self.group(L, kf); };
+    var tt = function (L) { return f(L.reduce(function (a, i) { return a + E[i][5]; }, 0) / 1000, 1) + ' t'; };
+    var charts = [
+      this.bars('maq', 'Rollos entregados por máquina', gE(S.EN, function (i) { return E[i][7]; }), function (g) { return g.L.length; }, function (g) { return self.col(g.k); }, function (g) { return g.L.length + ' · ' + tt(g.L); }, function (g) { oE(g.k + ' · ' + tit, 'Rollos entregados', g.L); }),
+      this.bars('cli', 'Rollos entregados por cliente', gE(S.EN, function (i) { return E[i][6]; }), function (g) { return g.L.length; }, function (g) { return self.col(g.k); }, function (g) { return g.L.length + ' · ' + tt(g.L); }, function (g) { oE(g.k + ' · ' + tit, 'Rollos entregados', g.L); }, { nt: 'En Tecnipapel algunos rollos no traen cliente en la etiqueta.' }),
+      this.bars('cap', 'Método de captura del rollo', gE(S.EI, function (i) { return E[i][10]; }), function (g) { return g.L.length; }, function (g) { return self.col(g.k); }, function (g) { return g.L.length + ' · ' + pc(g.L.length / Math.max(1, S.mov) * 100); }, function (g) { oE(g.k + ' · ' + tit, 'Rollos movidos', g.L); }),
+      this.bars('opr', 'Rollos despachados por operario de bodega', gE(S.EN, function (i) { return E[i][11]; }), function (g) { return g.L.length; }, function (g) { return self.col(g.k); }, function (g) { return g.L.length + ' rollos'; }, function (g) { oE(g.k + ' · ' + tit, 'Rollos despachados', g.L); }),
+      this.bars('sol', 'Requisiciones por solicitante', this.group(S.RI, function (i) { return R[i][6]; }), function (g) { return g.L.length; }, function (g) { return self.col(g.k); }, function (g) { return g.L.length + ' · ' + g.L.reduce(function (a, i) { return a + R[i][4]; }, 0) + ' rollos'; }, function (g) { oR(g.k + ' · ' + tit, 'Requisiciones creadas', g.L); }),
+      this.bars('dest', 'Requisiciones por destino', this.group(S.RI, function (i) { return R[i][8]; }), function (g) { return g.L.length; }, function (g) { return self.col(g.k); }, function (g) { return g.L.length + ' · ' + g.L.reduce(function (a, i) { return a + R[i][4]; }, 0) + ' rollos'; }, function (g) { oR(g.k + ' · ' + tit, 'Requisiciones creadas', g.L); })
+    ];
+    var DN = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'], HR = []; for (var h = 0; h < 24; h++) HR.push([h, String(h)]);
+    var hc = {}; S.EN.forEach(function (i) { var e = E[i]; if (!e[13]) return; var k = e[14] + '-' + Number(e[13].slice(0, 2)); hc[k] = (hc[k] || 0) + 1; });
+    var noche = S.EN.filter(function (i) { var hh = Number((E[i][13] || '12').slice(0, 2)); return hh >= 22 || hh < 6; }).length;
+    var grids = [this.heat('Rollos entregados por día y hora', 'noche (22:00–6:00): ' + f(noche) + ' rollos · ' + pc(this.ratio(noche, S.EN.length)), DN, HR,
+      function (ri, ci) { return hc[ri + '-' + ci] || 0; },
+      function (ri, ci) { oE('Entregas · ' + DN[ri] + ' de ' + ci + ':00 a ' + ci + ':59', tit, S.EN.filter(function (i) { return E[i][14] === ri && E[i][13] && Number(E[i][13].slice(0, 2)) === ci; })); },
+      'Muestra cómo se reparten las entregas entre turnos de día y de noche.', 40, 640)];
+    // gestión
+    var gk = [
+      this.gcard('Captura automática', S.cap, pc(S.cap), mt.rol_cap, 'Meta ≥ ' + mt.rol_cap + '%', 'ge', P.cap, pc(P.cap), 'pct', 'Rollos registrados con escaneo o foto, no digitados a mano.', kpis[7].click),
+      this.gcard('Devoluciones', S.dev, pc(S.dev), mt.rol_dev, 'Meta ≤ ' + mt.rol_dev + '%', 'le', P.dev, pc(P.dev), 'pct', 'Rollos devueltos de máquina a bodega ÷ rollos movidos. No cuentan como consumo.', kpis[6].click),
+      this.gcard('Ciclo creación → cierre', S.ci, hr(S.ci), null, 'Sin meta', 'n', P.ci, hr(P.ci), 'n', 'Incluye el tiempo que producción tarda en usar los rollos.', kpis[5].click),
+      this.gcard('Rollos adicionales', S.adi, pc(S.adi), null, 'Sin meta', 'n', P.adi, pc(P.adi), 'pct', 'Reasignaciones ' + pc(S.rea) + ' · cambio de máquina ' + pc(S.cam) + '.', kpis[1].click)
+    ];
+    var rowsEmp = [['C', 'Contubos'], ['T', 'Tecnipapel']].filter(function (x) { return s.emp === 'A' || s.emp === x[0]; }).map(function (x) {
+      var st = self.stats(s.mes, function (k, i) { return (k === 'r' ? R[i][2] : E[i][2]) === x[0]; });
+      return { n: x[1], nc: 'lnk', click: function () { oR('Requisiciones ' + x[1] + ' · ' + self.ML[s.mes] + ' ' + self.Y(s.mes), 'Creadas en el mes', st.RI); },
+        cells: [{ v: st.n, c: '' }, { v: f(st.ren), c: '' }, { v: pc(st.dev), c: st.dev > mt.rol_dev ? 'red' : '' }, { v: pc(st.cap), c: st.cap !== null && st.cap < mt.rol_cap ? 'red' : '' }, { v: f(st.man), c: '' }, { v: f(st.kg), c: '' }] };
+    });
+    var gTables = [this.table('gemp', 'Contubos vs Tecnipapel', 'toque una empresa para ver sus requisiciones', ['Empresa', 'Requisiciones', 'Rollos entregados', 'Devoluciones', 'Captura auto.', 'Rollos a mano', 'Kg entregados'], rowsEmp)];
+    return { fRows: fRows, hayFil: hayFil, quitar: quitar, kpis: kpis, charts: charts, grids: grids, mTables: [], gk: gk, gTables: gTables, empN: empN };
+  }
+  hist(ms) {
+    var self = this, R = this.D.R, E = this.D.E, f = function (n, d) { return self.fmt(n, d); };
+    var C = {}, st = function (m, p) { var k = m + '|' + (p ? p.id : ''); if (!C[k]) C[k] = self.stats(m, p ? p.fn : null); return C[k]; };
+    var mk = function (id, fn) { return { id: id, fn: fn }; };
+    var top = function (fi) { var o = {}; E.forEach(function (e) { if (ms.indexOf(e[0]) >= 0) o[e[fi]] = (o[e[fi]] || 0) + 1; }); return Object.keys(o).sort(function (a, b) { return o[b] - o[a]; }).slice(0, 5); };
+    var series = {
+      none: { n: 'Sin desglose', list: [['Total', null, '#D01148']] },
+      emp: { n: 'Contubos vs Tecnipapel', list: [['Contubos', mk('C', function (k, i) { return (k === 'r' ? R[i][2] : E[i][2]) === 'C'; }), '#D01148'], ['Tecnipapel', mk('T', function (k, i) { return (k === 'r' ? R[i][2] : E[i][2]) === 'T'; }), '#80AD36']] },
+      maq: { n: 'Máquina (5 principales)', list: top(7).map(function (m) { return [m, mk('m' + m, function (k, i) { return k === 'r' ? R[i][5].indexOf(m) >= 0 : E[i][7] === m; }), self.col(m)]; }) },
+      cli: { n: 'Cliente', list: top(6).map(function (c) { return [c, mk('c' + c, function (k, i) { return k === 'r' ? !!self.reqCli[i][c] : E[i][6] === c; }), self.col(c)]; }) },
+      dest: { n: 'Destino', list: [['Materia prima', mk('dm', function (k, i) { return (k === 'r' ? R[i][8] : R[E[i][3]][8]) === 'Materia prima'; }), '#D08A00'], ['Maquila', mk('dq', function (k, i) { return (k === 'r' ? R[i][8] : R[E[i][3]][8]) === 'Maquila'; }), '#3b6fd8']] }
+    };
+    var g = function (key) { return function (m, p) { var x = st(m, p); return x.n || x.mov ? x[key] : null; }; };
+    var mets = {
+      kg: { n: 'Toneladas entregadas', fn: function (m, p) { var x = st(m, p); return x.mov ? x.kg / 1000 : null; }, d: 1, u: ' t', kind: 'n', dir: 'n' },
+      dev: { n: 'Devoluciones', fn: g('dev'), d: 1, u: '%', kind: 'pct', dir: 'down', meta: this.metas.rol_dev, mt: '≤ ' + this.metas.rol_dev + '%' },
+      cap: { n: 'Captura automática', fn: g('cap'), d: 1, u: '%', kind: 'pct', dir: 'up', meta: this.metas.rol_cap, mt: '≥ ' + this.metas.rol_cap + '%' },
+      ren: { n: 'Rollos entregados', fn: g('ren'), d: 0, u: '', kind: 'n', dir: 'n' },
+    };
+    var T = { ren: 0, kg: 0, dev: 0, mov: 0, n: 0 }; ms.forEach(function (m) { var x = st(m); T.ren += x.ren; T.kg += x.kg; T.dev += x.ndev; T.mov += x.mov; T.n += x.n; });
+    var kp = [
+      { t: 'Requisiciones · ' + ms.length + ' meses', v: f(T.n), s: 'promedio ' + f(ms.length ? T.n / ms.length : null) + ' por mes' },
+      { t: 'Rollos entregados', v: f(T.ren), s: 'promedio ' + f(ms.length ? T.ren / ms.length : null) + ' por mes' },
+      { t: 'Toneladas entregadas', v: f(T.kg / 1000, 1) + ' t', s: 'promedio ' + f(ms.length ? T.kg / 1000 / ms.length : null, 1) + ' t por mes' },
+      { t: 'Devoluciones del periodo', v: this.pc(this.ratio(T.dev, T.mov)), s: 'meta ≤ ' + this.metas.rol_dev + '%' }
+    ];
+    return { series: series, mets: mets, kpis: kp };
+  }
+  DIMS() {
+    var R = this.D.R, E = this.D.E, en = function (c) { return c === 'C' ? 'Contubos' : c === 'T' ? 'Tecnipapel' : null; };
+    return {
+      emp: ['Empresa', function (k, x) { return en(k === 'r' ? R[x][2] : E[x][2]); }],
+      maq: ['Máquina', function (k, x) { return k === 'e' ? E[x][7] : R[x][5]; }],
+      cli: ['Cliente', function (k, x) { return k === 'e' ? E[x][6] : null; }],
+      dest: ['Destino', function (k, x) { return k === 'r' ? R[x][8] : R[E[x][3]][8]; }],
+      opr: ['Operario bodega', function (k, x) { return k === 'e' ? E[x][11] : null; }]
+    };
+  }
+  CMETS() {
+    return {
+      ren: { n: 'Rollos entregados', fn: function (st) { return st.ren; }, d: 0, u: '', kind: 'n', dir: 'n' },
+      kg: { n: 'Toneladas', fn: function (st) { return st.mov ? st.kg / 1000 : null; }, d: 1, u: ' t', kind: 'n', dir: 'n' },
+      cap: { n: 'Captura automática', fn: function (st) { return st.cap; }, d: 1, u: '%', kind: 'pct', dir: 'up', meta: this.metas.rol_cap, mt: '≥ ' + this.metas.rol_cap + '%' },
+      dev: { n: 'Devoluciones', fn: function (st) { return st.dev; }, d: 1, u: '%', kind: 'pct', dir: 'down', meta: this.metas.rol_dev, mt: '≤ ' + this.metas.rol_dev + '%' },
+      man: { n: 'Rollos a mano', fn: function (st) { return st.man; }, d: 0, u: '', kind: 'n', dir: 'down' },
+      adi: { n: 'Adicionales', fn: function (st) { return st.adi; }, d: 1, u: '%', kind: 'pct', dir: 'n' }
+    };
+  }
+  items(m) { var out = []; this.D.E.forEach(function (e, i) { if (e[0] === m) out.push(['e', i]); }); return out; }
+  cmpOpen(t, pred) { var st = this.stats(this.state.mes, pred); this.openM(t, 'Rollos entregados', 'e', st.EN); }
+  keyOf(k, i) { return k === 'r' ? this.D.R[i][13] : this.D.E[i][15]; }
+  rowYm(k, i) { return k === 'r' ? this.D.R[i][0] : this.D.E[i][0]; }
+  resumen() {
+    var s = this.state, S = this.stats(s.mes), P = this.hasPrev() ? this.stats(this.prev(s.mes)) : null, mt = this.metas, f = this.fmt.bind(this), self = this;
+    var R = this.D.R, E = this.D.E;
+    var pe = function (e) { return self.stats(s.mes, function (k, i) { return (k === 'r' ? R[i][2] : E[i][2]) === e; }).cap; };
+    var lp = P ? 'vs ' + this.MN[this.prev(s.mes)] + '.' : '';
+    return { t: 'Requisición a bodega de rollos', sub: 'App Trazabilidad Rollos', kt: 'Captura automática del rollo', v: this.pc(S.cap), sm: this.sem(S.cap, mt.rol_cap, 'ge'),
+      x: P ? this.vr(S.cap, P.cap, 'pct', 'up', lp + ' (' + this.pc(P.cap) + ')') : { t: '', c: 'vn' },
+      det: 'Meta ≥ ' + mt.rol_cap + '%' + (s.emp === 'A' ? ' · Contubos ' + this.pc(pe('C')) + ' · Tecnipapel ' + this.pc(pe('T')) : ''),
+      sec: [[this.sem(S.dev, mt.rol_dev, 'le').c, 'Devoluciones', this.pc(S.dev) + ' · meta ≤' + mt.rol_dev + '%'], ['pill na', 'Rollos entregados', f(S.ren) + (P ? ' · ' + this.vr(S.ren, P.ren, 'n', 'n', lp).t : '')], ['pill na', 'Kg entregados', f(S.kg) + ' kg']],
+      main: [['Captura automática (%)', S.cap, mt.rol_cap, 'ge'], ['Devoluciones (%)', S.dev, mt.rol_dev, 'le'], ['Rollos entregados', S.ren, null, 'n'], ['Kg entregados', S.kg, null, 'n']] };
+  }
+  kinds() { return { r: this.D.R.length, e: this.D.E.length }; }
+  exportIds(m) { var R = this.D.R, E = this.D.E, a = [], b = []; R.forEach(function (r, i) { if (r[0] === m) a.push(i); }); E.forEach(function (e, i) { if (e[0] === m) b.push(i); }); return { r: a, e: b }; }
+}
+
+class Mont extends Base {
+  setup() {
+    var self = this, I = this.D.I;
+    this.kind0 = 'i';
+    this.cursoTxt = 'cifras del 01 al ' + this.pad(this.lastCurso) + '/' + this.pad(this.M(this.CURSO)) + '. Los días hábiles se cuentan hasta hoy.';
+    this.EQ = this.D.F.map(function (x) { return x[0]; }).sort();
+    this.FL = {}; this.D.F.forEach(function (x) { self.FL[x[0]] = x; });
+    this.IT = this.D.IT;
+    Object.assign(this.state, { eqs: [], oprs: [], hmet: 'cov', cmp: ['emp'], cmet: 'cov' });
+    this.VOL = 'n';
+    this.mHead = {
+      i: ['Fecha', 'Hora', 'Equipo', 'Empresa', 'Operario', 'Horómetro', 'Ítems en NO', 'Cuáles', 'Observaciones'],
+      m: ['Fecha', 'Equipo', 'Tipo', 'Costo', 'Descripción', 'Proveedor / registró', 'Horómetro']
+    };
+    this.mFoot = '"Excluir" saca el registro de todos los cálculos sin borrarlo del Sheet y deja registro de quién lo excluyó. Los "Registro horómetro" del 07/09 ya no cuentan como mantenimiento.';
+  }
+  pad(x) { return (x < 10 ? '0' : '') + x; }
+  habiles(m, emp) {
+    var n = 0, last = m === this.CURSO ? this.lastCurso : this.dim(m), lab = this.metas.mon_lab === 7 ? 7 : 6;
+    for (var d = 1; d <= last; d++) if (lab === 7 || this.dt(m, d).getDay() !== 0) n++;
+    return n;
+  }
+  eqsOn(pred) {
+    var s = this.state, self = this;
+    return this.D.F.filter(function (x) { return x[2].indexOf('Gato') < 0 && x[4] === 'Operativo' && (s.emp === 'A' || x[1] === s.emp) && (!s.eqs.length || s.eqs.indexOf(x[0]) >= 0) && (!pred || pred('f', x)); }).map(function (x) { return x[0]; });
+  }
+  okI(i, pred) {
+    var s = this.state, r = this.D.I[i];
+    if (this.isEx('i', i)) return false;
+    if (s.emp !== 'A' && r[6] !== s.emp) return false;
+    if (s.eqs.length && s.eqs.indexOf(r[5]) < 0) return false;
+    if (s.oprs.length && s.oprs.indexOf(r[4]) < 0) return false;
+    return pred ? pred('i', r) : true;
+  }
+  okM(i, pred) {
+    var s = this.state, r = this.D.M[i], fl = this.FL[r[2]];
+    if (this.isEx('m', i)) return false;
+    if (s.emp !== 'A' && fl && fl[1] !== s.emp) return false;
+    if (s.eqs.length && s.eqs.indexOf(r[2]) < 0) return false;
+    return pred ? pred('m', r) : true;
+  }
+  stats(m, pred) {
+    var self = this, I = this.D.I, M = this.D.M, II = [], MI = [];
+    I.forEach(function (r, i) { if (r[0] === m && self.okI(i, pred)) II.push(i); });
+    M.forEach(function (r, i) { if (r[0] === m && (r[3] === 'Preventivo' || r[3] === 'Correctivo') && self.okM(i, pred)) MI.push(i); });
+    var eqs = this.eqsOn(pred), hab = this.habiles(m), pairs = {}, dias = {}, ops = {}, eqd = {};
+    II.forEach(function (i) { var r = I[i]; dias[r[1]] = 1; ops[r[4]] = 1; eqd[r[5]] = 1; if (r[7] === 'M' && eqs.indexOf(r[5]) >= 0) pairs[r[5] + '-' + r[1]] = 1; });
+    var ev = 0, no = 0, hall = 0, obs = 0;
+    II.forEach(function (i) { var r = I[i]; ev += r[10]; no += r[9].length; if (r[9].length) hall++; if (r[11]) obs++; });
+    var prev = MI.filter(function (i) { return M[i][3] === 'Preventivo'; }).length, corr = MI.length - prev;
+    var np = Object.keys(pairs).length;
+    return { II: II, MI: MI, n: II.length, dias: Object.keys(dias).length, hab: hab, neq: eqs.length, eqs: eqs, pairs: np, cov: eqs.length && hab ? np / (eqs.length * hab) * 100 : null,
+      ops: Object.keys(ops).length, eqd: Object.keys(eqd).length, ev: ev, no: no, conf: ev ? (1 - no / ev) * 100 : null, hall: hall, phall: this.ratio(hall, II.length), pno: II.length ? no / II.length : null, obs: obs,
+      nm: MI.length, prev: prev, corr: corr, pprev: MI.length ? prev / MI.length * 100 : null, costo: MI.reduce(function (a, i) { return a + M[i][4]; }, 0) };
+  }
+  mRow(k, i) {
+    var self = this;
+    if (k === 'i') {
+      var r = this.D.I[i];
+      return [{ v: this.pad(r[1]) + '/' + this.pad(this.M(r[0])), c: '' }, { v: r[3], c: '' }, { v: r[5], c: '' }, { v: r[6] === 'C' ? 'Contubos' : 'Tecnipapel', c: r[6] === 'C' ? 'tag tC' : 'tag tT' }, { v: r[4], c: '' }, { v: r[8] === null || r[8] === undefined ? '—' : this.fmt(r[8], 1), c: '' }, { v: r[9].length, c: r[9].length ? 'red' : '' }, { v: r[9].map(function (j) { return self.IT[j] ? self.IT[j][1] : '?'; }).join(', ').slice(0, 70), c: '' }, { v: r[11].slice(0, 60), c: '' }];
+    }
+    var x = this.D.M[i];
+    return [{ v: this.pad(x[1]) + '/' + this.pad(this.M(x[0])), c: '' }, { v: x[2], c: '' }, { v: x[3], c: x[3] === 'Correctivo' ? 'red' : '' }, { v: '$' + this.fmt(x[4]), c: '' }, { v: x[5], c: '' }, { v: x[6], c: '' }, { v: x[7] || '—', c: '' }];
+  }
+  build() {
+    var self = this, s = this.state, I = this.D.I, M = this.D.M, MN = this.MN, f = function (n, d) { return self.fmt(n, d); }, pc = function (v) { return self.pc(v); };
+    var empN = { A: 'Ambas empresas', C: 'Contubos', T: 'Tecnipapel' }[s.emp];
+    var tit = this.ML[s.mes] + ' ' + this.Y(s.mes) + ' · ' + empN;
+    var S = this.stats(s.mes), P = this.hasPrev() ? this.stats(this.prev(s.mes)) : {}, mt = this.metas;
+    var lp = 'vs ' + MN[this.prev(s.mes)] + '.';
+    var vr = function (k, kind, dir) { return self.vr(S[k], P[k], kind, dir, lp); };
+    var oprAll = {}; I.forEach(function (r) { if (r[0] === s.mes && (s.emp === 'A' || r[6] === s.emp)) oprAll[r[4]] = (oprAll[r[4]] || 0) + 1; });
+    var eqList = this.EQ.filter(function (e) { return s.emp === 'A' || self.FL[e][1] === s.emp; });
+    var fRows = [
+      { l: 'Empresa', chips: this.chips(s.emp, [['A', 'Ambas'], ['C', 'Contubos'], ['T', 'Tecnipapel']], function (v) { self.setState({ emp: v, eqs: [] }); }), nota: '' },
+      { l: 'Equipo', chips: this.chips(s.eqs, [['', 'Todos']].concat(eqList.map(function (e) { return [e, e]; })), function (v) { self.togArr('eqs', v); }), nota: '' },
+      { l: 'Operario', chips: this.chips(s.oprs, [['', 'Todos']].concat(Object.keys(oprAll).sort(function (a, b) { return oprAll[b] - oprAll[a]; }).map(function (o) { return [o, o]; })), function (v) { self.togArr('oprs', v); }), nota: '' }
+    ];
+    var hayFil = s.emp !== 'A' || s.eqs.length > 0 || s.oprs.length > 0;
+    var quitar = function () { self.setState({ emp: 'A', eqs: [], oprs: [] }); };
+    var oI = function (t, sub, ids, sf) { self.openM(t, sub, 'i', ids, sf); };
+    var oM = function (t, sub, ids, sf) { self.openM(t, sub, 'm', ids, sf); };
+    var byNo = function (a, b) { return I[b][9].length - I[a][9].length; };
+    var kpis = [
+      this.card('Inspecciones realizadas', f(S.n), S.dias + ' días con inspección de ' + S.hab + ' hábiles', vr('n', 'n', 'n'), function () { oI('Inspecciones · ' + tit, 'Todas las del mes', S.II); }),
+      this.card('Cobertura diaria de la flota', pc(S.cov), S.pairs + ' de ' + (S.neq * S.hab) + ' días-equipo · meta ≥ ' + mt.mon_cov + '%', vr('cov', 'pct', 'up'), function () { oI('Inspecciones de montacargas · ' + tit, S.neq + ' montacargas operativos × ' + S.hab + ' días hábiles', S.II.filter(function (i) { return I[i][7] === 'M'; })); }),
+      this.card('Equipos inspeccionados', f(S.eqd), S.ops + ' operarios inspeccionaron', vr('eqd', 'n', 'n'), function () { oI('Inspecciones · ' + tit, 'Todas las del mes', S.II); }),
+      this.card('Índice de conformidad', pc(S.conf), f(S.ev) + ' ítems evaluados · meta ≥ ' + mt.mon_conf + '%', vr('conf', 'pct', 'up'), function () { oI('Inspecciones con hallazgos · ' + tit, 'Ordenado por ítems en NO', S.II, byNo); }),
+      this.card('Ítems reportados en NO', f(S.no), f(S.pno, 1) + ' por inspección', vr('no', 'n', 'down'), function () { oI('Inspecciones con hallazgos · ' + tit, 'Ordenado por ítems en NO', S.II.filter(function (i) { return I[i][9].length; }), byNo); }),
+      this.card('Inspecciones con hallazgo', pc(S.phall), S.hall + ' de ' + S.n + ' · ' + S.obs + ' con observaciones', vr('phall', 'pct', 'down'), function () { oI('Inspecciones con hallazgos · ' + tit, 'Al menos un ítem en NO', S.II.filter(function (i) { return I[i][9].length; }), byNo); }),
+      this.card('Mantenimientos', f(S.nm), S.prev + ' preventivos · ' + S.corr + ' correctivos', vr('nm', 'n', 'n'), function () { oM('Mantenimientos · ' + tit, 'Registrados en la app', S.MI); }),
+      this.card('Costo de mantenimiento', '$' + f(S.costo), 'solo lo registrado en la app', vr('costo', 'n', 'n'), function () { oM('Mantenimientos · ' + tit, 'Ordenado por costo', S.MI, function (a, b) { return M[b][4] - M[a][4]; }); })
+    ];
+    // por equipo
+    var eqG = S.eqs.concat(Object.keys(this.FL).filter(function (e) { return S.eqs.indexOf(e) < 0 && S.II.some(function (i) { return I[i][5] === e; }); })).map(function (e) {
+      var L = S.II.filter(function (i) { return I[i][5] === e; }), d = {}; L.forEach(function (i) { d[I[i][1]] = 1; });
+      return { k: e, L: L, d: Object.keys(d).length, no: L.reduce(function (a, i) { return a + I[i][9].length; }, 0) };
+    });
+    var itG = this.IT.map(function (it, j) { return { k: it[1], j: j, L: S.II.filter(function (i) { return I[i][9].indexOf(j) >= 0; }) }; }).filter(function (g) { return g.L.length; });
+    var opG = this.group(S.II, function (i) { return I[i][4]; }).map(function (g) { g.no = g.L.reduce(function (a, i) { return a + I[i][9].length; }, 0); g.h = g.L.filter(function (i) { return I[i][9].length; }).length; return g; });
+    var charts = [
+      this.bars('eq', 'Cobertura por equipo (días inspeccionados)', eqG, function (g) { return g.d; }, function (g) { return g.d / S.hab * 100 >= mt.mon_cov ? '#2E7D32' : g.d / S.hab >= 0.5 ? '#D08A00' : '#C62828'; }, function (g) { return g.d + ' de ' + S.hab + ' · ' + pc(g.d / S.hab * 100); }, function (g) { oI(g.k + ' · ' + tit, (self.FL[g.k] ? self.FL[g.k][3] : '') + ' · ' + g.d + ' días inspeccionado', g.L); }, { lbl: function (g) { return g.k + (self.FL[g.k] ? ' · ' + self.FL[g.k][3] : ''); }, nt: 'Verde: cumple la meta de cobertura · ámbar ≥ 50% · rojo menos. GE-01 es gato eléctrico y no entra en la cobertura.' }),
+      this.bars('it', 'Ítems con más hallazgos (NO)', itG, function (g) { return g.L.length; }, function () { return '#C62828'; }, function (g) { return g.L.length + ' · ' + pc(g.L.length / Math.max(1, S.n) * 100) + ' de insp.'; }, function (g) { oI(g.k + ' en NO · ' + tit, self.IT[g.j][2], g.L); }),
+      this.bars('op', 'Inspecciones por operario', opG, function (g) { return g.L.length; }, function (g) { return self.col(g.k); }, function (g) { return g.L.length + ' insp. · ' + g.no + ' NO · ' + pc(g.h / g.L.length * 100) + ' con hallazgo'; }, function (g) { oI(g.k + ' · ' + tit, 'Inspecciones hechas', g.L, byNo); }, { nt: 'Si un operario casi nunca reporta NO y otro siempre, el criterio de inspección no es el mismo: conviene unificarlo.' }),
+      this.bars('noeq', 'Ítems en NO por equipo', eqG.filter(function (g) { return g.no; }), function (g) { return g.no; }, function (g) { return self.FL[g.k] && self.FL[g.k][1] === 'T' ? '#80AD36' : '#D01148'; }, function (g) { return g.no + ' · ' + pc(g.no / Math.max(1, S.no) * 100) + ' del total'; }, function (g) { oI(g.k + ' · hallazgos · ' + tit, 'Ordenado por ítems en NO', g.L.filter(function (i) { return I[i][9].length; }), byNo); })
+    ];
+    // calendario
+    var nd = s.mes === this.CURSO ? this.lastCurso : this.dim(s.mes), DAYS = [];
+    for (var d = 1; d <= nd; d++) DAYS.push(d);
+    var calEq = eqG.map(function (g) { return g.k; });
+    var grids = [{ t: 'Calendario de inspecciones · ' + this.ML[s.mes] + ' ' + this.Y(s.mes), i: 'verde: inspeccionado · rosado: día hábil sin inspección · gris: domingo', nc: DAYS.length, lw: 64, minw: 760, nt: 'Toque un día para ver la inspección de ese equipo.',
+      cols: DAYS.map(function (x) { return String(x); }),
+      rows: calEq.map(function (e) { return { n: e, cells: DAYS.map(function (x) {
+        var L = S.II.filter(function (i) { return I[i][5] === e && I[i][1] === x; }), dom = self.dt(s.mes, x).getDay() === 0, gato = self.FL[e] && self.FL[e][2].indexOf('Gato') >= 0;
+        var hayNo = L.some(function (i) { return I[i][9].length; });
+        return { t: L.length ? (hayNo ? '!' : '✓') : '', bg: L.length ? (hayNo ? '#B7791F' : '#2E7D32') : dom ? '#E4E1DA' : gato ? '#F4F2ED' : '#F6D5D5', fg: '#fff', al: e + ' día ' + x + ': ' + (L.length ? L.length + ' inspecciones' : 'sin inspección'),
+          click: function () { if (L.length) oI(e + ' · ' + self.pad(x) + '/' + self.pad(self.M(s.mes)) + '/' + self.Y(s.mes), L.length + ' inspección(es)', L); } };
+      }) }; }) }];
+    grids[0].i += ' · ! con hallazgo';
+    // gestión
+    var gk = [
+      this.gcard('Cobertura diaria de la flota', S.cov, pc(S.cov), mt.mon_cov, 'Meta ≥ ' + mt.mon_cov + '%', 'ge', P.cov, pc(P.cov), 'pct', 'Días-equipo inspeccionados ÷ (montacargas operativos × días hábiles).', kpis[1].click),
+      this.gcard('Índice de conformidad de ítems', S.conf, pc(S.conf), mt.mon_conf, 'Meta ≥ ' + mt.mon_conf + '%', 'ge', P.conf, pc(P.conf), 'pct', '1 − ítems en NO ÷ ítems evaluados.', kpis[3].click),
+      this.gcard('Mantenimiento preventivo', S.pprev, S.nm ? pc(S.pprev) : '—', mt.mon_prev, 'Meta ≥ ' + mt.mon_prev + '%', 'ge', P.pprev, P.nm ? pc(P.pprev) : '—', 'pct', S.nm ? S.prev + ' preventivos de ' + S.nm + ' mantenimientos.' : 'Sin mantenimientos registrados en el mes: el indicador queda vacío.', kpis[6].click),
+      this.gcard('Inspecciones con hallazgo', S.phall, pc(S.phall), null, 'Sin meta', 'n', P.phall, pc(P.phall), 'pct', S.hall + ' inspecciones reportaron al menos un ítem en NO.', kpis[5].click),
+      this.gcard('Promedio de NO por inspección', S.pno, f(S.pno, 1), null, 'Sin meta', 'n', P.pno, f(P.pno, 1), 'n', 'Baja cuando los hallazgos se corrigen.', kpis[4].click),
+      this.gcard('Costo de mantenimiento', S.costo, '$' + f(S.costo), null, 'Sin meta', 'n', P.costo, '$' + f(P.costo), 'n', 'Solo lo registrado en la app.', kpis[7].click)
+    ];
+    var corte = this.dt(s.mes, nd);
+    var fl = this.D.F.filter(function (x) { return (s.emp === 'A' || x[1] === s.emp) && (!s.eqs.length || s.eqs.indexOf(x[0]) >= 0); }).map(function (x) {
+      var rest = x[5] !== null && x[7] !== null && x[2].indexOf('Gato') < 0 ? x[7] - x[5] : null;
+      var ds = x[8] ? Math.round((new Date(x[8] + 'T00:00:00') - corte) / 864e5) : null;
+      var al = rest !== null && rest <= 0 ? ['Mant. vencido', 'pill ro'] : ds !== null && ds < 0 ? ['SOAT vencido', 'pill ro'] : ds !== null && ds <= 30 ? ['SOAT por vencer', 'pill am'] : rest !== null && rest <= 50 ? ['Mant. próximo', 'pill am'] : ['OK', 'pill ok'];
+      return { n: x[0], nc: 'lnk', click: function () { oI(x[0] + ' · ' + tit, x[3], S.II.filter(function (i) { return I[i][5] === x[0]; })); },
+        cells: [{ v: x[1] === 'C' ? 'Contubos' : 'Tecnipapel', c: x[1] === 'C' ? 'tag tC' : 'tag tT' }, { v: x[3], c: '' }, { v: x[5] === null ? '—' : f(x[5], 1), c: '' }, { v: x[7] === null ? '—' : f(x[7]), c: '' }, { v: rest === null ? '—' : f(rest), c: rest !== null && rest <= 0 ? 'red' : '' }, { v: x[8] ? x[8].split('-').reverse().join('/') : '—', c: '' }, { v: ds === null ? '—' : f(ds), c: ds !== null && ds <= 30 ? 'red' : '' }, { v: al[0], c: al[1] }] };
+    });
+    var opT = opG.sort(function (a, b) { return b.L.length - a.L.length; }).map(function (g) { return { n: g.k, nc: 'lnk', click: function () { oI(g.k + ' · ' + tit, 'Inspecciones hechas', g.L, byNo); }, cells: [{ v: g.L.length, c: '' }, { v: g.no, c: '' }, { v: pc(g.h / g.L.length * 100), c: '' }] }; });
+    var gTables = [
+      this.table('fl', 'Estado de la flota al ' + this.pad(nd) + '/' + this.pad(this.M(s.mes)) + '/' + this.Y(s.mes), 'horas al próximo mantenimiento y días para vencer el SOAT', ['Equipo', 'Empresa', 'Descripción', 'Horómetro', 'Próx. mant. (h)', 'Horas restantes', 'SOAT vence', 'Días SOAT', 'Alerta'], fl),
+      this.table('opt', 'Inspecciones por operario', 'toque un operario para ver sus inspecciones', ['Operario', 'Inspecciones', 'Ítems en NO', '% con hallazgo'], opT)
+    ];
+    return { fRows: fRows, hayFil: hayFil, quitar: quitar, kpis: kpis, charts: charts, grids: grids, mTables: [], gk: gk, gTables: gTables, empN: empN };
+  }
+  hist(ms) {
+    var self = this, I = this.D.I, f = function (n, d) { return self.fmt(n, d); };
+    var C = {}, st = function (m, p) { var k = m + '|' + (p ? p.id : ''); if (!C[k]) C[k] = self.stats(m, p ? p.fn : null); return C[k]; };
+    var mk = function (id, fn) { return { id: id, fn: fn }; };
+    var empP = function (e) { return mk(e, function (k, x) { return k === 'i' ? x[6] === e : k === 'f' ? x[1] === e : self.FL[x[2]] && self.FL[x[2]][1] === e; }); };
+    var o = {}; I.forEach(function (r) { if (ms.indexOf(r[0]) >= 0) o[r[4]] = (o[r[4]] || 0) + 1; });
+    var series = {
+      none: { n: 'Sin desglose', list: [['Total', null, '#D01148']] },
+      emp: { n: 'Contubos vs Tecnipapel', list: [['Contubos', empP('C'), '#D01148'], ['Tecnipapel', empP('T'), '#80AD36']] },
+      op: { n: 'Operario (5 principales)', list: Object.keys(o).sort(function (a, b) { return o[b] - o[a]; }).slice(0, 5).map(function (n) { return [n, mk('o' + n, function (k, x) { return k === 'i' ? x[4] === n : true; }), self.col(n)]; }) }
+    };
+    var g = function (key) { return function (m, p) { var x = st(m, p); return x.n ? x[key] : null; }; };
+    var mets = {
+      cov: { n: 'Cobertura diaria', fn: g('cov'), d: 1, u: '%', kind: 'pct', dir: 'up', meta: this.metas.mon_cov, mt: '≥ ' + this.metas.mon_cov + '%' },
+      conf: { n: 'Índice de conformidad', fn: g('conf'), d: 1, u: '%', kind: 'pct', dir: 'up', meta: this.metas.mon_conf, mt: '≥ ' + this.metas.mon_conf + '%' },
+      n: { n: 'Inspecciones', fn: g('n'), d: 0, u: '', kind: 'n', dir: 'n' },
+      phall: { n: '% con hallazgo', fn: g('phall'), d: 1, u: '%', kind: 'pct', dir: 'down' },
+      costo: { n: 'Costo de mantenimiento ($)', fn: function (m, p) { return st(m, p).costo; }, d: 0, u: '', kind: 'n', dir: 'n' }
+    };
+    var T = { n: 0, pairs: 0, den: 0, no: 0, ev: 0, costo: 0 };
+    ms.forEach(function (m) { var x = st(m); T.n += x.n; T.pairs += x.pairs; T.den += x.neq * x.hab; T.no += x.no; T.ev += x.ev; T.costo += x.costo; });
+    var kp = [
+      { t: 'Inspecciones · ' + ms.length + ' meses', v: f(T.n), s: 'promedio ' + f(ms.length ? T.n / ms.length : null) + ' por mes' },
+      { t: 'Cobertura del periodo', v: this.pc(this.ratio(T.pairs, T.den)), s: 'meta ≥ ' + this.metas.mon_cov + '%' },
+      { t: 'Conformidad del periodo', v: this.pc(T.ev ? (1 - T.no / T.ev) * 100 : null), s: 'meta ≥ ' + this.metas.mon_conf + '%' },
+      { t: 'Costo de mantenimiento', v: '$' + f(T.costo), s: 'en los meses escogidos' }
+    ];
+    return { series: series, mets: mets, kpis: kp };
+  }
+  DIMS() {
+    var FL = this.FL, en = function (c) { return c === 'C' ? 'Contubos' : c === 'T' ? 'Tecnipapel' : null; }, tp = function (id) { return FL[id] ? FL[id][2].replace('Montacargas - ', 'Montacargas ') : null; };
+    return {
+      emp: ['Empresa', function (k, x) { return en(k === 'i' ? x[6] : k === 'f' ? x[1] : FL[x[2]] ? FL[x[2]][1] : null); }],
+      eq: ['Equipo', function (k, x) { return k === 'i' ? x[5] : k === 'f' ? x[0] : x[2]; }],
+      tipo: ['Tipo de equipo', function (k, x) { return tp(k === 'i' ? x[5] : k === 'f' ? x[0] : x[2]); }],
+      opr: ['Operario', function (k, x) { return k === 'i' ? x[4] : '*'; }]
+    };
+  }
+  CMETS() {
+    return {
+      n: { n: 'Inspecciones', fn: function (st) { return st.n; }, d: 0, u: '', kind: 'n', dir: 'n' },
+      cov: { n: 'Cobertura', fn: function (st) { return st.n ? st.cov : null; }, d: 1, u: '%', kind: 'pct', dir: 'up', meta: this.metas.mon_cov, mt: '≥ ' + this.metas.mon_cov + '%' },
+      conf: { n: 'Conformidad', fn: function (st) { return st.conf; }, d: 1, u: '%', kind: 'pct', dir: 'up', meta: this.metas.mon_conf, mt: '≥ ' + this.metas.mon_conf + '%' },
+      phall: { n: '% con hallazgo', fn: function (st) { return st.phall; }, d: 1, u: '%', kind: 'pct', dir: 'down' },
+      no: { n: 'Ítems en NO', fn: function (st) { return st.no; }, d: 0, u: '', kind: 'n', dir: 'down' }
+    };
+  }
+  items(m) { var out = []; this.D.I.forEach(function (r) { if (r[0] === m) out.push(['i', r]); }); return out; }
+  cmpOpen(t, pred) { var st = this.stats(this.state.mes, pred); this.openM(t, 'Inspecciones', 'i', st.II); }
+  keyOf(k, i) { return k === 'i' ? this.D.I[i][12] : this.D.M[i][8]; }
+  rowYm(k, i) { return k === 'i' ? this.D.I[i][0] : this.D.M[i][0]; }
+  resumen() {
+    var s = this.state, S = this.stats(s.mes), P = this.hasPrev() ? this.stats(this.prev(s.mes)) : null, mt = this.metas, self = this;
+    var pe = function (e) { return self.stats(s.mes, function (k, x) { return k === 'i' ? x[6] === e : k === 'f' ? x[1] === e : self.FL[x[2]] && self.FL[x[2]][1] === e; }).cov; };
+    var al = this.alertas().filter(function (a) { return a[1] !== 'OK'; }).length;
+    var lp = P ? 'vs ' + this.MN[this.prev(s.mes)] + '.' : '';
+    return { t: 'Inspección diaria de montacargas', sub: 'Checklist FOR-SST-01', kt: 'Cobertura diaria de la flota', v: this.pc(S.cov), sm: this.sem(S.cov, mt.mon_cov, 'ge'),
+      x: P ? this.vr(S.cov, P.cov, 'pct', 'up', lp + ' (' + this.pc(P.cov) + ')') : { t: '', c: 'vn' },
+      det: 'Meta ≥ ' + mt.mon_cov + '%' + (s.emp === 'A' ? ' · Contubos ' + this.pc(pe('C')) + ' · Tecnipapel ' + this.pc(pe('T')) : ''),
+      sec: [[this.sem(S.conf, mt.mon_conf, 'ge').c, 'Índice de conformidad', this.pc(S.conf) + ' · meta ≥' + mt.mon_conf + '%'], [S.nm ? this.sem(S.pprev, mt.mon_prev, 'ge').c : 'pill na', '% preventivo', S.nm ? this.pc(S.pprev) + ' · meta ≥' + mt.mon_prev + '%' : '— sin mantenimientos'], [al ? 'pill ro' : 'pill ok', 'Alertas de flota', al ? al + ' equipos' : 'ninguna']],
+      main: [['Cobertura (%)', S.cov, mt.mon_cov, 'ge'], ['Conformidad (%)', S.conf, mt.mon_conf, 'ge'], ['% preventivo', S.nm ? S.pprev : null, mt.mon_prev, 'ge'], ['Inspecciones', S.n, null, 'n']] };
+  }
+  alertas() {
+    var s = this.state, nd = s.mes === this.CURSO ? this.lastCurso : this.dim(s.mes), corte = this.dt(s.mes, nd);
+    return this.D.F.filter(function (x) { return (s.emp === 'A' || x[1] === s.emp) && x[4] === 'Operativo'; }).map(function (x) {
+      var rest = x[5] !== null && x[7] !== null && x[2].indexOf('Gato') < 0 ? x[7] - x[5] : null;
+      var ds = x[8] ? Math.round((new Date(x[8] + 'T00:00:00') - corte) / 864e5) : null;
+      return [x[0], rest !== null && rest <= 0 ? 'Mant. vencido' : ds !== null && ds < 0 ? 'SOAT vencido' : ds !== null && ds <= 30 ? 'SOAT por vencer' : 'OK'];
+    });
+  }
+  kinds() { return { i: this.D.I.length, m: this.D.M.length }; }
+  exportIds(m) { var a = [], b = []; this.D.I.forEach(function (r, i) { if (r[0] === m) a.push(i); }); this.D.M.forEach(function (r, i) { if (r[0] === m) b.push(i); }); return { i: a, m: b }; }
+}
+
+class Imp extends Base {
+  setup() {
+    var self = this, R = this.D.R;
+    this.kind0 = 'r';
+    this.cursoTxt = 'cifras del 01 al ' + this.pad(this.lastCurso) + '/' + this.pad(this.M(this.CURSO)) + '.';
+    this.STK = {}; this.D.V.forEach(function (v) { self.STK[v[0]] = v; });
+    Object.assign(this.state, { recs: [], lote: '', hmet: 'neto', cmp: ['rec'], cmet: 'neto' });
+    this.VOL = 'n';
+    this.mHead = {
+      r: ['Requisición', 'Fecha', 'Hora', 'Referencia', 'Solicitó', 'Recibió', 'Solicitado', 'Entregado', 'Devuelto', 'Neto', 'Entrega', 'Atención'],
+      g: ['Ingreso', 'Fecha', 'Referencia', 'Kg', 'Ingresó', 'Observación'],
+      c: ['Referencia', 'Código', 'Sistema kg', 'Contado kg', 'Diferencia', '%', 'Cuenta registrada', 'Contó']
+    };
+    this.mFoot = 'Kg. "Excluir" saca el registro de todos los cálculos sin borrarlo del Sheet. La devolución se toma de la hoja Requisiciones (no de la hoja Devoluciones).';
+  }
+  pad(x) { return (x < 10 ? '0' : '') + x; }
+  aten(r) {
+    if (!r[12] || !r[14] || !r[15]) return null;
+    var a = new Date(this.Y(r[1]), this.M(r[1]) - 1, r[2], Number(r[14].slice(0, 2)), Number(r[14].slice(3, 5)));
+    var b = new Date(this.Y(r[12]), this.M(r[12]) - 1, r[13], Number(r[15].slice(0, 2)), Number(r[15].slice(3, 5)));
+    return (b - a) / 36e5;
+  }
+  okR(i, pred) {
+    var s = this.state, r = this.D.R[i];
+    if (this.isEx('r', i)) return false;
+    if (s.emp === 'T') return false;
+    if (s.recs.length && s.recs.indexOf(r[9]) < 0) return false;
+    return pred ? pred('r', r) : true;
+  }
+  stats(m, pred) {
+    var self = this, R = this.D.R, G = this.D.G, RI = [], GI = [];
+    R.forEach(function (r, i) { if (r[1] === m && self.okR(i, pred)) RI.push(i); });
+    G.forEach(function (g, i) { if (g[1] === m && !self.isEx('g', i) && self.state.emp !== 'T') GI.push(i); });
+    var sum = function (k) { return RI.reduce(function (a, i) { return a + R[i][k]; }, 0); };
+    var sol = sum(6), ent = sum(10), dev = sum(11), neto = ent - dev;
+    var conE = RI.filter(function (i) { return R[i][12]; });
+    var mismo = conE.filter(function (i) { return R[i][12] === R[i][1] && R[i][13] === R[i][2]; }).length;
+    var AT = RI.map(function (i) { return self.aten(R[i]); }).filter(function (v) { return v !== null && v >= 0; });
+    var refs = {}; RI.forEach(function (i) { refs[R[i][3]] = 1; });
+    var dias = m === this.CURSO ? this.lastCurso : this.dim(m);
+    return { RI: RI, GI: GI, n: RI.length, refs: Object.keys(refs).length, sol: sol, ent: ent, dev: dev, neto: neto, pdev: this.ratio(dev, ent), es: this.ratio(ent, sol),
+      mismo: this.ratio(mismo, conE.length), nmismo: mismo, nconE: conE.length, at: this.med(AT), atp: this.av(AT), dia: neto / dias, dias: dias,
+      ning: GI.length, king: GI.reduce(function (a, i) { return a + G[i][5]; }, 0) };
+  }
+  corte() {
+    var s = this.state, self = this, C = this.D.C, CI = [], lote = this.loteSel(), tolp = (this.metas.imp_tolpct || 2) / 100;
+    C.forEach(function (c, i) { if (c[0] === lote && !self.isEx('c', i)) CI.push(i); });
+    var sis = 0, abs = 0, neta = 0, ex = 0, tol = 0;
+    CI.forEach(function (i) { var c = C[i], d = c[4] - c[3]; sis += c[3]; abs += Math.abs(d); neta += d; if (Math.abs(d) < 0.005) ex++; if (c[3] ? Math.abs(d) / c[3] <= tolp : Math.abs(d) < 0.005) tol++; });
+    return { lote: lote, CI: CI, n: CI.length, ex: ex, tol: tol, pex: this.ratio(ex, CI.length), ptol: this.ratio(tol, CI.length), neta: neta, abs: abs, pabs: this.ratio(abs, sis) };
+  }
+  mRow(k, i) {
+    var f = this.fmt.bind(this), self = this;
+    if (k === 'r') {
+      var r = this.D.R[i], a = this.aten(r);
+      return [{ v: r[0], c: '' }, { v: this.pad(r[2]) + '/' + this.pad(this.M(r[1])), c: '' }, { v: r[14], c: '' }, { v: r[4], c: '' }, { v: r[5], c: '' }, { v: r[9].slice(0, 30), c: '' }, { v: f(r[6], 1), c: '' }, { v: f(r[10], 1), c: '' }, { v: f(r[11], 1), c: r[10] && r[11] / r[10] > 0.3 ? 'red' : '' }, { v: f(r[10] - r[11], 1), c: '' }, { v: r[12] ? this.pad(r[13]) + '/' + this.pad(this.M(r[12])) + ' ' + r[15] : '—', c: '' }, { v: a === null ? '—' : a < 1 ? f(a * 60) + ' min' : f(a, 1) + ' h', c: a !== null && (r[12] !== r[1] || r[13] !== r[2]) ? 'red' : '' }];
+    }
+    if (k === 'g') {
+      var g = this.D.G[i];
+      return [{ v: g[0], c: '' }, { v: this.pad(g[2]) + '/' + this.pad(this.M(g[1])), c: '' }, { v: g[4], c: '' }, { v: f(g[5], 1), c: '' }, { v: g[6], c: '' }, { v: g[7], c: '' }];
+    }
+    var c = this.D.C[i], d = c[4] - c[3];
+    return [{ v: c[2], c: '' }, { v: c[1], c: '' }, { v: f(c[3], 1), c: '' }, { v: f(c[4], 1), c: '' }, { v: (d > 0 ? '+' : '') + f(d, 1), c: Math.abs(d) < 0.005 ? '' : d > 0 ? 'vok' : 'red' }, { v: c[3] ? self.pc(d / c[3] * 100) : '—', c: '' }, { v: c[5], c: '' }, { v: c[6], c: '' }];
+  }
+  build() {
+    var self = this, s = this.state, R = this.D.R, C = this.D.C, V = this.D.V, f = function (n, d) { return self.fmt(n, d); }, pc = function (v) { return self.pc(v); };
+    var kg = function (v) { return v === null || v === undefined ? '—' : f(v, 1) + ' kg'; };
+    var hr = function (v) { return v === null ? '—' : v < 1 ? f(v * 60) + ' min' : f(v, 1) + ' h'; };
+    var empN = { A: 'Contubos', C: 'Contubos', T: 'Tecnipapel' }[s.emp];
+    var tit = this.ML[s.mes] + ' ' + this.Y(s.mes) + ' · Impresos', mt = this.metas;
+    var S = this.stats(s.mes), P = this.hasPrev() ? this.stats(this.prev(s.mes)) : {};
+    var lp = 'vs ' + this.MN[this.prev(s.mes)] + '.';
+    var vr = function (k, kind, dir) { return self.vr(S[k], P[k], kind, dir, lp); };
+    var recAll = {}; R.forEach(function (r, i) { if (r[1] === s.mes && !self.isEx('r', i)) recAll[r[9]] = (recAll[r[9]] || 0) + 1; });
+    var fRows = [
+      { l: 'Empresa', chips: this.chips(s.emp, [['A', 'Ambas'], ['C', 'Contubos'], ['T', 'Tecnipapel', true]], function (v) { self.setState({ emp: v }); }), nota: 'Impresos solo se maneja en Contubos.' },
+      { l: 'Corte general', chips: this.chips(this.loteSel(), this.lotes().map(function (l) { return [l[0], l[0] + (l[2] ? ' · ' + l[2].split('-').reverse().join('/') : ' · en progreso')]; }), function (v) { self.setState({ lote: v }); }), nota: 'para la exactitud de inventario' },
+      { l: 'Recibió (producción)', chips: this.chips(s.recs, [['', 'Todos']].concat(Object.keys(recAll).sort(function (a, b) { return recAll[b] - recAll[a]; }).map(function (r) { return [r, r]; })), function (v) { self.togArr('recs', v); }), nota: '' }
+    ];
+    var hayFil = s.recs.length > 0;
+    var quitar = function () { self.setState({ recs: [] }); };
+    var oR = function (t, sub, ids, sf) { self.openM(t, sub, 'r', ids, sf); };
+    var byDev = function (a, b) { return R[b][11] - R[a][11]; };
+    var stock = V.reduce(function (a, v) { return a + v[2]; }, 0);
+    var sinNiv = V.filter(function (v) { return v[3] === null || v[3] === '' || v[4] === null || v[4] === ''; }).length;
+    var mensual = S.neto / S.dias * 30;
+    var cob = mensual ? stock / mensual : null;
+    var kpis = [
+      this.card('Requisiciones', f(S.n), S.refs + ' referencias distintas', vr('n', 'n', 'n'), function () { oR('Requisiciones · ' + tit, 'Creadas en el mes', S.RI); }),
+      this.card('Kg entregados a producción', kg(S.ent), 'solicitados ' + kg(S.sol) + ' · ' + pc(S.es) + ' de lo pedido', vr('ent', 'n', 'n'), function () { oR('Entregas · ' + tit, 'Ordenado por kg entregados', S.RI, function (a, b) { return R[b][10] - R[a][10]; }); }),
+      this.card('Kg devueltos', kg(S.dev), pc(S.pdev) + ' de lo entregado', vr('pdev', 'pct', 'down'), function () { oR('Devoluciones · ' + tit, 'Ordenado por kg devueltos', S.RI.filter(function (i) { return R[i][11] > 0; }), byDev); }),
+      this.card('Consumo neto', kg(S.neto), kg(S.dia) + ' por día · entregado − devuelto', vr('neto', 'n', 'n'), function () { oR('Consumo neto · ' + tit, 'Entregado − devuelto', S.RI); }),
+      this.card('Entregadas el mismo día', pc(S.mismo), S.nmismo + ' de ' + S.nconE + ' · meta ≥ ' + mt.imp_mismo + '%', vr('mismo', 'pct', 'up'), function () { oR('Entregadas otro día · ' + tit, 'En rojo, las que no se entregaron el mismo día', S.RI, function (a, b) { return (self.aten(R[b]) || 0) - (self.aten(R[a]) || 0); }); }),
+      this.card('Tiempo de atención', hr(S.at), 'mediana · promedio ' + hr(S.atp), vr('at', 'n', 'down'), function () { oR('Tiempo de atención · ' + tit, 'De la solicitud a la entrega, de mayor a menor', S.RI, function (a, b) { return (self.aten(R[b]) || 0) - (self.aten(R[a]) || 0); }); }),
+      this.card('Kg ingresados a bodega', kg(S.king), S.ning + ' ingresos · sin duplicados', vr('king', 'n', 'n'), function () { self.openM('Ingresos · ' + tit, 'Ingresos registrados', 'g', S.GI); }),
+      this.card('Stock actual', kg(stock), (cob === null ? '—' : f(cob, 1)) + ' meses de cobertura', { t: 'al momento de la descarga', c: 'vn' }, function () { self.setState({ exp: Object.assign({}, s.exp, { stk: true }) }); })
+    ];
+    var gR = this.group(S.RI, function (i) { return R[i][4]; });
+    gR.forEach(function (g) { g.ent = g.L.reduce(function (a, i) { return a + R[i][10]; }, 0); g.dev = g.L.reduce(function (a, i) { return a + R[i][11]; }, 0); g.neto = g.ent - g.dev; });
+    var recG = this.group(S.RI, function (i) { return R[i][9]; });
+    recG.forEach(function (g) { g.ent = g.L.reduce(function (a, i) { return a + R[i][10]; }, 0); g.dev = g.L.reduce(function (a, i) { return a + R[i][11]; }, 0); });
+    var charts = [
+      this.bars('ref', 'Consumo neto por referencia', gR, function (g) { return g.neto; }, function () { return '#D01148'; }, function (g) { return kg(g.neto) + ' · dev. ' + pc(self.ratio(g.dev, g.ent)); }, function (g) { oR(g.k + ' · ' + tit, 'Requisiciones de la referencia', g.L, byDev); },
+        { v2: function (g) { return g.dev; }, col2: '#F2B8C6', leg: [{ n: 'Consumo neto', col: '#D01148' }, { n: 'Devuelto', col: '#F2B8C6' }], i: gR.length + ' referencias con movimiento' }),
+      this.bars('rec', 'Entregado por receptor en producción', recG, function (g) { return g.ent; }, function (g) { return self.col(g.k); }, function (g) { return kg(g.ent) + ' · ' + g.L.length + ' req. · dev. ' + pc(self.ratio(g.dev, g.ent)); }, function (g) { oR(g.k + ' · ' + tit, 'Requisiciones recibidas', g.L, byDev); })
+    ];
+    var refN = {}; gR.forEach(function (g) { refN[g.L.length ? R[g.L[0]][3] : ''] = g; });
+    var stkRows = V.slice().sort(function (a, b) { var ga = refN[a[0]], gb = refN[b[0]]; return (gb ? gb.neto : -1) - (ga ? ga.neto : -1) || b[2] - a[2]; }).map(function (v) {
+      var g = refN[v[0]], m = g && g.neto > 0 ? v[2] / (g.neto / S.dias * 30) : null;
+      return { n: v[1], nc: 'lnk', click: function () { if (g) oR(v[1] + ' · ' + tit, 'Requisiciones de la referencia', g.L); },
+        cells: [{ v: v[0], c: '' }, { v: g ? g.L.length : 0, c: '' }, { v: g ? f(g.neto, 1) : '0', c: '' }, { v: f(v[2], 1), c: '' }, { v: m === null ? 'Sin consumo' : f(m, 1), c: m === null ? 'red' : m < 1 ? 'red' : '' }, { v: v[3] ? 'Sí' : 'No', c: v[3] ? '' : 'red' }] };
+    });
+    var mTables = [this.table('stk', 'Stock y meses de cobertura por referencia', 'meses de cobertura = stock ÷ consumo neto del mes · en rojo, menos de 1 mes o sin consumo', ['Referencia', 'Código', 'Requisiciones', 'Consumo neto kg', 'Stock kg', 'Meses de cobertura', 'Niveles definidos'], stkRows, 10)];
+    var K = this.corte();
+    var oC = function (t, sub, ids, sf) { self.openM(t, sub, 'c', ids, sf); };
+    var byAbs = function (a, b) { return Math.abs(C[b][4] - C[b][3]) - Math.abs(C[a][4] - C[a][3]); };
+    var gk = [
+      this.gcard('Entregadas el mismo día', S.mismo, pc(S.mismo), mt.imp_mismo, 'Meta ≥ ' + mt.imp_mismo + '%', 'ge', P.mismo, pc(P.mismo), 'pct', 'Requisiciones entregadas el mismo día en que se pidieron.', kpis[4].click),
+      this.gcard('Exactitud del corte (±' + mt.imp_tolpct + '%)', K.ptol, pc(K.ptol), mt.imp_tol, 'Meta ≥ ' + mt.imp_tol + '%', 'ge', null, '—', 'pct', K.lote + ': ' + K.tol + ' de ' + K.n + ' referencias con diferencia dentro de ±' + mt.imp_tolpct + '%.', function () { oC('Corte ' + K.lote, 'Ordenado por diferencia absoluta', K.CI, byAbs); }),
+      this.gcard('Diferencia absoluta ÷ stock', K.pabs, pc(K.pabs), mt.imp_abs, 'Meta ≤ ' + mt.imp_abs + '%', 'le', null, '—', 'pct', 'De cada 100 kg en el sistema, ' + f(K.pabs, 1) + ' kg no cuadraron con el físico (' + kg(K.abs) + ').', function () { oC('Corte ' + K.lote, 'Ordenado por diferencia absoluta', K.CI, byAbs); }),
+      this.gcard('% de devolución', S.pdev, pc(S.pdev), mt.imp_pdev === null || mt.imp_pdev === undefined ? null : mt.imp_pdev, mt.imp_pdev === null || mt.imp_pdev === undefined ? 'Sin meta' : 'Meta ≤ ' + mt.imp_pdev + '%', mt.imp_pdev === null || mt.imp_pdev === undefined ? 'n' : 'le', P.pdev, pc(P.pdev), 'pct', 'Kg devueltos ÷ kg entregados.', kpis[2].click),
+      this.gcard('Exactitud exacta del corte', K.pex, pc(K.pex), null, 'Sin meta', 'n', null, '—', 'pct', K.ex + ' de ' + K.n + ' referencias sin ninguna diferencia. Diferencia neta ' + (K.neta > 0 ? '+' : '') + kg(K.neta) + '.', function () { oC('Corte ' + K.lote, 'Ordenado por diferencia absoluta', K.CI, byAbs); }),
+      this.gcard('Referencias sin niveles', sinNiv, f(sinNiv) + ' de ' + V.length, 0, 'Meta 0', 'le', null, '—', 'n', 'Sin óptimo y crítico no se puede alertar cuándo pedir.', function () { self.setState({ tab: 'mes', exp: Object.assign({}, s.exp, { stk: true }) }); })
+    ];
+    var difRows = K.CI.slice().sort(byAbs).map(function (i) {
+      var c = C[i], d = c[4] - c[3], p = c[3] ? d / c[3] * 100 : 0, ok = Math.abs(p) <= (mt.imp_tolpct || 2);
+      return { n: c[2], nc: 'lnk', click: function () { oC(c[2] + ' · ' + K.lote, 'Detalle del conteo', [i]); },
+        cells: [{ v: f(c[3], 1), c: '' }, { v: f(c[4], 1), c: '' }, { v: (d > 0 ? '+' : '') + f(d, 1), c: Math.abs(d) < 0.005 ? '' : d > 0 ? 'vok' : 'red' }, { v: (p > 0 ? '+' : '') + f(p, 1) + '%', c: ok ? '' : 'red' }, { v: ok ? 'Dentro de ±' + (mt.imp_tolpct || 2) + '%' : 'Fuera', c: ok ? 'pill ok' : 'pill ro' }] };
+    });
+    var LT = this.lotes().filter(function (l) { return l[0] === K.lote; })[0] || [];
+    var gTables = [this.table('dif', 'Diferencias del corte general ' + K.lote + ' por referencia', (LT[2] ? 'finalizado el ' + LT[2].split('-').reverse().join('/') : 'en progreso') + (LT[4] ? ' · inició ' + LT[4] : '') + ' · positivo = había más físico', ['Referencia', 'Sistema kg', 'Contado kg', 'Diferencia', '%', 'Estado'], difRows)];
+    return { fRows: fRows, hayFil: hayFil, quitar: quitar, kpis: kpis, charts: charts, grids: [], mTables: mTables, gk: gk, gTables: gTables, empN: empN };
+  }
+  hist(ms) {
+    var self = this, R = this.D.R, f = function (n, d) { return self.fmt(n, d); };
+    var C = {}, st = function (m, p) { var k = m + '|' + (p ? p.id : ''); if (!C[k]) C[k] = self.stats(m, p ? p.fn : null); return C[k]; };
+    var o = {}; R.forEach(function (r) { o[r[9]] = (o[r[9]] || 0) + 1; });
+    var series = {
+      none: { n: 'Sin desglose', list: [['Total', null, '#D01148']] },
+      rec: { n: 'Receptor en producción', list: Object.keys(o).filter(function (k) { return o[k] > 1; }).sort(function (a, b) { return o[b] - o[a]; }).slice(0, 4).map(function (n) { return [n, { id: 'r' + n, fn: function (k, r) { return r[9] === n; } }, self.col(n)]; }) }
+    };
+    var g = function (key) { return function (m, p) { var x = st(m, p); return x.n ? x[key] : null; }; };
+    var mets = {
+      neto: { n: 'Consumo neto (kg)', fn: g('neto'), d: 1, u: ' kg', kind: 'n', dir: 'n' },
+      ent: { n: 'Kg entregados', fn: g('ent'), d: 1, u: ' kg', kind: 'n', dir: 'n' },
+      pdev: { n: '% de devolución', fn: g('pdev'), d: 1, u: '%', kind: 'pct', dir: 'down' },
+      mismo: { n: 'Entregadas el mismo día', fn: g('mismo'), d: 1, u: '%', kind: 'pct', dir: 'up', meta: this.metas.imp_mismo, mt: '≥ ' + this.metas.imp_mismo + '%' }
+    };
+    var T = { n: 0, neto: 0, ent: 0, dev: 0 }; ms.forEach(function (m) { var x = st(m); T.n += x.n; T.neto += x.neto; T.ent += x.ent; T.dev += x.dev; });
+    var kp = [
+      { t: 'Requisiciones · ' + ms.length + ' meses', v: f(T.n), s: 'promedio ' + f(ms.length ? T.n / ms.length : null) + ' por mes' },
+      { t: 'Consumo neto', v: f(T.neto, 1) + ' kg', s: 'en los meses escogidos' },
+      { t: 'Kg entregados', v: f(T.ent, 1) + ' kg', s: 'en los meses escogidos' },
+      { t: '% de devolución', v: this.pc(this.ratio(T.dev, T.ent)), s: 'sin meta' }
+    ];
+    return { series: series, mets: mets, kpis: kp };
+  }
+  DIMS() {
+    return {
+      rec: ['Receptor', function (k, x) { return x[9]; }],
+      ref: ['Referencia', function (k, x) { return x[4]; }],
+      sol: ['Solicitó', function (k, x) { return x[5]; }]
+    };
+  }
+  CMETS() {
+    return {
+      n: { n: 'Requisiciones', fn: function (st) { return st.n; }, d: 0, u: '', kind: 'n', dir: 'n' },
+      ent: { n: 'Kg entregados', fn: function (st) { return st.n ? st.ent : null; }, d: 1, u: ' kg', kind: 'n', dir: 'n' },
+      dev: { n: 'Kg devueltos', fn: function (st) { return st.n ? st.dev : null; }, d: 1, u: ' kg', kind: 'n', dir: 'down' },
+      neto: { n: 'Consumo neto', fn: function (st) { return st.n ? st.neto : null; }, d: 1, u: ' kg', kind: 'n', dir: 'n' },
+      pdev: { n: '% devolución', fn: function (st) { return st.pdev; }, d: 1, u: '%', kind: 'pct', dir: 'down' },
+      mismo: { n: 'Mismo día', fn: function (st) { return st.mismo; }, d: 1, u: '%', kind: 'pct', dir: 'up', meta: this.metas.imp_mismo, mt: '≥ ' + this.metas.imp_mismo + '%' }
+    };
+  }
+  items(m) { var self = this, out = []; this.D.R.forEach(function (r, i) { if (r[1] === m && !self.isEx('r', i)) out.push(['r', r]); }); return out; }
+  cmpOpen(t, pred) { var st = this.stats(this.state.mes, pred); this.openM(t, 'Requisiciones', 'r', st.RI); }
+  keyOf(k, i) { return k === 'r' ? this.D.R[i][0] : k === 'g' ? this.D.G[i][0] : this.D.C[i][7]; }
+  rowYm(k, i) { return k === 'r' ? this.D.R[i][1] : k === 'g' ? this.D.G[i][1] : null; }
+  lotes() { return (this.D.L || []).slice().sort(function (a, b) { return String(b[2] || '9').localeCompare(String(a[2] || '9')); }); }
+  loteSel() {
+    var s = this.state, L = this.lotes(), self = this;
+    if (s.lote && L.some(function (l) { return l[0] === s.lote; })) return s.lote;
+    var lim = new Date(this.Y(s.mes), this.M(s.mes), 8), iso = function (d) { return d.getFullYear() + '-' + self.pad(d.getMonth() + 1) + '-' + self.pad(d.getDate()); };
+    var fin = L.filter(function (l) { return l[2] && /final/i.test(l[1]); });
+    var antes = fin.filter(function (l) { return l[2] <= iso(lim); });
+    if (antes.length) return antes[0][0];
+    var desp = fin.slice().sort(function (a, b) { return a[2].localeCompare(b[2]); });
+    return desp.length ? desp[0][0] : L.length ? L[0][0] : '';
+  }
+  resumen() {
+    var s = this.state, S = this.stats(s.mes), K = this.corte(), mt = this.metas, f = this.fmt.bind(this);
+    var P = this.hasPrev() ? this.stats(this.prev(s.mes)) : null, sinM = mt.imp_pdev === null || mt.imp_pdev === undefined;
+    return { t: 'Control de impresos', sub: 'Solo Contubos · solo impresos', kt: 'Entregadas el mismo día', v: this.pc(S.mismo), sm: this.sem(S.mismo, mt.imp_mismo, 'ge'),
+      x: P && P.n ? this.vr(S.mismo, P.mismo, 'pct', 'up', 'vs ' + this.MN[this.prev(s.mes)] + '. (' + this.pc(P.mismo) + ')') : { t: 'sin mes anterior para comparar', c: 'vn' },
+      det: 'Meta ≥ ' + mt.imp_mismo + '% · ' + S.n + ' requisiciones · consumo neto ' + f(S.neto, 0) + ' kg',
+      sec: [[this.sem(K.ptol, mt.imp_tol, 'ge').c, 'Exactitud corte (±' + mt.imp_tolpct + '%)', this.pc(K.ptol) + ' · meta ≥' + mt.imp_tol + '%'], [this.sem(K.pabs, mt.imp_abs, 'le').c, 'Diferencia / stock', this.pc(K.pabs) + ' · meta ≤' + mt.imp_abs + '%'], [sinM ? 'pill na' : this.sem(S.pdev, mt.imp_pdev, 'le').c, '% devolución', this.pc(S.pdev) + (sinM ? ' · sin meta' : ' · meta ≤' + mt.imp_pdev + '%')]],
+      main: [['Mismo día (%)', S.mismo, mt.imp_mismo, 'ge'], ['Exactitud corte (%)', K.ptol, mt.imp_tol, 'ge'], ['Diferencia/stock (%)', K.pabs, mt.imp_abs, 'le'], ['Consumo neto (kg)', S.neto, null, 'n']] };
+  }
+  kinds() { return { r: this.D.R.length, g: this.D.G.length, c: this.D.C.length }; }
+  exportIds(m) { var a = [], b = []; this.D.R.forEach(function (r, i) { if (r[1] === m) a.push(i); }); this.D.G.forEach(function (r, i) { if (r[1] === m) b.push(i); }); return { r: a, g: b }; }
+}
+
+// =====================================================================
+// APLICACIÓN: datos, sesión, cierres, exclusiones, vistas y exportes
+// =====================================================================
+var API = '/api/indicadores';
+var EMB = window.EMBED || null;
+var H = [];
+function A(i) { if (H[i]) H[i](); }
+function on(fn) { return 'A(' + (H.push(fn) - 1) + ')'; }
+function esc(s) { return String(s === null || s === undefined ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+function ats(s) { return esc(s); }
+
+var PROCS = [
+  ['cond', 'Registro de conductores', 'Cargue y descargue de vehículos · App Despachos', Cond],
+  ['rol', 'Requisición a bodega de rollos', 'App Trazabilidad Rollos · Contubos y Tecnipapel', Rollos],
+  ['mon', 'Inspección diaria de montacargas', 'Checklist preoperacional FOR-SST-01 · flota Contubos y Tecnipapel', Mont],
+  ['imp', 'Control de impresos', 'App Control de Impresos, Insumos y Estibas · solo impresos · Contubos', Imp]
+];
+var METAS_DEF = [
+  ['cond_tot', 'Conductores · tiempo total en planta ≤ (min)'], ['cond_esp', 'Conductores · tiempo de espera ≤ (min)'], ['cond_e60', 'Conductores · % de vehículos con espera > 1 h ≤'],
+  ['rol_cap', 'Rollos · captura automática ≥ (%)'], ['rol_dev', 'Rollos · devoluciones ≤ (%)'],
+  ['mon_cov', 'Montacargas · cobertura diaria ≥ (%)'], ['mon_conf', 'Montacargas · índice de conformidad ≥ (%)'], ['mon_prev', 'Montacargas · mantenimiento preventivo ≥ (%)'], ['mon_lab', 'Montacargas · días hábiles por semana (6 = lun–sáb, 7 = todos)'],
+  ['imp_mismo', 'Impresos · entregadas el mismo día ≥ (%)'], ['imp_tol', 'Impresos · exactitud del corte dentro de la tolerancia ≥ (%)'], ['imp_tolpct', 'Impresos · tolerancia del corte ± (%)'], ['imp_abs', 'Impresos · diferencia absoluta ÷ stock ≤ (%)'], ['imp_pdev', 'Impresos · % de devolución ≤ (vacío = sin meta)'],
+  ['ambar', 'Margen del ámbar: % de la meta dentro del cual el semáforo queda ámbar y no rojo']
+];
+var METAS_STD = { cond_tot: 60, cond_esp: 30, cond_e60: 10, rol_cap: 95, rol_dev: 3, mon_cov: 95, mon_conf: 95, mon_prev: 70, mon_lab: 6, imp_mismo: 95, imp_tol: 95, imp_tolpct: 2, imp_abs: 2, imp_pdev: null, ambar: 10 };
+
+var App = {
+  view: 'login', proc: 'cond', user: null, pin: '', pinBuf: '', err: '', cargando: false, readonly: !!EMB,
+  raw: null, portal: null, hoyYm: 0, hoyD: 1, metas: {}, inst: {}, G: { mes: 0, emp: 'A' }, dlg: null, msg: '',
+
+  post: function (body) {
+    body.pin = App.pin;
+    return fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+      .then(function (r) { return r.json().catch(function () { return { ok: false, error: 'Respuesta inválida del servidor (' + r.status + ')' }; }); });
+  },
+  start: function () {
+    if (EMB) { App.recibir(EMB); App.user = { nombre: EMB.generadoPor || '', rol: '' }; App.view = 'resumen'; App.render(); return; }
+    var p = ''; try { p = sessionStorage.getItem('ind_pin') || ''; } catch (e) { /* sin almacenamiento */ }
+    if (p) { App.pin = p; App.cargar(); } else App.render();
+  },
+  login: function () {
+    if (!App.pinBuf) return;
+    App.pin = App.pinBuf; App.err = ''; App.cargando = true; App.render();
+    App.post({ action: 'login' }).then(function (r) {
+      if (!r.ok) { App.cargando = false; App.err = r.error || 'PIN incorrecto'; App.pinBuf = ''; App.pin = ''; App.render(); return; }
+      try { sessionStorage.setItem('ind_pin', App.pin); } catch (e) { /* nada */ }
+      App.user = r.user; App.cargar();
+    }).catch(function (e) { App.cargando = false; App.err = 'No se pudo conectar: ' + e.message; App.render(); });
+  },
+  salir: function () { try { sessionStorage.removeItem('ind_pin'); } catch (e) { /* nada */ } App.pin = ''; App.pinBuf = ''; App.user = null; App.raw = null; App.inst = {}; App.view = 'login'; App.render(); },
+  cargar: function (keep) {
+    App.cargando = true; App.render();
+    App.post({ action: 'datos' }).then(function (r) {
+      App.cargando = false;
+      if (!r.ok) { if (/PIN/.test(r.error || '')) { App.salir(); App.err = r.error; App.render(); return; } App.err = r.error || 'Error'; App.view = App.view === 'login' ? 'error' : App.view; App.render(); return; }
+      App.user = r.user;
+      App.recibir(r, keep);
+      if (App.view === 'login' || App.view === 'error') App.view = 'resumen';
+      App.render();
+    }).catch(function (e) { App.cargando = false; App.err = 'No se pudo conectar: ' + e.message; App.view = 'error'; App.render(); });
+  },
+  recibir: function (r, keep) {
+    var old = App.inst;
+    App.raw = r.data; App.portal = r.portal;
+    var h = String(r.hoy).split('-').map(Number);
+    App.hoyYm = h[0] * 100 + h[1]; App.hoyD = h[2];
+    App.metas = Object.assign({}, METAS_STD);
+    Object.keys(r.portal.metas || {}).forEach(function (k) { if (r.portal.metas[k] !== undefined) App.metas[k] = r.portal.metas[k]; });
+    App.inst = {};
+    PROCS.forEach(function (p) {
+      if (!App.raw[p[0]]) return;
+      try { App.inst[p[0]] = new p[3](App, p[0], App.efectivo(p[0])); } catch (e) { App.raw.errores = App.raw.errores || {}; App.raw.errores[p[0]] = 'Error al calcular: ' + e.message; delete App.inst[p[0]]; }
+      if (keep && old[p[0]] && App.inst[p[0]]) { var st = old[p[0]].state; Object.assign(App.inst[p[0]].state, st, { modal: null }); }
+    });
+    var todos = App.mesesTodos();
+    if (!App.G.mes || todos.indexOf(App.G.mes) < 0) App.G.mes = todos.length > 1 ? todos[todos.length - 2] : todos[0];
+  },
+  // ---------- meses y cierres
+  ymOf: function (P, kind, row) {
+    if (P === 'imp') return row[1];
+    return row[0];
+  },
+  mesesDe: function (P) {
+    var d = App.inst[P] ? App.inst[P].D : App.efectivoCache[P], mn = App.hoyYm;
+    var rows = P === 'cond' ? d : P === 'rol' ? d.R.concat(d.E) : P === 'mon' ? d.I : d.R;
+    rows.forEach(function (r) { var m = P === 'imp' ? r[1] : r[0]; if (m && m < mn) mn = m; });
+    var out = [], m = mn;
+    while (m <= App.hoyYm && out.length < 120) { out.push(m); m = (m % 100 === 12) ? (Math.floor(m / 100) + 1) * 100 + 1 : m + 1; }
+    return out;
+  },
+  mesesTodos: function () { var o = {}; Object.keys(App.inst).forEach(function (k) { App.inst[k].MESES.forEach(function (m) { o[m] = 1; }); }); var L = Object.keys(o).map(Number).sort(); return L.length ? L : [App.hoyYm]; },
+  cierre: function (m) { var c = App.portal && App.portal.cierres[String(m)]; return c && c.estado === 'Cerrado' && App.portal.frozen[String(m)] ? c : null; },
+  cerrado: function (m) { return !!App.cierre(m); },
+  efectivoCache: {},
+  efectivo: function (P) {
+    var raw = App.raw[P], fr = App.portal.frozen || {}, closed = Object.keys(fr).filter(function (m) { return App.cerrado(Number(m)); }).map(Number);
+    var isC = function (m) { return closed.indexOf(m) >= 0; };
+    var out;
+    if (P === 'cond') {
+      out = raw.filter(function (r) { return !isC(r[0]); });
+      closed.forEach(function (m) { out = out.concat((fr[m].cond || {}).rows || []); });
+    } else if (P === 'rol') {
+      var R = [], idx = {}, addR = function (r) { if (idx[r[13]] === undefined) { idx[r[13]] = R.length; R.push(r); } };
+      closed.forEach(function (m) { ((fr[m].rol || {}).R || []).forEach(addR); });
+      raw.R.forEach(function (r) { if (!isC(r[0])) addR(r); });
+      raw.R.forEach(addR);
+      var E = [];
+      raw.E.forEach(function (e) { if (isC(e[0])) return; var k = raw.R[e[3]][13]; if (idx[k] === undefined) return; var x = e.slice(); x[3] = idx[k]; E.push(x); });
+      closed.forEach(function (m) { ((fr[m].rol || {}).E || []).forEach(function (e) { if (idx[e[3]] === undefined) return; var x = e.slice(); x[3] = idx[e[3]]; E.push(x); }); });
+      out = { R: R, E: E };
+    } else if (P === 'mon') {
+      var IT = raw.IT.slice(), pos = {};
+      IT.forEach(function (it, j) { pos[it[0]] = j; });
+      var I = raw.I.filter(function (r) { return !isC(r[0]); }), M = raw.M.filter(function (r) { return !isC(r[0]); });
+      closed.forEach(function (m) {
+        var f = fr[m].mon || {}, fit = f.IT || IT;
+        (f.I || []).forEach(function (r) { var x = r.slice(); x[9] = r[9].map(function (j) { var c = fit[j] ? fit[j][0] : null; if (c === null) return j; if (pos[c] === undefined) { pos[c] = IT.length; IT.push(fit[j]); } return pos[c]; }); I.push(x); });
+        M = M.concat(f.M || []);
+      });
+      out = { I: I, M: M, F: raw.F, IT: IT };
+    } else {
+      var Rr = raw.R.filter(function (r) { return !isC(r[1]); }), G = raw.G.filter(function (r) { return !isC(r[1]); });
+      closed.forEach(function (m) { var f = fr[m].imp || {}; Rr = Rr.concat(f.R || []); G = G.concat(f.G || []); });
+      out = { R: Rr, G: G, V: raw.V, L: raw.L, C: raw.C };
+    }
+    App.efectivoCache[P] = out;
+    return out;
+  },
+  // ---------- exclusiones (las de un mes cerrado quedan como estaban al cerrar)
+  isEx: function (P, kind, key, ym) {
+    var full = P + ':' + kind + ':' + key;
+    if (ym !== null && ym !== undefined && App.cerrado(ym)) { var f = App.portal.frozen[String(ym)]; return !!(f.excl && f.excl.indexOf(full) >= 0); }
+    var e = App.portal.excl[full];
+    return !!(e && e.activo);
+  },
+  toggleEx: function (inst, kind, i, activo) {
+    var full = inst.P + ':' + kind + ':' + inst.keyOf(kind, i);
+    App.portal.excl[full] = { activo: activo, usuario: App.user.nombre, fh: '', motivo: '' };
+    App.render();
+    App.post({ action: 'excluir', clave: full, activo: activo }).then(function (r) { if (!r.ok) { App.toast('No se guardó: ' + r.error); delete App.portal.excl[full]; App.render(); } }).catch(function (e) { App.toast('No se guardó: ' + e.message); });
+  },
+  aviso: function (inst) {
+    var m = inst.state.mes, c = App.cierre(m), lb = inst.ML[m] + ' ' + inst.Y(m);
+    if (c) return { t: '✓ ' + lb + ' cerrado el ' + c.fh + ' por ' + c.usuario + ': las cifras son la foto del cierre aunque después se corrijan datos en las apps.', c: 'note' };
+    if (m === App.hoyYm) return { t: lb + ' en curso: ' + (inst.cursoTxt || 'cifras del 01 al ' + inst.pad(App.hoyD) + '/' + inst.pad(inst.M(m)) + '.'), c: 'note w' };
+    var h = (App.portal.hist || []).filter(function (x) { return Number(x.mes) === m; }).slice(-1)[0];
+    if (h && h.estado === 'Reabierto') return { t: lb + ' reabierto el ' + h.fh + ' por ' + h.usuario + (h.nota ? ' (' + h.nota + ')' : '') + ': las cifras se calculan con los datos actuales.', c: 'note w' };
+    if (!inst.hasPrev()) return { t: lb + ': no hay mes anterior en los datos, así que la comparación queda en blanco.', c: 'note w' };
+    return { t: '', c: 'note' };
+  },
+  procState: function (inst) { App.G.mes = inst.state.mes; if (inst.P !== 'imp') App.G.emp = inst.state.emp; },
+  abrirProc: function (P) {
+    var I = App.inst[P];
+    if (!I) return;
+    I.state.mes = I.MESES.indexOf(App.G.mes) >= 0 ? App.G.mes : I.MESES[I.MESES.length - 1];
+    if (P !== 'imp') I.state.emp = App.G.emp;
+    I.state.modal = null;
+    App.proc = P; App.view = 'proc'; window.scrollTo(0, 0); App.render();
+  },
+  toast: function (t) { App.msg = t; App.render(); setTimeout(function () { App.msg = ''; App.render(); }, 4000); },
+  // ---------- cierre y reapertura de mes
+  snapshot: function (m) {
+    var raw = App.raw, out = { v: 1, mes: m, excl: [] };
+    if (raw.cond) out.cond = { rows: raw.cond.filter(function (r) { return r[0] === m; }) };
+    if (raw.rol) {
+      var E = raw.rol.E.filter(function (e) { return e[0] === m; }), need = {};
+      E.forEach(function (e) { need[e[3]] = 1; });
+      raw.rol.R.forEach(function (r, i) { if (r[0] === m) need[i] = 1; });
+      out.rol = { R: Object.keys(need).map(function (i) { return raw.rol.R[i]; }), E: E.map(function (e) { var x = e.slice(); x[3] = raw.rol.R[e[3]][13]; return x; }) };
+    }
+    if (raw.mon) out.mon = { I: raw.mon.I.filter(function (r) { return r[0] === m; }), M: raw.mon.M.filter(function (r) { return r[0] === m; }), IT: raw.mon.IT };
+    if (raw.imp) out.imp = { R: raw.imp.R.filter(function (r) { return r[1] === m; }), G: raw.imp.G.filter(function (r) { return r[1] === m; }) };
+    Object.keys(App.portal.excl).forEach(function (k) { if (App.portal.excl[k].activo) out.excl.push(k); });
+    out.resumen = {};
+    Object.keys(App.inst).forEach(function (k) { var I = App.inst[k], s0 = Object.assign({}, I.state); I.state.mes = m; I.state.emp = 'A'; try { out.resumen[k] = I.resumen().main; } catch (e) { /* nada */ } I.state = s0; });
+    return out;
+  },
+  cerrarMes: function (m) {
+    App.dlg = null; App.cargando = true; App.render();
+    App.post({ action: 'cerrar', mes: String(m), json: JSON.stringify(App.snapshot(m)) }).then(function (r) {
+      if (!r.ok) { App.cargando = false; App.toast('No se pudo cerrar: ' + r.error); return; }
+      App.cargar(true);
+    }).catch(function (e) { App.cargando = false; App.toast('No se pudo cerrar: ' + e.message); });
+  },
+  reabrirMes: function (m, nota) {
+    App.dlg = null; App.cargando = true; App.render();
+    App.post({ action: 'reabrir', mes: String(m), nota: nota }).then(function (r) {
+      if (!r.ok) { App.cargando = false; App.toast('No se pudo reabrir: ' + r.error); return; }
+      App.cargar(true);
+    }).catch(function (e) { App.cargando = false; App.toast('No se pudo reabrir: ' + e.message); });
+  },
+  guardarMetas: function () {
+    var M = {};
+    METAS_DEF.forEach(function (d) { var el = document.getElementById('meta_' + d[0]); if (el) M[d[0]] = el.value === '' ? null : Number(el.value.replace(',', '.')); });
+    App.cargando = true; App.render();
+    App.post({ action: 'metas', metas: M }).then(function (r) {
+      if (!r.ok) { App.cargando = false; App.toast('No se guardaron: ' + r.error); return; }
+      App.view = 'resumen'; App.cargar(true); App.toast('Metas guardadas');
+    }).catch(function (e) { App.cargando = false; App.toast('No se guardaron: ' + e.message); });
+  },
+  mesLbl: function (m) { var NL = ['', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre']; return NL[m % 100] + ' ' + Math.floor(m / 100); },
+
+  // ---------- exportes
+  xlsx: function (cb) {
+    if (window.XLSX) { cb(); return; }
+    var s = document.createElement('script');
+    s.src = 'https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js';
+    s.onload = cb; s.onerror = function () { App.toast('No se pudo cargar el generador de Excel (requiere internet).'); };
+    document.head.appendChild(s);
+  },
+  txt: function (c) { return typeof c === 'object' && c !== null ? c.v : c; },
+  excel: function () {
+    App.xlsx(function () {
+      var wb = XLSX.utils.book_new(), add = function (name, rows) { XLSX.utils.book_append_sheet(wb, XLSX.utils.aoa_to_sheet(rows), name.slice(0, 31)); };
+      if (App.view === 'proc') {
+        var I = App.inst[App.proc], v = I.renderVals(), m = I.state.mes, nm = PROCS.filter(function (p) { return p[0] === App.proc; })[0][1];
+        var rows = [[nm + ' · ' + App.mesLbl(m)], [], ['Indicador', 'Valor', 'Detalle', 'Variación']];
+        v.kpis.forEach(function (k) { rows.push([k.t, k.v, k.s, k.vt]); });
+        rows.push([], ['Indicador de gestión', 'Valor', 'Estado', 'Meta', 'Mes anterior', 'Variación', 'Cómo se calcula']);
+        v.gk.forEach(function (k) { rows.push([k.t, k.v, k.pt, k.meta, k.cmp, k.vt, k.exp]); });
+        add('Indicadores', rows);
+        if (v.cRows && v.cRows.length) { var c = [[v.cTitle], [v.cHead].concat(v.cCols).concat([v.cVarHead])]; v.cRows.forEach(function (r) { c.push([r.n].concat(r.cells.map(function (x) { return x.v; })).concat([r.vt])); }); add('Comparativo', c); }
+        var ids = I.exportIds(m);
+        Object.keys(ids).forEach(function (k) {
+          var t = [I.mHead[k].concat(['Excluido'])];
+          ids[k].forEach(function (i) { t.push(I.mRow(k, i).map(function (x) { return x.v; }).concat([I.isEx(k, i) ? 'SÍ' : ''])); });
+          add('Datos ' + k.toUpperCase(), t);
+        });
+        XLSX.writeFile(wb, 'Indicadores_' + App.proc + '_' + m + '.xlsx');
+      } else {
+        var r0 = [['Resumen de indicadores · ' + App.mesLbl(App.G.mes) + ' · ' + { A: 'Ambas empresas', C: 'Contubos', T: 'Tecnipapel' }[App.G.emp]], [], ['Proceso', 'Indicador', 'Valor', 'Meta', 'Estado']];
+        Object.keys(App.inst).forEach(function (k) {
+          var I = App.inst[k]; I.state.mes = I.MESES.indexOf(App.G.mes) >= 0 ? App.G.mes : I.state.mes; if (k !== 'imp') I.state.emp = App.G.emp;
+          var rs = I.resumen();
+          rs.main.forEach(function (x) { r0.push([rs.t, x[0], x[1] === null || x[1] === undefined ? '' : Math.round(x[1] * 10) / 10, x[2] === null || x[2] === undefined ? '' : (x[3] === 'ge' ? '≥ ' : '≤ ') + x[2], x[2] === null || x[2] === undefined ? 'Sin meta' : I.sem(x[1], x[2], x[3]).t]); });
+        });
+        add('Resumen', r0);
+        XLSX.writeFile(wb, 'Indicadores_resumen_' + App.G.mes + '.xlsx');
+      }
+    });
+  },
+  htmlPresentar: function () {
+    App.cargando = true; App.render();
+    fetch(location.pathname, { cache: 'no-store' }).then(function (r) { return r.text(); }).then(function (src) {
+      var emb = { data: App.raw, portal: App.portal, hoy: App.hoyYm.toString().slice(0, 4) + '-' + String(App.hoyYm % 100).padStart(2, '0') + '-' + String(App.hoyD).padStart(2, '0'), generadoPor: App.user.nombre, generado: new Date().toLocaleString('es-CO') };
+      var js = '<script>window.EMBED=' + JSON.stringify(emb).replace(/</g, '\\u003c') + ';<\/script>';
+      var i = src.indexOf('<script');
+      var out = src.slice(0, i) + js + src.slice(i);
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([out], { type: 'text/html' }));
+      a.download = 'Indicadores_Logistica_' + App.G.mes + '.html';
+      document.body.appendChild(a); a.click(); a.remove();
+      App.cargando = false; App.toast('Archivo para presentar descargado. Se abre sin login ni internet.');
+    }).catch(function (e) { App.cargando = false; App.toast('No se pudo generar: ' + e.message); });
+  },
+
+  render: function () { H = []; document.getElementById('app').innerHTML = V.page(); }
+};
+
+// =====================================================================
+// VISTAS (HTML generado; los clics pasan por on(fn))
+// =====================================================================
+var V = {
+  page: function () {
+    var h = '';
+    if (App.view === 'login') h = V.login();
+    else if (App.view === 'error') h = V.error();
+    else if (!App.raw) h = V.top('', '') + '<div class="wrap"><div class="card vac">Cargando…</div></div>';
+    else if (App.view === 'metas') h = V.metas();
+    else if (App.view === 'proc' && App.inst[App.proc]) h = V.proc();
+    else h = V.resumen();
+    if (App.dlg) h += V.dialog();
+    if (App.cargando) h += '<div class="load"><div class="spin"></div><div>Cargando datos de las apps…</div></div>';
+    if (App.msg) h += '<div class="toast">' + esc(App.msg) + '</div>';
+    return h;
+  },
+  logos: function () { return '<span class="logos"><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEA3ADcAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCABuAUgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9U6KKKACiimswXqQPrQAUV5144/aE+HXw6e6i1/xfplpdWrKs1nHMJ7pC2CMwx7pOhB+70OelcFf/ALeHwctYw0PiK5vWz9yHTLkH/wAfRaNtz1qGUZhio81HDzku6i7ffY+g/wAKO1eBQft0fBiSMM/iuWE4yUfS7skflEa9a8J/ETwv47jlk8O+IdM1tYdvm/YLuOby89AwUnaTg9fQ0b7GWIy3G4NXxFGUF5xa/M6SikpaDzgooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAbR60CvM/j58dNF+A3gmXWtTDXV7MfJsNOjOHupsEhc4O1QBlnPQepKqQ6MPh6uKqxoUY80pOyQvxy+Pnhn4DeGl1LXZmnvLglLLTbfBnuWGM4BIwq5BZzwOOpKqfzm+Mn7XnxA+MEl1ayag2gaBIWUaTpblA8Z3DbLJ96XKvtYEhDtB2CvNviJ8RNd+KXiq88ReIr1rzULg4AHEcKAnbHGv8KDnj3JJySa+mf2af2Fbzx1bw+I/iClzpOjMUktdJjby7i7XIJMpxmNCOMDDnJOUwC2fM5O0T+gcHkeUcH4NY3NrTqvbrr2iv1/I+SbGwudTvIbSyt5bu6mYJFBBGXd2zjCqBkk+wrsYfgX8SLhtqeAfE2f8Aa0i4UfmUr9dPBPw58M/DfSV03w1olnpFoAu5bWIK0hChQzt952wBlmJJ7k10gVfQflRyLqeHifEytz2wmHSj5vX8LfqfjBffBrx/pdvPcXngfxJbW8KlpJpdJnWNAOSS2zGODzXL6Zql5ouoQX+nXk9hfQNvhurWUxyRt6qy8g1+45Re4H5V5t8Vv2efAvxjs5E8Q6JA9+ybI9UtgIruLAYKRIBkhd5IRtyZ6qaPZrozXCeJXtJezzDDJxf8v+T3+8+MvgH+31r/AIVubTRviAZNf0UlYhqygfbLVQuAXAH74cDJPz8scucLX394S8XaR488O2Wu6DfxalpV6nmQXMJOGGcEEHkEEEFTgggg4IIr4v0X/gmmn/CYX51fxc58KxyA2aWUIF9MhU8SMw2RlW2jIV94B4TOB9e/Df4X+GvhL4d/sTwrpq6ZpxladoxI8jPIcAszOSScADk9AB0Aq436nx/FVXh/ETjVyi6m90laP47P00Ouooopn56FFFFABRRTZJFjUsxwoGTmgApeleDfD79qLTPir8etQ8FeGlivNC0zTJrmbVgci5uFmhQCHHBjAd/n/jONuFGX94H50HXisJWwc1Trx5ZNJ28nsOooooOQKKKKAErl/ib4muvBvw78Ua9ZJHJeaZplzeQpOpaNnjiZ1DAEEjIGcEfWuorgvj1/yRHx9/2Ab7/0nemtzow8VOtCMtm1+Z8J/wDDxz4m/wDQJ8L/APgJcf8AyRX398LfE1342+G3hXxDfJFHe6ppdtfTpACI1kkiV2CgkkLljgEk+9fixX7I/s+Y/wCFF/D3/sX7D/0njrOEnJan67x5kuAyqhh54OkoOTd7X7I9Coooqz8aCiiigAooooAKKKKACiiigAoopKAFooooAKKKKAGSMEUt2AzX5J/tW/Gqb40/Fi/uoJy/h/TGay0uNJC0bRq3zTAdMyEBsgZ2iMH7ua/Rf9qbxtc/D/4B+MdXs/MF4LT7LDJDKYnied1hEqsOQUMm8Y/u9R1r8g+3FZzelj9v8NsrhOdXM6q+H3Y+u7/C34n1V+wv+zva/FDxJceMdfg+0eH9DuFS3tiw2XN4AHw4zkogZGxgBiy8kBlr9JwoVQAMCuD+Bfw9X4W/CXwz4Z2Ik9lZr9p8ty6tcPl5mUnnBkZyPYjgdK5v9qD47Q/Ab4cTapFHFda5ev8AZdMtZG+VpSCTIwHJRAMnHU7VyN2atLlVj4TOsdieJ83caWt3ywXl/wAHdkfx4/aj8IfAe3WDUHk1XX50ZoNIsiDJgA4aQk4jQnAyeTztVsHHyPr3/BSDx7ealO+kaBoOm6e2PKgulmuJk4AO6QSIrHOT9wYyBzjJ+Xbq61bxl4ieeZrrWNb1O45IBlmuJnYYAAGWYkgAAdxX2H8M/wDgm9qGpWFpfeN/EZ0p5Bul0rS41kljBUEAzsSoYEkEBWXjhjU80pfCfp3+r/DnDOHhLOJc9WXq/uiunmzmdG/4KO/ES0vrZtR0bQL+yVx50UUU0Msi9wr+awU++0/Q19W/Af8Aa88G/HCaDS4nk0LxPIhb+yb0j95tUM5hkHyyAZbjh8Ix2ADNeFePv+CaqrazXHg3xbJ5qqPLsdahBDtkbiZowNvy5x+7PI685Hxlrmia78OfFk+najBdaH4g0q4G5dxSWCVSGR1ZT9GV1OCMEHGDReUfi2FHJOGeKKUo5VL2dVK/VffF7r0+8/bj+VebftDfEy9+D/wh13xbp1rDe3lgYAkNyWEbeZPHEc454Dk/hXDfsc/tBXHxy8Azway6N4p0Vkhvnjj2CdGB8qbAG0FgrggfxIThQyirP7cf/JsPjD/esv8A0shqntc/IcPlk8PnNLL8ZHapGMl3Ta/Bo+ZP+Hk/jT/oV9D/AO+5v/iqdH/wUo8ZCQF/C2isvdVeUZ/HdXyx4J8OHxl400Dw+Lj7IdW1C3sftGzf5Xmyqm7bkbsbs4yOlfZY/wCCYspUH/hY6f8AgkP/AMkVmud7H7jmmW8H5NUjTxtPlcldfG9Plcfp/wDwU23XFut78PikJZRNLb6tuYLkbiqGEAkDsWH1FfSvwV/aU8E/HaGSPw/eyQarDH5s+k3yCK5jTdt3YBKsPu8ozY3rnBOK+GPjT+wr4v8AhTod3rumajbeKdFs4vOu5Iozb3ECAMXcxFmBRQByHLc/dwCa+f8Awr4p1XwT4isNd0S9k0/VbGUSwXERwVYDofUEZBU8EEg8GnzSjpI82pwnkGfYOVfJJ8sl5tq/Zp6r8D9upJBGpZiAo6k1+eX7Yn7YZ8aNe+BvA97t8PgtDqWrQN/x/djDEf8Anj13MP8AWdB8n+s+oPH3hXxB+0z8G9BGh+KT4I0zXrCK7vo1s/tU08UsauIN4kTavzENgHfwMhdwb4O/ab/Zkf8AZxk8OK/iMeIP7YFweLH7N5PleV/00fdnzPbpVyvFaHyfBGX5XPHxWOnetd8sLO11q23a3TRX/E5L4F/GvUvgP4wufEOlWFrqFxPZPZGK7LBArSRuT8pHIMY/Ovev+Hk/jT/oWNE/76m/+KrxP9nX4Gt+0B46u/Di60NDMFg999pNr9oztkjTbt3p18zOc9q+kv8Ah2LN/wBFHT/wSH/5IrKPPbQ/RuIKnCkcbKOaL99ZX0n8ttD2n4p/tHaz4D/Zz8LfES00yyuNR1eKxkltJi/kp58O9guDng9M15T8D/26vFPxP+K3h7wvf+H9KtbTUpmjkmt2lLqBGzZGWxnKjrW1+2d4UPgT9knwz4bN19uOkzafYfafL2eb5cLJv25O3O3OMnFfJ37If/JyHgb/AK+5P/RMlaSfvWR8ZkmR5bjcixeNnSvKLnyvXZK6P1ypsjbY2PcDNOps3+pk/wB0/wAqs/F1ufnd/wAPKPGn/Qr6H/33N/8AFV9X+LPFVx44/ZM1jxDdRRwXOq+D5r2SKLOxGksy5C57AtX5I1+qdr/yY5H/ANiH/wC2FTTble5+1cXZJl+UrBzwdPlcpa7+Xc/Kyv0Z1z9p5v2cfgb8GVXw2PEP9seH4TzffZvJ8q3t/wDpm+7Pm+2NtfnNX3x8Rv2b/FHx++B3wQbw5daZbDSfD0Yn/tKaSPd5tva7duyN/wDnm2c47VnC9nY+z4whgamIwEcy/g3lfVr7Om2u9ijZ/wDBThHuolu/h40NsWxJJDrAkdR3IUwqCfqR9a9V8C/t8/C7xdei0vbm/wDDEzPHHE2r24EUjMcf6yNnVADjLOVAz9cfMkv/AATn+KEcbMNR8NSlRkIt5Pk+3MAFeEfEb4S+LvhNqUFj4t0K40ee4UvC0hWSKUDGdsiEqxGRkA8ZGetVeUd0eJT4c4Szd+xwFbln2Utfulv8j9mdN1Oz1uwtr6wuob2yuI1mhuLeQPHIjAFXVgcEEHII65q3X5Mfs1/tNa38A/ESRyPNqXhK6cC+0rdkpz/roc8LIPTgOOD/AAsv6uaXqdrrWn2t/Y3EV3Z3MazQ3ELh45EYZVlYcEEEHIqk+ZH5RxFw7iOH8QqdR80JfDLv/ky0zY5JwO9fMvxw/bq8J/CvWLjQ9Gs38W63ayeXcpbzCG2gYdVabDZceiqQDkEggiuc/bt/aPvfAGm2/gbw1c/Z9Z1SBpb+8jZhJa2xJVVQ4wHkw/zZyqqeMurD4U+Gvw11/wCLXi608OeG7M3eoT5Zmb5YreMY3SyN/CgyOepJAALEAzKVnZbn2HDHCOHxWFea5vLlo7pXtdd2+3bue+Tf8FF/ihMPl0/w3Dz/AMs7Of8ALmY10Hg3/gpL4rtdWT/hKPDelajpjAK39lmS2mTkZcF3cPhd3y/Lk4+YV2Xg7/gmnpcdkH8VeL7y4u3jUmHSIUhSJ8fMN8gcuM9DtTp0rgPjF/wT28ReC9FvNZ8I6v8A8JVBbh5n0trYx3gjGCBHtJEzAZOAEJ2/KGJAo98+ihW4GxVT6ooJX0UrSS+//M+2fg/8dPCXxu0OXUPDN/5slvsW6sZ18u4tmYZCup7dRuUlSVbBODXoNfip8N/iRrvwp8XWXiTw5d/ZdQtzgq+TFPGfvRSr/EhwOPYEEEAj9efhH8SLH4tfDrRPFdgvlRahAHkgySYZVJWWPJA3bXVl3YwcZHBFOMuZeZ8DxZwtLIKkatF81Gez7Ps/0JPiZ8VPDXwh8My674m1FLGzU7I0xulmc9EjQcsx9ugBJwASPkXxJ/wUyjW5u4dA8DPLb8C3utRvwjngctEiMBzno54A6Zrxj9ubxtqHij9oLW9OnvHn03RVitLK35CRbokeUhf7xdjlschUHYVT/Z1/ZL1z9oKxutWg1mz0TQ7W4azkuJI2mnMoRHwsY2gjDryWHXoaTk72ifaZTwtk2X5XDM87lfnSdrtJX1SstWz0j/h5R40/6FjRP++5v/iqP+HlHjT/AKFjRP8Avub/AOKrp/8Ah2JN/wBFHT/wSH/5IpP+HYk3/RR0/wDBIf8A5Ipe/wD1Y1lW4Ds7LX0qf5H3ZC/mRI3qM0URL5car/dGKK0Pwd7nyf8A8FILqaD4K6NFHIyRz67CkiqeGUQXDAH2yqn8BXwR8KNJtde+KXg7TL6FbiyvdZs7aeF/uyRvOisp9iCfzr7z/wCCkwP/AAprQP8AsPxf+k1zXwv8EmC/GfwCScAeINPJ/wDAmOs5fHE/ozg1uHDFeUdH7/5H7ORjbGn0r84/+Cj/AIkutQ+LmhaMZw9hp+kieOHaMpNNK4kOcZOVii46ccdTX6OR/cX6V+Z3/BRDTxZfHq3mG4i70aCY56ZEkyYH4IPzqp7M/OeAYwlnkHPdKVvW3+VzoP8Agm/4Fstc+IHiXxLdBZLjQ7WGK2jeMHa85kDSA9iFiZeO0jV+iXWvgn/gmXq1rDrHj7TJLiNb24hs54YCRudEaZXYDqQDJGD/ALw9a+9jTj8KOfjqpUnn1ZVNly29OVP87ir0r4a/4KUfD2zWw8L+N4dsd6Jjo9wPmJlRleWI9cDYVl6DJ8zn7or7jr47/wCClWuWcPw48K6M8mNQutW+1xR7T80cUMiuc9ODNH1P8XHQ05Ws7nDwhUq087w3sd27fK2v4Hzx+wb4kuND/aO0azgSNo9YtLmxnLA5VBGZwV990Cj6E19qftyf8mw+MP8Aesv/AEshr4b/AGIbSa4/aa8ISRRPIkAu5JWRSRGptZlDMew3Mo57kV9yftx/8mw+MP8Aesv/AEshrOPwn3vFUIR4uwbitW6bfrz/AOVj82/gj/yWrwB/2MGn/wDpTHX7OR/cX6Cvxj+CP/JavAH/AGMGn/8ApTHX7OR/dX6CnD4Tk8TP9/of4f1GToHhdSMgqRX4ofEDw/D4T8e+JdEtmZrfTdTubKJnOWKxysi5OOTgCv2xf7p+lfjF8af+SyePP+w/f/8ApRJRP4TXwynJYvEU76OK/P8A4J+mv7G2qTax+zZ4LnuHaSSOCa3Bb+7FPJGo/BUA/Cvnz/gp3/rvhv8A7uo/ztq93/Yf/wCTYvB31vP/AErmrwj/AIKd/wDHx8OP93Uf521OXwnkZAlHjGy/5+VPykcF/wAE4/8Aku2q/wDYAn/9KLav0q7ivzV/4JyH/i+uqA/9ACb/ANKLev0q9KcfhRycf/8AI8qekfyPl7/goh/yQSP/ALC9v/6DJXxd+yJ/ycf4H/6+pP8A0TJX2x/wUIsZbr9n+WaNCy2+p20khH8KksufzZfzr4e/ZV1CDS/2iPAs9zIsUbX/AJIZjxudGRB9SzKPxqJfEj7rhPXhTFpf3/8A0lH6902b/Uyf7p/lTl6Cmzf6mT/dP8q1W5+ALc/C+v1TtP8AkxxP+xD/APbCvysr9evhPocPib9mHwrpFwM2994WtrWT/de1VT+hqKXU/oPxBkoUcDKXSX+R+Qtfsj+z3/yQr4ff9i/Yf+k8dfjbX6/fst+IbXxN+z94EurMsYodLhsn3jBEkCiF+PTdG2PbFRT6k+JcZSweFqJaXevqj1T2rjPiz8LdD+L/AIJ1Dw5r1sJredd8UwA8y3mAOyWM9mU/gQSCCCQezNNlbbE5PTBrY/AqNWdGpGpTdpJ3TPw91vRbzw3rWoaTqEXk39hcSWtxFuDBJI2KsMjg8qeR6V+nX7B/jU+K/wBnnTbWSS4mudDuZ9NkluG3btpEkYU5J2rHLGgBxjYR0AJ/N/4pa1Z+JPiZ4u1fT5fPsNQ1i8ureXaV3xSTOynB5GQw/Ov0A/4J16Peaf8AArULq4gaKDUNZuLi2YkYkjEUURYY/wBuOQc/3fpWUPiaP6I47/fZBQrV1ad4/e4u58P/ALR3iK68UfHjx5f3hQzLq89oPLG0eXA3kx5HrsjX9a+5v+Ce/wAPrTw58Fv+EmUrLf8AiO5kkkfZgpFDI8KR5zyAyyPnj/Wkds18E/HK2ktPjV49jljaN/7evm2upBwZ3KnHoQQfxFfon+wXrlnqn7N2hWlrMJbjTbm7trpMEeXI07zBenPySoeOPmoj8bOXjCU6XC+FhR0i+RO3bldvxSPoihlDDB6UtFaH8+H5V/tyeAbLwJ8ftSawKpBrdtHq7QquBFI7Okg6nO542kzgf6wjtXu//BM3xBdXGieOdDfy/sVpc217FgfP5kyOj5OemII+3rXkn/BQzWLTVPj9Hb204lm0/R7e1uVAP7uQySyhfrslQ/8AAq9J/wCCY8Def8RJirBNunorY4J/0gkfhx+dR9s/oTMuatwPCeI1klG19/iSX4HnX7fnws1bwv8AGG68XG3km0HxAsRS6WPEcNwkQjaEkE/MVjEgJAzuYDOxq8++AX7Tnir4AXc0WliHU9CupRLdaTdZCs3ygvG45R9q7c8j1U4GP1a8WeEdI8deH73Q9esIdT0u8Ty57acZVh1yD1BBAII5BAIwRXyH8SP+CbmkXzXN34J8Rz6VIfMkTTtUTz4Sx5SNZBh0QcjLCRsY69yUXe8Tx8j4syzFZdHKc8h7sUkna6stttU13Op+H/8AwUR+H/iQRReJLPUPCV35bO8jxm6tQ24AIrxjeSQc5MajhuemfpTwz4v0Txpp4v8AQdXsdZsSxQXNhcJPHuHUblJGR6V+UnxQ/ZS+JPwnt7i91XQjf6RDy+qaU/2iEKF3MzAAOiqAcs6qBjrzXE/Db4la/wDCfxZaeIvDd81pfQcOh5injP3opF/iQ46eoBGCAQuZp2kjrxXAuWZnQeJyTEX8r8y9L7r53P2p/nRXKfC3x5a/E74e6D4psxGkWp2iTtFHKJRDIR+8jLADJR9yHgcqeKK1PwypTlSm6c1Zp2fqea/tq+D28Xfs6+J/ItFurzTVj1KEswBiEThpXBPcQ+b9ckda/Ke2uprK4iuLaaS3uYWWSKWFiroynKspB4IIHT0FfuFqunW2sabdWN5BHdWlzE0M0EyB0kRgQVZTwQQSMGvxt+Mnw0vfhH8SNc8L3aSlLSdvss0g/wBfbscxSZwAcrjOOAwYdqyqLZn7t4bZhCdKvlk3r8S9Ho/u0+8/YHwT4ntvGvg/RNfshItnqdnDeRLKAHVZEDgMAeDg88187/t8/Bu8+Ifw3tfEmlgy6h4X864kg3hRJauoMxGRyy+WjDkcB+pIFcX/AME8fjfbXWhXPw11W8jivrSR7rR1kIUzQuS8sS/KMlH3PySxEhwMRmvtdlDrgjINaX5kfmeIp4nhXOm4/FTldecf+Ctz8XfhT8TtZ+EHjjTvE2hzFZ7Zts0BfEdzCfvxP6qw9QcEBhyBX6V/DP8AbQ+GPxA0qCS61638Nap5XmXFhrDi3ETA7SBM2I3z1G1s4IyByB4z+0J/wT/GrXt74g+Grw208ztNL4enYRw52kkWz4whLAYjf5BuOGRQFr458U/CPxt4Ja4Gu+E9Y0yO3kMTzz2b+RuH92UDYw46qSD2rNc0Omh+vYmjkHG1OFdVfZ11o9Un6NPdeaP088c/tffCrwPppuJPFllrE7I7RWmiyC8kkKgfLmMlUJyMb2UHnng1+bHxy+NetfHXxvN4g1dVtYFXybLT4m3R2sOSQoOBuYk5ZiOT6ABRgeHPht4t8YLv0PwxrGsR7ghksrGWVFJ4wWUYH4mvrT4B/wDBPrUbq+i1f4nbbOyjIaPQbWcPLKwc8TSJlQpAHCMSd/3kxgj5p6WHhMFkHBSliqlb2lbps36JLb1f4HV/8E8fgpc+HtH1L4g6xaSW1zqsQtNLWXKn7LuDPLjPSRgmNy5xFkHa/Pq/7cWP+GYfGH+9Zf8ApZDXuFjZQadaQ2tpBHbW0KLHFDEoVEUDAVQOgAAGPavHf2yNB1LxJ+zn4r07SdPutV1CZrTy7SyhaaWTF3CzYRQScAEnjoCau1lZH5JDNZ5pxBSx9d2vUg/RJq33I/M34If8lq+H/wD2MGn/APpTHX7Nx/6tfpX5J/B34OePtP8Ai94Hu7vwR4jtbW31yxlmnn0m4SONFuELMzFMAAZJJ6YNfrYvCgHrilBWjqfU+I2Jo4nHUZUJqS5ejv1CQfI30r8YvjV/yWTx5/2H7/8A9KJK/Z1/ukDrivyR+L/wc8fah8WfGt1a+B/Ed1az63eyxTwaTcPHIjXDlWVgmCCOcj1HrRJXiPw5xNHDYyvKvNRXL1dup99fsP8A/JsXg763n/pXNXm//BR7wFNrvw10LxTBHJK2g3jRTbWUIkFxtUuQeSfMSFRj++eMcj1X9jrQ9S8N/s6+E9O1awutL1CH7V5tpeQtDLHm6mYbkYAjIII46EV65rGk2eu6XdadqFtHd2N1E0M9vMoZJEYYZSD1BBIxTtpY+QeZf2bn88fS1Uakn6q7v96Pxw+DfxU1H4MfETS/FemxC7a0LJPZvK0aXMLDa6MR+BGcgMqnBxiv0O8Oft8fCLWNNW51DVr7QbgsVNpe6dM8gx3zCsi4P+9mvBfjR/wTx13TdQvNS+HVxFqumyMXj0W8l8u5hyR8iSsdkg5Y5coQAAS55Pz/AOIv2a/in4XvBbX3gLW3lKh82NqbxMc4G+DeueOmf5is1zR0sfsePo8M8XcuLniOSol/Moy9GnfbuvvP0S/aehT4q/sq+Irvw5Kt7bXmn2+rW0jKyeZbo8dwSFI3AmNDgEZzgHFflhoms3fh3WtP1bTpvs9/YXEd1bTBQ2yVGDI2GyDgqOtfsV8D9NudN+C/gawv7aW0u7fQ7KGa3uEKSRuLdAyspGQQcggjIxXyt+0F/wAE/ptU1e+8QfDaW0t0nzNJ4dn/AHSB8MWFu/Rdx2gRsAq5PzBcKLnFt6HyXBvEGByv2+V412pyk2pPbs0/VJHofw+/4KA/DbXtDjl8S3F14V1OMKJbaS1luUdsZJjeJGyv+8FPtXTS/tyfBVo2x4vbJBH/ACCrz/4zX59+Jv2W/ix4TaIX3gTVpfMBK/2fGL3GP73kF9vXjNYP/CkfiN/0IHij/wAE1z/8RU80ux7suD+F68nVpYyyfRTjb8Uziq/Y/wDZ7+b4D/D8HvoFiP8AyXSvyl/4Uj8Rv+hA8Uf+Ca5/+Ir9YfgVp91pXwX8DWd7by2d5b6JZRTW86FJI3WBAyspAIIIIIPIxTp3Sdzk8RcVhq+Gw0cPUUrN7NPofm9+2T8ILj4V/GTU7mONjoniCWTUrKY8jczZnj4UAFXY4AzhXjycmpf2Xf2qL79n28vLC7sH1jwxqEqzT20bhZreQYVpY88MSgAKsRnavzLg5/Sb4qfCrw/8YvCF34d8RWvn2cvzxzR4EtvKM7ZYmx8rjJ9iCQQQSD+f3xN/YA+IXhXU5G8LJB4u0lnJiaOZLe4RcA/vEkIXOcgbGbOM4XOANNPmidGScR5XnWWrKc6ajJKyb0Tts79GvxPrGw/bs+Dd1YwTz+Jp7KaRFdrabTLlpIiRnaxSNlyOh2kj0JrwP9pL9vK18W+G9Q8LfD+C6hhvA9td61doIy0BBDLAmcjeD99gCozhdxDL8wt8D/iMjEHwB4oyDj/kDXGPz2V2vgb9jn4s+Omt3i8Ly6LZysyG71pxaiPAJy0Z/e4JAGQh6jtmlzT6I7MPw3wrllRYuriVJR1SlKLX3JJv01PJvDfhvU/F+vWGi6NZyahql9KIbe2ixl2PuTgAc5J4ABJr9jPg98Obb4TfDXQPClo3mpp9vtkmGcSzMS8smCTjdIztjPGcDivNP2dP2Q/DnwL2arPMdd8WNGyNqUibUhVjysMeTt4wCxJY88gHbXv1VGPL6nwPGfE8M8qxw+F/gw69339F09Wfnh/wUL+DF1ovjKD4h2EDy6Zqyx22oMpz5NyihUJ54V41UcDAMZzywz5N+zL+0pqf7P3iaQyJNqXhe/KjUNNQjcCOk0WTw4HbgOOD0Vl/VDxZ4T0nxz4fvtC1yxi1HSb2MxT28wOGHqCOQQQCCOQQCMEV+e3xw/YD8U+D7y41HwIr+J9CC7/sTuovoMKxbggLKPlGNvzkuBsONxlxafNE+l4b4iy7MMt/sTOmkkrJva3TXo10Psrw3+1R8KfFGnm8tvHOj2yK+wx6jcCzkyAM/JNtYjnqBj3rgvjN+3L4D8A6NeQeGtRg8WeIwAkFvZlntlLAkO8w+RlXuEJbJA45I/N3XvBHiPwrJHHregapo8kgyi39lJAWHtvArofCPwF+Injq4to9E8G6xdJcAtFcSWxgt2wCc+dJtj7f3vajmb0sd9PgfI8NNYmvi70uzcV97/yscx4h8Qav468S3mr6rczaprOpT+ZLKwy8jk4AVR0xwoUcAAAV+qn7JnwbuPgr8IbHS9RTytbvZW1DUUDhxHK4UBBgkfKiIpwSNwYjg15v+zX+w5p3wx1Gz8S+MLiHW/E9s5ktraDJs7RgcJINygySADIJACk8DKq9fWHG3HaqjHl33PleMuJsPmUIZdl38GHXa9tEl5L8TyLxt+1h8Lvh34ovvDuv+JTYavZMqz2/9n3Mmzcquo3JGVPysp4PesT/AIbl+Cn/AEODf+Cq8/8AjNfHP7W3wp8ba9+0N4v1DS/B+v6lYTywGK6s9MnlikxbRAlXVSDggj8PWvIf+FI/EX/oQPFH/gmuf/iKTlK9kj2sv4P4fxOEpVq2LalKKbXNDRtarY/RLxD+3h8HtP0m4uLTXLrWZ1A22Vrps6ySZIBwZVRBjk8sOAfpX5keI9Tg1vxBqmo2lhHpVreXUtxFYwkeXbIzlhEvA4UHHAHQV2mh/s7fE/xBqMdlZ+AtfWaTo13YyWsfAJ5klCqOh6tzxX0J8Ev+Ceuv6nq1nqXxGkh0nSon3yaLbTCS5uACRseRDtjU4U5VmbBI+Q8ifelpY+owEeHeDqdWtSxPPKS25lJ6bWSt9/4n09+xrot5oP7Nfgq2vYvJmkgmu1XcGzFNPJLE2Qe6Op/GivZLS1isbaK3gjWGCJAiRxqAqqBgADsMUVqfzpjMS8XiamIa1nJv73cnzjrXzR+2l+zc3xi8Kp4g0ONV8VaLC7RxLEC1/B95oCwG7cDkpzjLMMDeWH0vR/D7UeTNcvx9fLMVDF4d2lF/0vmfiB4f8Qan4P16y1fSbqXTtVsJhNBOg+aN1PcHgjsQeDkg1+mP7OP7ZPhv4v2tno2tSQ6B4w2BWtZW2wXb5AJgcnknIPlk7hk43BS1c1+1D+xNYfEc6h4p8FJHpviyQ+dPZEhLfUG/iPpHKeu77rH72Cxcfnx4s8I614F1y50bX9MudJ1O3O2S3uEKnqRuU9GU4OGUkHsTWWsPQ/oGSyfj7CxfNyYiK+a/+Sj/AFoft0rAjgg0jRqeSoP4V+S/w8/bA+KXw5WOG38RSa1YIWb7Hram6UkjH3yRKAMcKHA68V6/4b/4KWeKbNXGu+ENL1Rj902FzJaAfUN5ufwq+dH5zivD7OsPJqilUXdO352P0IESjoi/lUV1dw2FvJPPKkMMal3kkYKqqBkkk9BxX5269/wUk8dXl4zaR4c0LTrQ9I7vzrmQe+8PGP8Ax2vCPiN8fvH/AMVlaLxL4mvLyzIwbGIiC2IDbhmKMBXIOMFsngc0OcTowPh3m2ImvrLVOPrd/JL/ADP068MftSfC/wAYeKJ/D2m+LrKTU45vIjWXdFHcPuChYZGASQliAApJbqMjmvVVw68YIr8afhT8EfGPxo1b7F4X0mS5ijcLcX8x8u1tslcl5Dxkbgdq5cjOFOK/Vb4H/Chvg74DtPD0mv6l4hki2lrnUJSwTCKojhUk+XEAvCAnGTyacW5K7R5XFOQZfkc4ww2I559Y9V53W3oegiNV6KM/SnUUUz4AKb5an+EflTqKAEAC9BiloooAKQqG6gGlooASloooAQqD1GaTy1/uj8qdRQA3y0/uj8qXpS0UAFJS0UAN8tP7o/KlwB0GKWigAooooAKKKKAGeUh5KKfwpRGq9FA/CnUUDuwooooENKK3VQfwpPLT+6Pyp9FA7ibQOgA/CloooEFFFFABRRRQA2uU+IHwt8K/FDS/sHijQ7PWLdQwjM8f7yLdjcY5BhkJwOVINdWKM0zSnUnRmp05NNdUfHHjT/gmz4X1S4abwx4n1DQN8rO0F5Ct7EiHkInKMMdizMeOfWvL9d/4Js+OLW8ZdH8S6HqFr/DLeCa2c8f3FSQDnP8AFX6LrRmp5Y9UfaYbjXPMNFQjX5l5pP8AFq/4n57eG/8Agmn4mvFk/t3xhpeltxsFhayXYbrnO4xY7ev4V7N8Pf8Agnv8PPCk1vda7PfeLLyNBvjun8m1MgIO8Rp82OMbWdxgnOa+pKTIosuxji+MM7xkXCpiGl/dsvxWv4mboPh/TfDOlwadpGn2umafACIrWzhWKJASTgKoAHJJ+prS7UcUH0qj45ycndu7HUUUUhBRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFAH/2Q==" alt="Contubos"><i></i><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEA3ADcAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCABuAbEDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9UuKBXnHxx+ImpfDXwna6lpcNrPcTXiW5W6RmTaUduArKc5UfrXh3/DWnjH/nw0X/AL8Tf/Ha8LGZxhMDU9lWbT9DGdaFN2kz65or5G/4az8Yf9A/Rf8AvxL/APHaP+Gs/GH/AED9F/78S/8Ax2uL/WTL/wCZ/cZ/Wafc+uaK+Rv+Gs/GH/QP0X/vxN/8do/4a08Y/wDPhov4wTf/AB2qXEeAk7KT+4PrNPufXNFIpyoNLX1B1BRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAlFQXV5DYW0lxcypBBEpeSWRgqooGSST0AHf2rN0fxhoXiK4eHS9ZsNSljXc0dpcpKyjOMkKTgVk6kIyUW7MV0bVFFJWoworgfiB8avDXw7YQX9y13fk4+w2QEkqjAOWBICjBB+YjPbPNeL6x+13rM5j/svQbKyxnf9rme43dMY27MY56569u/iYrOMFhJclSpr2WpjKtCGjZ9TUnWvljSf2utdhkc6noen3iY+RbWR4CDnqS2/PHpXrfw9+P3hnx5LHaea2k6qwAFpeEASNwCI3zh+TgDhjgnbU4bOsDipKFOevnoKNaE9Ez06ikGCKWvdNwooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigBD0oryz47/ABO1X4Y6XpdzpcFpPJdTNG/2tHYABcjG1hXD/Cr9obxJ448faVol/aaZFaXXmh3t4pFkG2J3GCZCOqjtXjVc1w1HErCzfvO3TuYurGMuR7n0ZRRRXsmwUUUUAcF8YfhvL8T/AA1baXDfJYNDdrc+Y8ZcHCOuMZH9717V49/wyBf/APQyQf8AgI3/AMXX07+tFeLisowmMqe1rRu/VmM6MJu8kfH/AMQv2crrwB4Tvtcl1uG8S1KAwrblS26RU67v9r07V5Xoeltrmt6dpyyCJry4jtxIRnbvcKCR+P6V9k/tHf8AJHdd+tv/AOj46+RvAP8AyPfhz/sJW3/o1a/OM4wNDCY6FGjG0Wl+Z5tanGFRRSPZ/wDhj+//AOhlt/8AwEb/AOLpf+GP7/8A6GW3/wDARv8A4uvpxfuj6Utfdx4ey9Wah+L/AMzv+r0+wijCgUtFN3r6ivpdEdI6imhge4p1F09gCiiimAUUhIHWk3r/AHhSugHUUgYHoaWmAUUm4DqcUm9f7wpcy7gOopu9f7wpdwPQ0cy7gLRRRTA+df2vdYvbfT/D2mxTvHY3bTyTxLgCQp5ezPqBvbjpnHoMfOmh61e+HdYtNT06Zre9tZA8UiZzkcEHHUEEgjuCRX3d488B6R8Q9FOm6vG7RhvMiljbbJE+CNyn1wT1BHqK4vwZ+zj4W8H67Dqolu9SuIDugS8dCkbZyrgKoyw7ZOMnOM4I+AzLJ8Vicf7enNKLt12scFSjOdTmTPWFyVB9q82+O3xMb4b+EybOQLrN+TDaZUNsxjfIQeyg+/JXIIzXpVfHf7UGvPqvxOksf3gi0y2jgCMxKlmHmFwOxIdR77R7V72d4yWCwTlB+89Eb1p+zhdHk1xcS3c8s9xK888rs8ksjFndjySxJ5JJNR0UV+LtuTu9zxQo/WiiltsB9d/s4fFOXxnocujarctcazpygrNKwLzwE4DE5yzKflY47ocksa9m718P/AXXP7B+K2hyNM8UNzI1pIFPD+YpCKR6b9h59Aa+4a/Y+H8ZLGYNe0esdD2cPUc4ai0U3eo6kUb1/vCvpeZdzpHUU3zF/vD86WndPYBaKKKYBRRSZx1oAWim719RShgehzS5l3AWiiimAUUUUAFFIWA6nFJ5i/3hU8y7gOopAwPQ0tUB8+/tff8AIA8P/wDX1J/6BXkv7O//ACWTw99bj/0nlr1r9r7/AJAHh/8A6+pP/QK8l/Z3/wCSyeHvrcf+k8tfluY/8j6HrH9Dy6v+8L5H25RRRX6keoFFFFABRRRQB5n+0f8A8kd1362//o+OvkbwD/yPfhz/ALCVt/6NWvrn9o//AJI7rv1t/wD0fHXyN4B/5Hvw5/2Erb/0atflvEX/ACM6XovzPLxH8VH6Br0rP17XbHw1pNzqepXKWtlbrukmc8Dtx6kkgADkkgDrWgOFFfK/7VfjptS1+28LW8g+zWAW5uVwcmdl+QEkfwo2eDg+ZzyK+7zLHLL8M6z36ep31ans4uRh/ET9pDxF4rnmttHmk0HSdxCeQdtzIoIwXkH3Tlc4TH3iCWrym9v7jU7qS6vLiW6upDmSaaQu7cYyWJ5OAOp7V2/wc+Fc3xS8QSQPKbbSrMK95MjDfhs7VQerFW5xgYPsD9j+G/BOh+ELfydH0u2sF2qjNFGN7gdNzdW+pJr4HC5fjs8viK9S0X/WiOCNOpX96T0PgnSPEOqeH5JH0vU7zTXkAEjWdw8RbHTJU8gZ4zX0d8Dv2gr3xFq0Hh7xNJFJdT5FtqAAjMj5J2OoG3JHAIx0A5JzXR/tHeCtFvvh/qutvY28erWoiZL1UCyH94q7WYcsCpIwc9RXyZomoT6TrVhfWv8Ax82txHNFwD8ysCvH1ArOX1rIcZCn7Tmi/wAV6E+9h5pXuj9FfeuO+JnxM0v4Z6Eb2/PnXUuVtbJGw87j09FGRlu2e5IB6e8voNNsJry6lWG3gjaWWRzhUUDLE+wFfBXxC8a3fxB8V3mtXYKeYdsMG4sIYl4VB+ZJwOrMeM4r7POs0/s+iuT45bf5nbWq+zj5nQeMPj14w8W3TsNUl0i037o7XTnMW3ggZcfM3BycnGecCvPpJGnkaSV2kkc7mZiSSSckk+pPWvob4H/s92GuaLb+IfE0b3EV0PMtdPBZF8vnDyEYJzwQAcYwTnOB7l/wrHwhtwPC+jYPb7BF/wDE18rRyXMMxgsRXq2v3/rQ5Y0KlRc0mfHfhn40eMfCk6va65cXMIK5tr5zPGVHRRu5UY/uEV9c/Cvx7J8RvCUOry6bLpsjO0bI5ykhGMtG3de3TqGHOMnmfEH7Nng/XNatL6G1fTY0m8y5tbVisVwuPuY6R8gcpjjcOpBHqVraxWNvFBbxJBDEoRI41CqqgAAADoAPSvpMowGOwc5LEVLw6Lf/AIY6aNOcNJO585ftif6zwl9Lv+cNfOPFfR37Yf8ArPCX0u/5w1xv7Mug6b4g8fXttqlhbajbrpskghuoVlQMJYhnDDrgn86+QzShPFZxKhGVr2/JHHVi51+VM8j4rZ0jxp4g0GFIdN1zULGBW3LDb3Tomc5J2g45PqK+4R8MPB//AEKui/8Agvh/+Jri/iP+zv4d8U6XO+jWVvomsKmYZbdTHCxAOFeNflwc8sBuGB1xg9lThvGYeDqUat2vVFvDTjrGWpw3wl/aZubjUodK8YyQmKY7ItVVBHtcnpKB8u05A3ADGBnglh9JNIqRlyQFAzkmvzhZWVirAhhwVbg+4Ir7p+FOqx+NvhXos97GbtLi0+y3K3X7zzimYpC+c7gxUnnrnmvV4dzOviufDVneUVdP/M1w9VyvGW6PkH4qeNX8feONS1bezWpfybVTnCwqSEwD0zyxHqxrksCvtn4ifDvwtY+AfElzbeG9JguIdOuJI5Y7GJWRhExBBC5BBr4nr5TOMHWweJUqk+Zz1/E5a0JQldvc/SBfurXxL+0R/wAlk8RfWD/0njr7aX7q/SviX9oj/ksniL6wf+k8dfX8U/7lD/EvyZ14r4Eec0UUV+VHkhRRRQBueArpLPx/4Ukk+62sWMYx/ee4RB+rCv0G/hFfmfo3iKNPi98PNIhkVpZPEWnPcKrcqouYyqkY6k/N68DjkV+l+K/VOFoOOGm31Z62FTUGfEv7RWP+Fx+If+3f/wBJ46834r9A9S8B+G9avJLzUNA0y+vJMb57izjd2wABliMnAAH4Cq//AAq/wd/0Kujf+C+L/wCJrlxfDdbEV51VVspNsmWGcpNpnwVa3U1jdRXFtNJbXEbb45oWKurDoQQeCPavRPBX7QHi7whcp51/JrliX3SW2oO0jHlclZD8ynCkDkqMk7TX1NqXwf8ABWrWb28vhnTY42x81tAsD9ezoAw/A18pfGn4Vt8L/EUMMEkk+k3iGS1lmZS+VwHVsY5BKnIGCGHoa8bFZbj8misRTqXS7fqjCVOpRXMmfX/grxppnj3QINW0qbzYH+V424eJx1Rx2YZ/HIIJBBPQ18pfsm+JJrPxdqWjNKotLy288RsST5qMANvOOVZs8fwr6V9T3E8drDJNK6xxRqWZ3OAoHJJPpxX6BleO+vYSNeWj6noUqntIKRynxM+Jml/DPQze3x866lytrZI2HncdvZRkZbHGe5IB+UfF3x68ZeLbhyNVl0m037o7bTmMW3ggDePnbgnqcZ7cVh/EjxtP8QPGWoaxKXEMjbLWJ8gxQjhFxk4JGSQDjcWxXXfBf4G3HxLkk1DUJZbDQYiY/NhwJZ5APupkEBV4yxB9B3K/CYzMsZm2JeGwbtHy6+bOGdSdWXLT2PLri4lu7iSeeV555GLvJIxZmYkkkknkkk/nW94f+I3ijwu0H9l69fWsVvny7fzmeFc9R5bZXHJPI4NfWUX7OPw/SMKdDaRsDLNez5Pv9/8AlXDfEf8AZasJLG5vvCcktrdRoWXTZn3xyYA+VHb5lJ5PzEgnA+UciamQ5lho+2pzu12buJ4erFcyZe+Df7Rq+KLyHQ/EoitdSk2pbXkY2x3DdNrD+FycYxwSSODgH3jPFfm9X2p+z/49fxz4Dg+1y+bqenkWtwzPl3wBskOSSdwxknqyvXvcP5xUxUnhcQ7yWz7m+HrOXuy3PTq8q+MXxys/hqq6faQrf65NGXWFjiOEHhWkPfn+EcnB5HBPe+LPEUHhPw3qOr3ODFZwNMVLBd5AyFBPcnAHuRXwHrut3niTWLzVNQmaa8upDJI7Ekc9AOeAAAAOwAFdmfZrLA040qPxy/BF4iq6aSjuzZ8UfEzxR4yaUatrV1PBIAGtkfy4CAcgGNcKcHByRngVy/FfVvwY/Z90rTdFtdX8TWSajqtyiyraXUZMdqrLwjRsPmfB53Dg4A6ZPtU2k2Nxp7WM1nBLZsnlm3eNWjK4xtKnjGO1fP0OH8XjIKtiKtm++r+ZhHDzmryZ8P8AhT4zeL/B8yNaaxPdW6hV+y3zmeLaoOFAJyo/3COgr7C+G/j6z+JHhaDV7SMwMSY57dmDNDKMZXI69QQe4IOB0r5T/aG8Hab4L+ITW+lRC2tby2S7Nuv3ImLOpCDsvyZx2JOOMAej/seXErR+K4TIxhQ2rrHuJUMfNDMB0BIVc+u0VeS4rE4XHvAVZcy1X3a6DoylGp7OTuXv2vv+QB4f/wCvqT/0CvJf2d/+SyeHvrcf+k8tetftff8AIA8P/wDX1J/6BXkv7O//ACWTw99bj/0nlrnzH/kfQ9Y/oRV/3hfI+3KKKK/Uj1AooooAKKKKAPM/2j/+SO679bf/ANHx18jeAf8Ake/Dn/YStv8A0atfXP7R/wDyR3Xfrb/+j46+RvAP/I9+HP8AsJW3/o1a/LuIv+RnS9F+Z5eI/io/QP8Ah/Cvgb4o3k998SPE8txI00g1K4iDMedqOUVfoFVR+Ar75/h/Cvgj4qWE+m/ErxNDcxmORtQmmCkj7juXQ8eqsp/HtXq8VX+rU+1/0NsX8KPo79n/AOyeDvghLr0vmyxsbrUbhEALYjJQhQcclYR1PU1D/wANb+Ev+gbrP/fmH/47VD4E3x8afA/W/C9u8MWoW8VzZoHYgYmVmR24OBudxwD9w1w3/DJvjDj/AE/Rf+/83/xqmsRjqeDw/wDZ8brl19Q5qihH2auQfGD9oWX4haXJoul2L6fpMjq00lwVaWcAhlBA4QBhngknC8jkHm/gh4Ju/GfxA0zy4WawsJ0u7uYpuRFU7lVskcuV24HPJOMA16d4d/ZDctDJruvgLz5lvp8XPTjbK/vjqnOMV7z4S8H6R4H0mPTdHtFtLYMXIBLM7HqzMeSenXsAOgFcuHyjHY7FRxWYOyX9W02JjRnOanU6HMfHzULjTPhF4hlt5PLkaKOEttBykkiI4wfVWYfjxXxZoumPrWsWGnRtskvLiO3ViMgF2Cg49ia+1/jvpU2sfCXxFBCUDpCtwd5IG2J1kbt12ofxr4k07UJtK1C2vbcgT20qzR5GRuVgw49MiuTibTG0ub4bL89TPFfGrn6KWtvHa28UMMaxRRqFWNFwqgDAAHpxU1VNL1C31bTbW9tZBNa3MSzRSAEbkYAg/iDmrdfpkLOKtsemLRRRWgz5q/bE/wBZ4T+l3/OGuc/ZL/5KRf8A/YLk/wDRsNdH+2J/rPCf0u/5w1zn7Jf/ACUi/wD+wXJ/6Nhr8xq/8lCvVfkjzX/vJ9cUjfdNLSN901+mvY9I/P8A+I3HxC8UAdP7Uuv/AEa1fW37OP8AyRzQfrcf+lElfJPxG/5KF4o/7Ct1/wCjmr62/Zy/5I3oP1uP/SiSvzPh7/kZ1V5P80ebh/4sjovih/yTjxV/2C7r/wBFNXwLX318UP8AknHir/sF3X/opq+Barir/eKXp+oYr4on6Qp91fpXxJ+0P/yWTxF9YP8A0njr7bT7q/SviT9of/ksniL6wf8ApPHXq8U/7lD/ABL8ma4r4EeY3WoWtiVFxcwwFvu+ZIFJx6ZPuPzqA+INLUEnUbQDrzOn+NcF8Yv9bpXrtl/mlecV8DRwKqwU27HDGmpJM98ufF2i2kLSSapalV6iOUO3Jx91Tnv2Fch4i+K8Yjkg0eNnkPH2qZcKPdV7n/e9OhrzKiu2ngKcHd6lqmlqzuPgtNJcfG7wHLK7Syv4isGZ3JJJNzGSSfWv197fhX4//BH/AJLV4A/7GDT/AP0pjr9Vvid4kbwj4B1zVI5jbzwWziCUKG2ysNsZwRg/Oy9eK+9ymcaOGqTe0f8AI76T5Ys8++K37SNj4NvrnSNFt01XVofklldv9HgfnKnHLMCBkDGM9cgivD9R/aH8e6hLKRrf2WJ23CG3t41Cc8KCVLYHTlvrXnBzyScmvrfwX+y/4Y03R4h4gifWNTkUNK6zyRRRtz8sYQqSBxy3JxnjOB8rTxGZ55Wl7CfLFedkvu1ZyKVXEN8rsjw2y/aD8fWPlga+0yK24rNbxPux1BO3OD9e/wCNdX8ZPENz49+EfgrxNqEcMeoS3NzEy26lYwu5l4BYnpEvf1r1rVP2ZfAmoWbQ21hcabKSMXFvdSM49sSFl5+leZfGzwfN4D+D/hXQp7hLp7TULjE0YKh1ZpXUkdjtYZHrnk9+mtgswwuHrLFT5ocve+t13KlCpGElN3Rxf7ObFfjFoAHQ+eD7/uJP8BX0/wDG/WDofwp8SXHl+bvtTbbc4/1pEWenbfn3xXy/+zp/yWTw/wD9vH/pPJX0h+0Zz8G9e+tv/wClEddeTSccnrSX978kXQ/gtnxPX6A+AfDq+EvBej6SERHtbZEl8sYVpMZkb8WLH8a/P1ulfpDH9xfpXNwlCMp1ZvfT9ScH9pj6Q80tV7q6hsbWa5uJUgt4VMkkkrBVRQMliTwABnr6V+jtpK7PRPh7456VBo/xZ8SW9sGEbTrOcnJ3SRrI/wD487fpXpH7IOpLFrniPTyDvnt4Zw3bCMwI/wDIg/KvIviR4pHjTx1rOspjybmc+ThSMxKAkZIPOSqqT9T0r2j9j/TGMniXUHgYLiCCKcrhSfnZ1B9f9WT9Vr8lyxqpnXNS25pfdqeTS1r3R237UmrnTfhbJbbNw1C7htyf7uCZc/8AkLH418w/DXSBr3xB8O2TQx3EUl9EZYpV3I8atucMCORtVuor6e/aj0c6l8LZbkSbBYXcNwV/vZJix/5Fz+FfK/gjWk8OeMtE1OWR4oLS8illaMEt5YYbxgf7OeO+cV15+7ZrTdTbT7rl1/4qb2Psz4l/FzSPhY2mrqlrfXP24SeX9jRGxs25zuZf749ehrgdQ/a58Ox2sjWWj6pcXIHyRziOJCfdg7Ed/wCE9K2fjx8J9X+Kn9hSaRc2MS2azeYbuR13b/L27dqtn7h647V5dY/sk+J5LqNbvVdKt7cnDyQtLK4HqFKLn/voV7mOxGbqvKGEh7nR2XY3qSrXtBaHlPjbxdeeOfEt7rV8FSa4YYjQnbGoGFUe2B/OvqH9mDwTN4a8FTardRCO61h1mT5jnyFX93kdBks7DHZlz6A8C/sxeHfC90l5qkr+IbtcgLcRhLcZ6HyucnHHzEj2zivZRjHHGKWT5PWw9d4zFv33+u7YqNGUZc89z5//AGvv+QB4f/6+pP8A0CvJf2d/+SyeHvrcf+k8teufteRsfDegyY+Vbt1J+qHH8v0ryP8AZ2/5LJ4e+tx/6TyV4eY/8j2HrH9DCr/HXqj7cooor9SPUCiiigAooooA8z/aO/5I7rv1t/8A0fHXyN4B/wCR78Of9hK2/wDRq19gfH7TbzV/hTrVrY2s17dSGDbBbRmR2xPGThQMngE/ga+XfBPgDxRa+NNAmm8N6vDDHqFu7ySWEqqqiRSWJ28AAE+wFfmmf0alTMacoRbSS/M83ERbqppH3Mv3RXzP+1P8N5Vuo/GFkgaJgtvfqqnKt0SQ+2MKckdE9ePphfuioLq1hvraW2uIknt5VMckcigq6kYIIPUEcV9vj8DDMMM6E/l5M7qkFUjys+BvAXjzUvh5r8eq6YUZ9pjlhlBKSoSMqefUA8HsO1fT/h39qHwbqtmG1KW40W6VV3xTQPKpYjLbWjByAe7BT7VynxA/ZTW8vGu/Cd3DZI5G6wvWconByySDcf7vykdzzjivJdR+BPjzS4fNm8OTuvTFvJHM3/fKMT+lfn9H+18lbpwhzR9Lr8Njzo+2o6JXR9C+IP2oPBul2ZfTpbjWrlgwWGCBogGA43NIFwpPGRk+1WvhD8d7H4lTT6feQppesKzPFbeZuWaLJI2t3ZRjI74yOMhfnbSfgD481gQsmgvbRSMFMl1LHFs56spbdjvwvToDXtXwt/Zng8K6ha6v4gvF1DUrd1lht7QssMLqxIYtwXPC8EAdeDxXs4HHZxisRGU6doddLL8dTenOtOSutD2+6tYr61lt7iJJoJUMbxyKGVlIwQQeoI9a+Evij8Pbz4b+KrjTp0drKRmksrhmB82LJxk4A3AcEYHI9CK+9BXOeN/AekfEDR307VrfzE5McyHbJC2MBkPYj8j3BFeznGV/2lRtHSa2/wAjatS9pHzPmf4N/tCP4B01NF1m0kvtJjYmCa32iWAEklSDgOCTnkgjJ68Ae3j9o74enrrxH/blcf8AxuvDPFX7LnizRbj/AIlHka9as2FaN1glA2jJZXOBzkcMf8ODm+F/jCC4eBvC+rl1baStlIy9cZDAbSPcGvkKOPzjLY+wlS5ktrpv8UckalamuVq57/rv7WWjWmtWsGl6fcX+nLNi6u5BsJjxgGJOpOcH5sfdx3yPbNF1qy8RaVb6jp1yl3ZXC745ozkEf0IIwR1BGDzXyV4Z/Zh8Y61dbdSig0K1BXdLPIsrMpzkoiMeRgcMV6jGea+nPh58P9N+G/h8aVpjTSRmVppZp33NI5wCfQcADAA6euSfpsnxGZV5yli4Wi9un3Lf7zpoyqS1mjxT9sP/AFnhP6Xf84a5z9kv/kpF/wD9guT/ANGw12n7VnhvV/EEnhg6Xpd7qQhF15n2O3eXZkxY3bQcZwfyNYH7MXhLXNC8f3txqWi6hp0DabIgmu7WSJSxliIGWHXAPHtXh1KNX+3lUUXy3WvyMXF/WOa2h9R0jfdNLSN901+jPY9A/P8A+I3/ACULxR/2Fbr/ANHNX1t+zj/yRvQfrcf+lElfM/j7wD4nuvHXiOeDw3q88EupXLxyx2MrK6mViGBC8g9sHnNfT/wD0270j4UaJaX1rPZXUZn3wXEZjdczyEZU8jIIPPY1+cZDRq08yqylFpNP80efQi1Vk2jc+KH/ACTfxT/2C7r/ANFNXwJX398RrWa98A+JLe3hknnl024SOKJSzOxiYAKB1JJ6V8R/8K48W/8AQr61/wCC6b/4mr4mo1atek4RbsGJi21ZH3+v3V+lfEn7Q/8AyWTxF9YP/SeOvttfurXxJ+0R/wAlj8Q/W3/9J469DihOWCgl/MvyZpivgR82/GT/AFmlf7sv/slecV6P8Yv9bpX+7L/7JXnFfKYVNUY3OWHwhRRRXWWetfso+HYvFH7Qngu1mDeVDdtellGcNBG8yE+2+NR+Nfpd8VPDbeLPh7rumRxNNPNbM8MakAtKnzxjPuyrXyv/AME8fhbcWsGueP7yN4o7pP7M07O5fMjDq074K4I3JGqsCeUlBHFfam3PFfa5dhb4OUJ/b/LY7Kcfcsz83fvL6GvrXwZ+1J4b1LTYk8QGXRtQSMeaVheWF26fJtyw45ww4zjJ61U+K/7NKeKdTm1jw5cxWF9cSGS5tbnPkyMTkupAJUnnPBBz27+F6x8F/HGh+X9p8NXr+ZwPsii5/Pyy2Pxr4enSzPIqs/Yw5ovyun92xwqNWg3bVH1F/wANHfD3/oPtj/ryuP8A43Xkf7RXxS8M+PPD+l22h6kb2aC6Mki/Z5I8KUIz86juR0ryb/hW/i3/AKFfWv8AwXTf/E0f8K38W/8AQr61/wCC6b/4mnis2zLF0ZUJ0dH5P/MJ1qs48vLudN+zr/yWTw//ANvH/pPJX0h+0Z/yR3X/APt3/wDSiOvCPgL4J8RaT8VtEur7QdUsrWPz981xZyRouYHAyxGBknFe7/tGf8kd1/8A7d//AEojr2cqpzp5NXU42fvfkbUU1RkmrHxM3SvtT4tfGhfhTPpUJ0ltTN4jvkXHlbNu0Y+6c53fpXxW3Svqv9o74beI/Hl5oMmhab9vS3ilWU+dHHtLFMffYdcHpXg5NUxFLC4ieF+P3el+/Q56DlGEuTfQx2/bCUL8vhQk++oYH5+XXm/xN+PGvfEaA2OxNK0jduNrbuWaXgYEj8bgDk4AA5Gc4FM/4Z3+IXH/ABTx/wDAy3/+OV1+hfsk69dXA/tbV7Gxttgb/RQ08m7I+XBCgcZ5ye3BrWU89x8fZSTSflb/ACKf1iorNHi2jaLe+IdUttN022ku725fZFDGOSepPsMAkknAAzX3N8LfAkXw78GWWkrta6A867lQ5EkzAbyDgZA6DIzhRUfw/wDhR4e+G8DDSrXdduu2S+uCHmdSc4LYGBwOFAHA712dfV5Lkv8AZydWq7zf4HXQo+z1e5m+IdFtvEmh3+lXYY215A8D7cbgGUjIyDzzx718E+MvCOo+B/EF1pGpwmOeE5STHyyoSdrqe6kD9CDyCK/QiuQ+Ivwz0b4l6WlpqcbJLE26C7gwJYj3wSDwehB46HqARrneU/2lTUqek4/j5Dr0vaK63Pnf4P8A7RU3gnTY9G16G41LTIeLaaIhpoFx9z5j8y+nI2jjkYA9rX9o74e7QTrxHt9iuP8A43XhPib9l3xfo91jSxb67bM2FkikWFwABy6uwA7/AHWPSuUf4L+OFvhaHw1feb03BQY/++87f1r5Wjj85y+PsJU+a3dN/ijljUrU1ytXPbde/a10q21i0i0rS7i809ZiLq4mxGzRjIzEuc5yQ3z44GMDOV9u0HXbDxNpNtqem3KXdlcJvjljPBHQ8dQQcgg8ggg8ivk/wx+y74v1i626qsGg2qnDSSyLO5yDyqI2DyAOWXr3r6Z+H/w/0z4baD/ZelmZ43laeWW4fc8jkAZOMAcKo4A6euSfpcnr5nXnKWLjaL76fcv8zpoyqyd5o4v9pzw7Prfwylntwztp1zHdvGiFmZMMjYx0AEhYnsFNfJ3hnxFeeE/EFhrFgwW6tJRIu77rddynnoRkHB6Gv0GurWG+t5ba4iSeCVSkkUihldSMEEHqCM/nXzL8Qf2Vr+3uri88Jzx3NozM66dcOUki6YRHPDjJb7xUgAcscmvOz/K8RVrRxmGV2vv06mWIpSk1OO56D4f/AGoPBmp2YfUJrnRbkBQ8M0DyjOMna0YORnPUAn0r1bTdSt9Y061vrSTzbS6iWaJ9pXcjAFTg4IyD3r4Y1b4O+NtEmWK48M6g7sMj7LEbhf8AvqPcAfqa+0Ph9bTWfgXw9b3ETwTx6dbo8UilWRhGoIIPQgivRyXHY3FSlTxcLW8mjWjUnK6mjo6KKK+sOoKKKKAEo2j0paKACiiigApKWigBOlLRRQAUUUUAFJS0UAFFFFACUY9qWigApKWigBMD0oxilooAKTA9KWigApNoPUD8qWila+4Hwb/wUeAXxX4LwMf6Fcf+hpXx3X2J/wAFH/8Aka/Bf/Xncf8AoaV85eDvgj498fNanQfCWqX0F0GMN4bcxWrBQSf3z4j7Hq3tXwOPpyli5qCucVRPn0OIr2T9m/8AZv1b48+IC8nm6d4Ts5At/qYUZY4z5MORgyEEc4wgIJzlVb3L4Q/8E+HMlvqPxF1NfLysg0TS3PP3G2zT44/jVljHoVkr7M0Hw/pnhXSbfS9HsLfTNOtwRFa2kSxxpkknCgY5Ykn1JJruweUynJTr6LsXClreQ7w/oNj4X0TT9H0yAWunWMCW1vCGLbI0UKq5JycADkkk9zWlRRX16SirI6gpKWiqASjA9KWilZANIrzb9oz/AJI7r/8A27/+lEdelNXmv7Rn/JHdf/7d/wD0ojrz8x/3Ot/hf5EVPgZ8TN0r9Io/9Wv0r83TX6RR/wCrX6V8XwimvbX8v1OHB/aHUUUV+inohRRRQAUUUUAFJgelLRQAUUUUAFFFFACUtFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAIVB6ijHtS0UgCiiimAUUUUAFFFFABRRRQAUhAbqM0tFADdi/3R+VLS0UkktgCiiimAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAf/2Q==" alt="Tecnipapel"></span>'; },
+  top: function (backHtml, title, sub) {
+    return '<div class="top">' + backHtml + V.logos() +
+      '<div class="tt"><b>' + esc(title || 'Indicadores de gestión') + '</b><span>' + esc(sub || 'Logística y Bodega · Contubos · Tecnipapel') + '</span></div>' +
+      (App.readonly ? '<span class="mk">COPIA PARA PRESENTAR' + (EMB && EMB.generado ? ' · ' + esc(EMB.generado) : '') + '</span>' :
+        '<span class="usr"><b>' + esc(App.user ? App.user.nombre : '') + '</b>' + (App.user && App.user.rol ? ' · ' + esc(App.user.rol) : '') + '</span><button class="btn" onclick="' + on(App.salir) + '">Salir</button>') + '</div>';
+  },
+  login: function () {
+    var keys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', 'del', '0', 'ok'];
+    var dots = ''; for (var i = 0; i < Math.max(4, App.pinBuf.length); i++) dots += '<span class="d ' + (i < App.pinBuf.length ? 'on' : '') + '"></span>';
+    return '<div class="top"><a href="/" class="btn" style="color:#D01148">← Volver al portal</a></div>' +
+      '<div class="lg"><div style="text-align:center">' + V.logos() + '<h1>Indicadores de gestión</h1><div class="sub">Acceso solo para Jefes de Logística y Supervisor de Inventarios</div></div>' +
+      '<div class="card lgc"><div style="font-weight:700;color:#444">Ingrese su PIN</div><div class="dots">' + dots + '</div>' +
+      (App.err ? '<div class="red">' + esc(App.err) + '</div>' : '') +
+      '<div class="kp">' + keys.map(function (k) {
+        if (k === 'del') return '<button class="key del" onclick="' + on(function () { App.pinBuf = App.pinBuf.slice(0, -1); App.err = ''; App.render(); }) + '">Borrar</button>';
+        if (k === 'ok') return '<button class="key okk" onclick="' + on(App.login) + '">Entrar</button>';
+        return '<button class="key" onclick="' + on(function () { if (App.pinBuf.length < 12) App.pinBuf += k; App.err = ''; App.render(); }) + '">' + k + '</button>';
+      }).join('') + '</div></div></div>';
+  },
+  error: function () {
+    return V.top('<a href="/" class="btn" style="color:#D01148">← Volver al portal</a>') + '<div class="wrap"><div class="card"><h2>No se pudieron cargar los indicadores</h2><p class="red">' + esc(App.err) + '</p><p>Revise las variables de entorno en Vercel y que cada Sheet esté compartido con la cuenta de servicio.</p><button class="btn pri" onclick="' + on(function () { App.cargar(); }) + '">Reintentar</button></div></div>';
+  },
+  chips: function (list) { return list.map(function (x) { return '<button class="' + x.cls + '" onclick="' + on(x.click) + '">' + esc(x.t) + '</button>'; }).join(''); },
+  toolbar: function (m) {
+    var b = '<button class="btn" onclick="' + on(App.excel) + '">Excel</button><button class="btn" onclick="' + on(function () { window.print(); }) + '">PDF</button>';
+    if (!App.readonly) {
+      b += '<button class="btn" onclick="' + on(App.htmlPresentar) + '">HTML para presentar</button><button class="btn" onclick="' + on(function () { App.view = 'metas'; App.render(); }) + '">⚙ Configurar</button>';
+      if (App.cerrado(m)) b += '<button class="btn" onclick="' + on(function () { App.dlg = { t: '¿Reabrir ' + App.mesLbl(m) + '?', body: 'Las cifras volverán a calcularse con los datos actuales de las apps. Queda registro de quién lo reabrió.', input: 'Motivo (obligatorio)', yes: function (txt) { if (!txt) { App.toast('Escriba el motivo'); return; } App.reabrirMes(m, txt); } }; App.render(); }) + '">Reabrir ' + esc(App.mesLbl(m).split(' ')[0].toLowerCase()) + '</button>';
+      else if (m < App.hoyYm) b += '<button class="btn pri" onclick="' + on(function () { App.dlg = { t: '¿Cerrar ' + App.mesLbl(m) + '?', body: 'Se congelan los datos de los 4 procesos de ese mes: las cifras ya no cambian aunque después se corrijan registros en las apps. Se puede reabrir dejando registro.', yes: function () { App.cerrarMes(m); } }; App.render(); }) + '">Cerrar ' + esc(App.mesLbl(m).split(' ')[0].toLowerCase()) + '</button>';
+    }
+    return '<div class="tb noprint">' + b + '</div>';
+  },
+  dialog: function () {
+    var d = App.dlg;
+    return '<div class="ov"><div class="md dlg"><h2>' + esc(d.t) + '</h2><p>' + esc(d.body) + '</p>' + (d.input ? '<textarea id="dlgtxt" rows="3" placeholder="' + ats(d.input) + '"></textarea>' : '') +
+      '<div class="sino"><button class="si" onclick="' + on(function () { var el = document.getElementById('dlgtxt'); d.yes(el ? el.value.trim() : ''); }) + '">SÍ</button><button class="no" onclick="' + on(function () { App.dlg = null; App.render(); }) + '">NO</button></div></div></div>';
+  },
+  // ---------------- RESUMEN
+  resumen: function () {
+    var m = App.G.mes, todos = App.mesesTodos(), err = (App.raw && App.raw.errores) || {};
+    var meses = todos.map(function (x) { return { t: App.mesLbl(x).slice(0, 3) + ' ' + Math.floor(x / 100) + (x === App.hoyYm ? ' · en curso' : '') + (App.cerrado(x) ? ' ✓' : ''), cls: x === m ? 'chip on' : 'chip', click: function () { App.G.mes = x; App.render(); } }; });
+    var emps = [['A', 'Ambas'], ['C', 'Contubos'], ['T', 'Tecnipapel']].map(function (e) { return { t: e[1], cls: App.G.emp === e[0] ? 'chip on' : 'chip', click: function () { App.G.emp = e[0]; App.render(); } }; });
+    var c = App.cierre(m), h = '';
+    h += V.top(App.readonly ? '' : '<a href="/" class="btn" style="color:#D01148">← Volver al portal</a>');
+    h += '<div class="wrap"><div class="hd"><h1>Resumen · ' + esc(App.mesLbl(m)) + '</h1>' + V.toolbar(m) + '</div>';
+    h += '<div class="fil"><span class="lbl">Mes</span><div class="chw">' + V.chips(meses) + '</div><span class="lbl">Empresa</span><div class="chw">' + V.chips(emps) + '</div></div>';
+    if (c) h += '<div class="note">✓ <b>' + esc(App.mesLbl(m)) + ' cerrado</b> el ' + esc(c.fh) + ' por ' + esc(c.usuario) + ': las cifras son la foto del cierre.' + (App.hoyYm > 0 ? '' : '') + '</div>';
+    else if (m === App.hoyYm) h += '<div class="note w">' + esc(App.mesLbl(m)) + ' en curso: cifras del 01 al ' + String(App.hoyD).padStart(2, '0') + '.</div>';
+    h += '<div class="g2r">';
+    PROCS.forEach(function (p) {
+      var I = App.inst[p[0]];
+      if (!I) { h += '<div class="pc"><b style="font-size:16px">' + esc(p[1]) + '</b><div class="red">No se pudieron leer los datos: ' + esc(err[p[0]] || 'sin datos') + '</div></div>'; return; }
+      I.state.mes = I.MESES.indexOf(m) >= 0 ? m : I.state.mes;
+      if (p[0] !== 'imp') I.state.emp = App.G.emp;
+      var r;
+      try { r = I.resumen(); } catch (e) { h += '<div class="pc"><b>' + esc(p[1]) + '</b><div class="red">Error: ' + esc(e.message) + '</div></div>'; return; }
+      h += '<button class="pc" onclick="' + on(function () { App.abrirProc(p[0]); }) + '"><div class="pch"><div><b style="font-size:16px">' + esc(r.t) + '</b><div class="ks">' + esc(r.sub) + '</div></div><span class="' + r.sm.c + '">' + esc(r.sm.t) + '</span></div>' +
+        '<div><span class="kt">' + esc(r.kt) + '</span><div class="pcv"><b class="' + r.sm.v + '">' + esc(r.v) + '</b><span class="' + r.x.c + '">' + esc(r.x.t) + '</span></div><span class="ks">' + esc(r.det) + '</span></div>' +
+        '<div>' + r.sec.map(function (s) { return '<div class="sec"><span><i class="dot ' + s[0].replace('pill ', 'd') + '"></i>' + esc(s[1]) + '</span><b>' + esc(s[2]) + '</b></div>'; }).join('') + '</div>' +
+        '<span class="lnk2">Ver proceso ›</span></button>';
+    });
+    h += '</div><div class="ks" style="margin-top:12px;line-height:1.5">Verde = cumple la meta · Ámbar = no cumple pero está a menos del ' + esc(App.metas.ambar) + '% de la meta · Rojo = no cumple · Gris = sin meta. Toque un proceso para ver sus pestañas Mes, Histórico e Indicadores de gestión.</div></div>';
+    return h;
+  },
+  // ---------------- METAS Y CIERRES
+  metas: function () {
+    var h = V.top('<button class="btn" style="color:#D01148" onclick="' + on(function () { App.view = 'resumen'; App.render(); }) + '">← Volver al resumen</button>', 'Configurar metas');
+    h += '<div class="wrap"><div class="card"><div class="ct"><span>Metas de los indicadores</span><i>se guardan en la hoja Metas del Sheet del portal</i></div><table class="mt">';
+    METAS_DEF.forEach(function (d) { var v = App.metas[d[0]]; h += '<tr><td>' + esc(d[1]) + '</td><td><input id="meta_' + d[0] + '" inputmode="decimal" value="' + ats(v === null || v === undefined ? '' : v) + '"></td></tr>'; });
+    h += '</table><div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap"><button class="btn pri" onclick="' + on(App.guardarMetas) + '">Guardar metas</button><button class="btn" onclick="' + on(function () { App.view = 'resumen'; App.render(); }) + '">Cancelar</button></div></div>';
+    var hist = (App.portal.hist || []).slice().reverse();
+    h += '<div class="card" style="margin-top:12px"><div class="ct"><span>Historial de cierres de mes</span><i>cada cierre y cada reapertura con quién y cuándo</i></div>' + (hist.length ? '<div class="scr"><table><thead><tr><th>Mes</th><th>Acción</th><th>Usuario</th><th>Fecha</th><th>Nota</th></tr></thead><tbody>' + hist.map(function (x) { return '<tr><td>' + esc(App.mesLbl(Number(x.mes))) + '</td><td><span class="' + (x.estado === 'Cerrado' ? 'pill ok' : 'pill am') + '">' + esc(x.estado) + '</span></td><td>' + esc(x.usuario) + '</td><td>' + esc(x.fh) + '</td><td>' + esc(x.nota) + '</td></tr>'; }).join('') + '</tbody></table></div>' : '<div class="vac">Todavía no se ha cerrado ningún mes.</div>') + '</div>';
+    h += '<div class="note" style="margin-top:12px">Los usuarios y sus PIN, y las equivalencias de nombres (clientes y operarios escritos de varias formas), se editan directamente en las hojas <b>Usuarios</b> y <b>Equivalencias</b> del Sheet INDICADORES PORTAL.</div></div>';
+    return h;
+  },
+  // ---------------- PROCESO
+  proc: function () {
+    var I = App.inst[App.proc], v = I.renderVals(), s = I.state, p = PROCS.filter(function (x) { return x[0] === App.proc; })[0];
+    var h = V.top('<button class="btn" style="color:#D01148" onclick="' + on(function () { App.view = 'resumen'; I.state.modal = null; window.scrollTo(0, 0); App.render(); }) + '">← Volver al resumen</button>', p[1], p[2]);
+    h += '<div class="wrap"><div class="hd"><div class="vsel noprint">' + v.tabs.map(function (x) { return '<button class="' + x.cls + '" onclick="' + on(x.click) + '">' + esc(x.t) + '</button>'; }).join('') + '</div>' + V.toolbar(s.mes) + '</div>';
+    h += '<div class="prt">' + esc(p[1]) + ' · ' + esc(I.lbl(s.mes)) + '</div>';
+    if (v.aviso) h += '<div class="' + v.avisoCls + '">' + esc(v.aviso) + '</div>';
+    if (v.exclTxt) h += '<div class="note w noprint">' + esc(v.exclTxt) + ' <button class="lnk" onclick="' + on(v.verExcl) + '">Ver excluidos ›</button></div>';
+    h += '<div class="fil noprint">' + v.fRows.map(function (fr) { return '<span class="lbl">' + esc(fr.l) + '</span><div class="chw">' + V.chips(fr.chips) + (fr.nota ? '<span class="ks">' + esc(fr.nota) + '</span>' : '') + '</div>'; }).join('') + (v.hayFil ? '<span></span><div><button class="lnk" onclick="' + on(v.quitar) + '">✕ Quitar filtros</button></div>' : '') + '</div>';
+    if (v.isMes) h += V.tabMes(v);
+    if (v.isHist) h += V.tabHist(v);
+    if (v.isGest) h += V.tabGest(v);
+    h += '</div>';
+    if (v.hasModal) h += V.modal(v);
+    return h;
+  },
+  bar: function (b) {
+    return '<button class="bar" onclick="' + on(b.click) + '"><span class="n">' + esc(b.n) + '</span><span class="rr"><span class="r" style="width:' + b.w + '%;background:' + b.col + '"></span>' + (b.w2 && b.w2 !== '0' ? '<span class="r" style="width:' + b.w2 + '%;background:' + b.col2 + '"></span>' : '') + '</span><span class="v">' + esc(b.v) + '</span></button>';
+  },
+  leg: function (L) { return '<div class="legs">' + L.map(function (l) { return '<span><i style="background:' + l.col + '"></i>' + esc(l.n) + '</span>'; }).join('') + '</div>'; },
+  table: function (head, rows, first) {
+    return '<div class="scr"><table><thead><tr>' + head.map(function (x) { return '<th>' + esc(x) + '</th>'; }).join('') + '</tr></thead><tbody>' + rows.join('') + '</tbody></table></div>';
+  },
+  cmpCard: function (v, gest) {
+    var h = '<div class="card">';
+    if (!gest) {
+      h += '<div class="ct"><span>' + esc(v.cTitle) + '</span><i>toque una barra o una fila para ver el detalle</i></div><div class="chw" style="margin:4px 0 8px"><span class="lbl">Ver</span>' + V.chips(v.cMetChips) + '</div>';
+      if (v.cNone) h += '<div class="vac">' + esc(v.cNoneTxt) + '</div>';
+      h += v.cBars.map(V.bar).join('');
+      if (v.cMore) h += '<button class="mas" onclick="' + on(v.cTog) + '">' + esc(v.cMore) + '</button>';
+      if (v.cMeta) h += '<div class="nt">' + esc(v.cMeta) + '</div>';
+      h += '<div style="margin-top:10px">' + V.table([v.cHead].concat(v.cCols).concat([v.cVarHead]), v.cRows.map(function (r) { return '<tr><td><button class="lnk" onclick="' + on(r.click) + '"><i class="sw" style="background:' + r.col + '"></i>' + esc(r.n) + '</button></td>' + r.cells.map(function (c) { return '<td><span class="' + c.c + '">' + esc(c.v) + '</span></td>'; }).join('') + '<td><span class="' + r.vc + '">' + esc(r.vt) + '</span></td></tr>'; })) + '</div>';
+    } else {
+      h += '<div class="ct"><span>' + esc(v.gmTitle) + '</span><i>semáforo de cada grupo contra las metas · toque un grupo para ver el detalle</i></div>';
+      if (v.cNone) h += '<div class="vac">' + esc(v.cNoneTxt) + '</div>';
+      h += V.table([v.cHead].concat(v.gmCols).concat(['Metas cumplidas']), v.gmRows.map(function (r) { return '<tr><td><button class="lnk" onclick="' + on(r.click) + '"><i class="sw" style="background:' + r.col + '"></i>' + esc(r.n) + '</button></td>' + r.cells.map(function (c) { return '<td><span class="' + c.c + '">' + esc(c.v) + '</span></td>'; }).join('') + '<td><b>' + esc(r.ok) + '</b></td></tr>'; }));
+      h += '<div class="nt">Los grupos salen de "Comparar por" (arriba). Ordenados de peor a mejor cumplimiento.</div>';
+    }
+    return h + '</div>';
+  },
+  tabMes: function (v) {
+    var h = '<div class="ks noprint" style="margin:2px">Toque cualquier tarjeta, barra, celda o fila para ver los registros.</div>';
+    h += '<div class="g4">' + v.kpis.map(function (k) { return '<button class="k" onclick="' + on(k.click) + '"><span class="kt">' + esc(k.t) + '</span><span class="kv">' + esc(k.v) + '</span><span class="ks">' + esc(k.s) + '</span><span class="' + k.vc + '">' + esc(k.vt) + '</span></button>'; }).join('') + '</div>';
+    h += V.cmpCard(v, false);
+    h += '<div class="g2">' + v.charts.map(function (c) {
+      return '<div class="' + c.cls + '"><div class="ct"><span>' + esc(c.t) + '</span><i>' + esc(c.i) + '</i></div>' + (c.hasLeg ? V.leg(c.leg) : '') + c.items.map(V.bar).join('') + (c.empty ? '<div class="vac">Sin datos con estos filtros</div>' : '') + (c.hasMore ? '<button class="mas" onclick="' + on(c.tog) + '">' + esc(c.more) + '</button>' : '') + (c.nt ? '<div class="nt">' + esc(c.nt) + '</div>' : '') + '</div>';
+    }).join('') + '</div>';
+    (v.grids || []).forEach(function (g) {
+      var cols = 'grid-template-columns:' + g.lw + 'px repeat(' + g.nc + ',minmax(0,1fr))';
+      h += '<div class="card"><div class="ct"><span>' + esc(g.t) + '</span><i>' + esc(g.i) + '</i></div><div class="scr"><div style="min-width:' + (g.minw || 0) + 'px"><div class="gr" style="' + cols + '"><span></span>' + g.cols.map(function (c) { return '<span class="gh">' + esc(c) + '</span>'; }).join('') + '</div>' +
+        g.rows.map(function (r) { return '<div class="gr" style="' + cols + ';margin-top:3px"><span class="gl">' + esc(r.n) + '</span>' + r.cells.map(function (c) { return '<button class="gc" style="background:' + c.bg + ';color:' + c.fg + '" aria-label="' + ats(c.al) + '" title="' + ats(c.al) + '" onclick="' + on(c.click) + '">' + esc(c.t) + '</button>'; }).join('') + '</div>'; }).join('') + '</div></div><div class="nt">' + esc(g.nt) + '</div></div>';
+    });
+    (v.mTables || []).forEach(function (t) { h += V.tcard(t); });
+    return h;
+  },
+  tcard: function (t) {
+    return '<div class="card"><div class="ct"><span>' + esc(t.t) + '</span><i>' + esc(t.i) + '</i></div>' + V.table(t.head, t.rows.map(function (r) { return '<tr><td><button class="' + r.nc + '" onclick="' + on(r.click) + '">' + esc(r.n) + '</button></td>' + r.cells.map(function (c) { return '<td><span class="' + c.c + '">' + esc(c.v) + '</span></td>'; }).join('') + '</tr>'; })) + (t.hasMore ? '<button class="mas" onclick="' + on(t.tog) + '">' + esc(t.more) + '</button>' : '') + '</div>';
+  },
+  svg: function (c, big) {
+    var h = '<svg viewBox="' + c.vb + '" width="100%" role="img" aria-label="' + ats(c.t) + '">';
+    c.grid.forEach(function (g) { h += '<line x1="' + g.x1 + '" x2="' + g.x2 + '" y1="' + g.y + '" y2="' + g.y + '" stroke="#ECE9E2"/><text x="' + g.tx + '" y="' + g.ty + '" font-size="11" fill="#8a857c" text-anchor="end">' + esc(g.t) + '</text>'; });
+    c.xl.forEach(function (x) { h += '<text x="' + x.x + '" y="' + x.y + '" font-size="12.5" font-weight="700" fill="#333" text-anchor="middle">' + esc(x.t) + '</text>'; });
+    (c.ref || []).forEach(function (r) { h += '<line x1="' + r.x1 + '" x2="' + r.x2 + '" y1="' + r.y + '" y2="' + r.y + '" stroke="#D08A00" stroke-width="2" stroke-dasharray="7 6"/><text x="' + r.tx + '" y="' + r.ty + '" font-size="11.5" font-weight="800" fill="#9A6200" text-anchor="end">' + esc(r.t) + '</text>'; });
+    c.lines.forEach(function (l) { if (l.pts) h += '<polyline points="' + l.pts + '" fill="none" stroke="' + l.col + '" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>'; });
+    c.dots.forEach(function (d) { h += '<circle cx="' + d.x + '" cy="' + d.y + '" r="' + (big ? 5 : 4.5) + '" fill="' + d.col + '"/>' + (d.t ? '<text x="' + d.x + '" y="' + d.ty + '" font-size="11.5" font-weight="800" fill="#333" text-anchor="middle">' + esc(d.t) + '</text>' : ''); });
+    return h + '</svg>';
+  },
+  tabHist: function (v) {
+    if (v.hEmpty) return '<div class="card vac">Escoja al menos un mes.</div>';
+    var h = '<div class="g4">' + v.hk.map(function (x) { return '<div class="k nc"><span class="kt">' + esc(x.t) + '</span><span class="kv">' + esc(x.v) + '</span><span class="ks">' + esc(x.s) + '</span></div>'; }).join('') + '</div>';
+    h += '<div class="card"><div class="ct"><span>' + esc(v.hTitle) + '</span><i>toque un mes para abrirlo en la pestaña Mes</i></div>' + V.leg(v.hRows.map(function (r) { return { n: r.n, col: r.col }; })) +
+      '<div class="hcols">' + v.hCols.map(function (c) { return '<button class="hcol" onclick="' + on(c.click) + '"><span class="hbs">' + c.bars.map(function (b) { return '<span class="hbw"><span class="hv">' + esc(b.t) + '</span><span class="hb" style="height:' + b.h + 'px;background:' + b.col + '"></span></span>'; }).join('') + '</span><span class="hl">' + esc(c.lbl) + '</span></button>'; }).join('') + '</div></div>';
+    h += '<div class="card"><div class="ct"><span>' + esc(v.lc.t) + '</span><i>' + esc(v.lc.i) + '</i></div>' + V.leg(v.lc.leg) + V.svg(v.lc, true) + '<div class="nt">Cada curva es un grupo de "Comparar por". La línea punteada es la meta.</div></div>';
+    h += '<div class="lbl" style="margin:4px 2px 0">Todas las métricas · mismas curvas</div><div class="g2">' + v.lcm.map(function (c) { return '<div class="card"><div class="ct"><span>' + esc(c.t) + '</span><button class="lnk noprint" onclick="' + on(c.ver) + '">Ver en grande ›</button></div>' + V.svg(c, false) + '</div>'; }).join('') + '</div>';
+    h += '<div class="card"><div class="ct"><span>' + esc(v.hTitle) + ' · tabla</span><i>variación del primer al último mes escogido</i></div>' + V.table(['Serie'].concat(v.hHead).concat(['Var.']), v.hRows.map(function (r) { return '<tr><td><i class="sw" style="background:' + r.col + '"></i><b>' + esc(r.n) + '</b></td>' + r.cells.map(function (c) { return '<td>' + esc(c.v) + '</td>'; }).join('') + '<td><span class="' + r.vc + '">' + esc(r.vt) + '</span></td></tr>'; })) + '</div>';
+    h += '<div class="note">Los meses se calculan directamente de los Sheets de las apps. Los meses cerrados (✓) usan la foto del cierre.</div>';
+    return h;
+  },
+  tabGest: function (v) {
+    var h = '<div class="lbl" style="margin:2px">' + esc(v.gTitle) + '</div><div class="g3">' + v.gk.map(function (x) {
+      return '<button class="gk" onclick="' + on(x.click) + '"><span class="kt">' + esc(x.t) + '</span><span class="gkv"><span class="' + x.vcls + '">' + esc(x.v) + '</span><span class="' + x.pcls + '">' + esc(x.pt) + '</span></span><span class="ks"><b>' + esc(x.meta) + '</b> · ' + esc(x.cmp) + ' <span class="' + x.vc + '">' + esc(x.vt) + '</span></span><span class="gke">' + esc(x.exp) + '</span></button>';
+    }).join('') + '</div>';
+    h += V.cmpCard(v, true);
+    (v.gTables || []).forEach(function (t) { h += V.tcard(t); });
+    h += '<div class="note">Semáforo: verde cumple · ámbar no cumple pero está a menos del ' + esc(App.metas.ambar) + '% de la meta · rojo no cumple · gris sin meta. Las metas se cambian en ⚙ Configurar.</div>';
+    return h;
+  },
+  modal: function (v) {
+    var I = App.inst[App.proc];
+    var close = function () { I.setState({ modal: null }); };
+    return '<div class="ov" onclick="if(event.target===this)' + on(close) + '"><div class="md"><button class="btn" style="color:#D01148;margin-bottom:10px" onclick="' + on(close) + '">← Volver</button><h2>' + esc(v.mTitle) + '</h2><div class="sub">' + esc(v.mSub) + '</div><div class="card scr"><table><thead><tr>' + v.mHead.map(function (x) { return '<th>' + esc(x) + '</th>'; }).join('') + '<th></th></tr></thead><tbody>' +
+      v.mRows.map(function (r) { return '<tr class="' + r.rc + '">' + r.cells.map(function (c) { return '<td><span class="' + c.c + '">' + esc(c.v) + '</span></td>'; }).join('') + '<td>' + (r.xt ? '<button class="' + r.xc + '" onclick="' + on(r.tog) + '">' + esc(r.xt) + '</button>' : '') + '</td></tr>'; }).join('') +
+      '</tbody></table>' + (v.mMore ? '<div class="nt">' + esc(v.mMore) + '</div>' : '') + '</div><div class="nt">' + esc(v.mFoot) + '</div></div></div>';
+  }
+};
+
+App.start();
+</script>
+</body>
+</html>
