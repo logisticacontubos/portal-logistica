@@ -88,19 +88,6 @@ function render(){
   });
   grid.innerHTML = '';
   var verInd = !term || 'indicadores de gestion tablero kpi gerencia'.indexOf(term) !== -1;
-  if (verInd) {
-    var ind = document.createElement('a');
-    ind.className = 'card ind';
-    ind.href = 'indicadores.html';
-    ind.innerHTML =
-      '<div class="card-top">' +
-        '<div class="card-icon" style="background:#D01148;color:#fff;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/></svg></div>' +
-        '<span class="lock"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Con clave</span>' +
-      '</div>' +
-      '<div><h3>Indicadores de gestión</h3><p>Tablero mensual de los 4 procesos de logística para análisis y presentación a gerencia</p></div>' +
-      '<div class="card-companies"><span class="badge c">Contubos</span><span class="badge t">Tecnipapel</span></div>';
-    grid.appendChild(ind);
-  }
   emptyState.style.display = (visible.length || verInd) ? 'none' : 'block';
   visible.forEach(function(a){
     var card = document.createElement('a');
@@ -120,6 +107,19 @@ function render(){
       '<div class="card-companies">'+badges+'</div>';
     grid.appendChild(card);
   });
+  if (verInd) {
+    var ind = document.createElement('a');
+    ind.className = 'card ind';
+    ind.href = 'indicadores.html';
+    ind.innerHTML =
+      '<div class="card-top">' +
+        '<div class="card-icon" style="background:#D01148;color:#fff;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/></svg></div>' +
+        '<span class="lock"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Con clave</span>' +
+      '</div>' +
+      '<div><h3>Indicadores de gestión</h3><p>Tablero mensual de los 4 procesos de logística para análisis y presentación a gerencia</p></div>' +
+      '<div class="card-companies"><span class="badge c">Contubos</span><span class="badge t">Tecnipapel</span></div>';
+    grid.appendChild(ind);
+  }
   checkStatus();
 }
 
